@@ -1,3 +1,8 @@
+manage_bundle_system_management_bundle_examination_room_infomation:
+    resource: "@ManageBundleSystemManagementBundleExaminationRoomInfomationBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 manage_bundle_system_management_bundle_academy:
     resource: "@ManageBundleSystemManagementBundleAcademyBundle/Controller/"
     type:     annotation
