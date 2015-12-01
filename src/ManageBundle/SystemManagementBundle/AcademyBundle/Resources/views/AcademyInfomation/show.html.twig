@@ -1,0 +1,36 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>AcademyInfomation</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Academyid</th>
+                <td>{{ entity.academyID }}</td>
+            </tr>
+            <tr>
+                <th>Academyname</th>
+                <td>{{ entity.academyName }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('academyinfomation') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('academyinfomation_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}
