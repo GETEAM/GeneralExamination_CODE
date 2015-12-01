@@ -6,7 +6,7 @@
 
     <!--
     <services>
-        <service id="ge_manager.example" class="GE\Bundle\ManagerBundle\Example">
+        <service id="manage_bundle_system_management_bundle_grade_information.example" class="ManageBundle\SystemManagementBundle\GradeInformationBundle\Example">
             <argument type="service" id="service_id" />
             <argument>plain_value</argument>
             <argument>%parameter_name%</argument>

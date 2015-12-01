@@ -1,5 +1,5 @@
-ge_manager:
-    resource: "@GEManagerBundle/Controller/"
+manage_bundle_system_management_bundle_grade_information:
+    resource: "@ManageBundleSystemManagementBundleGradeInformationBundle/Controller/"
     type:     annotation
     prefix:   /
 

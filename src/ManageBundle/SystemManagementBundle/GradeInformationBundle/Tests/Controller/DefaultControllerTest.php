@@ -1,6 +1,6 @@
 <?php
 
-namespace GE\Bundle\ManagerBundle\Tests\Controller;
+namespace ManageBundle\SystemManagementBundle\GradeInformationBundle\Tests\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace GE\Bundle\ManagerBundle\DependencyInjection;
+namespace ManageBundle\SystemManagementBundle\GradeInformationBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
 use Symfony\Component\Config\Definition\ConfigurationInterface;
@@ -18,7 +18,7 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('ge_manager');
+        $rootNode = $treeBuilder->root('manage_bundle_system_management_bundle_grade_information');
 
         // Here you should define the parameters that are allowed to
         // configure your bundle. See the documentation linked above for
