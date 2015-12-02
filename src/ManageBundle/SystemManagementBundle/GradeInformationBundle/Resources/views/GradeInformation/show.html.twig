@@ -1,36 +1,45 @@
-{% extends '::base.html.twig' %}
+{% extends 'ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation:grade.html.twig' %}
 
-{% block body -%}
-    <h1>GradeInformation</h1>
+{% block title %}查看年级信息—基本信息设置—系统管理{% endblock %}
 
+{% block right -%}
+    <h1>
+        查看年级信息
+        <a href="{{ path('gradeinformation') }}">
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回年级信息列表" title="返回年级信息列表">
+            {% endimage %}
+            <span>返回年级信息列表</span>
+        </a>
+    </h1>
+    <div class="common-action">
+        <a href="{{ path('gradeinformation_edit', { 'id': grade.id }) }}" class="btn btn-common-action">
+            {% image '@AppBundle/Resources/public/images/edit.png' %}
+                <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
+            {% endimage %}
+            编辑
+        </a>
+        <a href="{{ path('gradeinformation_delete', { 'id': grade.id }) }}" class="btn btn-common-action">
+            {% image '@AppBundle/Resources/public/images/delete.png' %}
+                <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
+            {% endimage %}
+            删除
+        </a>
+    </div>
     <table class="record_properties">
         <tbody>
             <tr>
-                <th>Id</th>
-                <td>{{ entity.id }}</td>
+                <th>编号</th>
+                <td>{{ grade.id }}</td>
             </tr>
             <tr>
-                <th>Grade</th>
-                <td>{{ entity.grade }}</td>
+                <th>年级代号</th>
+                <td>{{ grade.grade }}</td>
             </tr>
             <tr>
-                <th>Description</th>
-                <td>{{ entity.description }}</td>
+                <th>详细描述</th>
+                <td>{{ grade.description }}</td>
             </tr>
         </tbody>
     </table>
-
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('gradeinformation') }}">
-            Back to the list
-        </a>
-    </li>
-    <li>
-        <a href="{{ path('gradeinformation_edit', { 'id': entity.id }) }}">
-            Edit
-        </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
 {% endblock %}

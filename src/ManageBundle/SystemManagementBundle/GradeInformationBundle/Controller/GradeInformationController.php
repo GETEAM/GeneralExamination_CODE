@@ -23,16 +23,16 @@ class GradeInformationController extends Controller
      *
      * @Route("/", name="gradeinformation")
      * @Method("GET")
-     * @Template()
+     * @Template("ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation:index.html.twig")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation')->findAll();
+        $grades = $em->getRepository('ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation')->findAll();
 
         return array(
-            'entities' => $entities,
+            'grades' => $grades,
         );
     }
     /**
@@ -110,16 +110,16 @@ class GradeInformationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation')->find($id);
+        $grade = $em->getRepository('ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation')->find($id);
 
-        if (!$entity) {
+        if (!$grade) {
             throw $this->createNotFoundException('Unable to find GradeInformation entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'grade'      => $grade,
             'delete_form' => $deleteForm->createView(),
         );
     }

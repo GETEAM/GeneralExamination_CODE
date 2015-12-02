@@ -5,7 +5,7 @@
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}
             {%  stylesheets 
-                '@AppBundle/Resources/public/css/rest.css'
+                '@AppBundle/Resources/public/css/reset.css'
                 '@AppBundle/Resources/public/css/common.css'
                 '@AppBundle/Resources/public/css/header.css'
                 filter='cssrewrite'
@@ -16,20 +16,7 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-        {% block header %}
-            <div class="header" >
-                <div class="common-block">
-                    <div class="logo">英语通用考试系统</div>
-                    <nav>
-                        <ul>
-                            <li><a href="">首页</a></li>
-                            <li><a href="">关于我们</a></li>
-                            <li><a href="">帮助中心</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </div>
-        {% endblock %}
+        {% block header %}{% endblock %}
 
         {% block content %}{% endblock %}
 

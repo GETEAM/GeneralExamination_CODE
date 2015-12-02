@@ -15,8 +15,8 @@ class GradeInformationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('grade')
-            ->add('description')
+            ->add('grade', 'text', array('label' => '年级代号'))
+            ->add('description', 'text', array('label' => '描述'))
         ;
     }
     

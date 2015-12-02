@@ -31,6 +31,16 @@ body {
     border: 1px solid #f82;
     color: #fff;
 }
+/*common-action的样式*/
+.btn-common-action {
+    color: #666;
+    border: 1px solid #eee;
+}
+.btn-common-action:hover {
+    color: #666;
+    border: 1px solid #eee;
+    background-color: #f8f8f8;
+}
 
 /*块级li标签的样式*/
 .li-block {

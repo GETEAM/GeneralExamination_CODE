@@ -1,0 +1,28 @@
+{% extends '::base.html.twig' %}
+
+
+{% block stylesheets %}
+    {{ parent() }}
+    {%  stylesheets                
+        '@AppBundle/Resources/public/css/manage.css'    
+        filter='cssrewrite'  
+    %}
+        <link rel="stylesheet" href="{{asset_url}}"/>
+    {% endstylesheets %}
+    
+{% endblock %}
+
+{% block header %}
+    <div class="header" >
+        <div class="common-block">
+            <div class="logo">英语通用考试系统</div>
+            <nav>
+                <ul>
+                    <li><a href="{{ path('manage') }}">首页</a></li>
+                    <li><a href="">关于我们</a></li>
+                    <li><a href="">帮助中心</a></li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+{% endblock %}

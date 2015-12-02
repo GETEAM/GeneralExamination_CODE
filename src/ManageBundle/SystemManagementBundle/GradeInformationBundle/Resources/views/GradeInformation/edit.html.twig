@@ -1,6 +1,8 @@
-{% extends '::base.html.twig' %}
+{% extends 'ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation:grade.html.twig' %}
 
-{% block body -%}
+{% block title %}添加年级—系统管理{% endblock %}
+
+{% block right -%}
     <h1>GradeInformation edit</h1>
 
     {{ form(edit_form) }}

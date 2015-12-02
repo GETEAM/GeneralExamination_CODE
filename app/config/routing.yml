@@ -11,3 +11,4 @@ manage_bundle_system_management_bundle_grade_information:
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
+    prefix:   /

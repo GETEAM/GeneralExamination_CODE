@@ -1,0 +1,43 @@
+{% extends 'AppBundle::manage.html.twig' %}
+
+{% block title %}管理端首页—通用考试系统{% endblock %}
+
+{% block content -%}
+    <ul class="common-block function-modules">
+        <li class="function-module li-block system-manage">
+            {% image '@AppBundle/Resources/public/images/system-manage.png' %}
+                <img src="{{ asset_url }}" width="100" height="100" alt="系统管理">
+            {% endimage %}
+            <h2>系统管理<a href="{{ path('gradeinformation') }}" class="btn">点击进入</a></h2>
+            <p>系统管理为管理员提供相应的功能，包括基本信息维护，系统维护，题库管理以及学生信息管理</p>
+        </li>
+        <li class="function-module li-block no-role">
+            {% image '@AppBundle/Resources/public/images/exam-manage.png' %}
+                <img src="{{ asset_url }}" width="100" height="100" alt="考务管理">
+            {% endimage %}
+            <h2>考务管理<a href="systemManage.html" class="btn">点击进入</a></h2>
+            <p>考务管理员通过该模块进行教师信息管理、学生信息管理、考试管理、考场安排、考务安排、阅卷安排以及归档考试</p>
+        </li>
+        <li class="function-module li-block">
+            {% image '@AppBundle/Resources/public/images/paper-manage.png' %}
+                <img src="{{ asset_url }}" width="100" height="100" alt="试卷管理">
+            {% endimage %}
+            <h2>试卷管理<a href="systemManage.html" class="btn">点击进入</a></h2>
+            <p>相关老师在该模块可以进行试卷库管理和试题库管理，包括各种方式的组卷，试卷编辑和试题编辑，试卷和试题的导入等</p>
+        </li>
+        <li class="function-module li-block">
+            {% image '@AppBundle/Resources/public/images/monitor-manage.png' %}
+                <img src="{{ asset_url }}" width="100" height="100" alt="考场调度与监控">
+            {% endimage %}
+            <h2>考场调度与监控<a href="systemManage.html" class="btn">点击进入</a></h2>
+            <p>调度员通过该模块对考场的相关状态进行调度和监控，包括对考生相关信息的修改，考场状态的统计以及突发状况的处理</p>
+        </li>
+        <li class="function-module li-block no-role">
+            {% image '@AppBundle/Resources/public/images/marking-manage.png' %}
+                <img src="{{ asset_url }}" width="100" height="100" alt="阅卷评分">
+            {% endimage %}
+            <h2>阅卷评分<a href="systemManage.html" class="btn">点击进入</a></h2>
+            <p>管理员通过该模块分配阅卷老师，同时可以查看阅卷进度，根据阅卷进度还可以重新分配试卷</p>
+        </li>
+    </ul>
+{% endblock %}
