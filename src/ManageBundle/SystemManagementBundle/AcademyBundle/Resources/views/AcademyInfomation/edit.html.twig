@@ -1,16 +1,25 @@
-{% extends '::base.html.twig' %}
+{% extends 'ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation:grade.html.twig' %}
 
-{% block body -%}
-    <h1>AcademyInfomation edit</h1>
+{% block title %}修改年级信息—基本信息设置—系统管理{% endblock %}
 
-    {{ form(edit_form) }}
-
-        <ul class="record_actions">
-    <li>
+{% block right -%}
+    <h1>
+        添加学院
         <a href="{{ path('academyinfomation') }}">
-            Back to the list
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
+            {% endimage %}
+            <span>返回学院信息列表</span>
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    </h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+
+        {{ form_row(edit_form.academyID, {'attr': {'placeholder': '请输入学院代号', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.academyName, {'attr': {'placeholder': '请输入学院名称', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.submit, {'attr': {'class': 'btn' } }) }}
+
+    {{ form_end(edit_form, {'render_rest': true}) }}
+
 {% endblock %}

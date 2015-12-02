@@ -15,8 +15,8 @@ class AcademyInfomationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('academyID')
-            ->add('academyName')
+            ->add('academyID', 'text', array('label' => '学院代号'))
+            ->add('academyName', 'text', array('label' => '学院名称'))
         ;
     }
     

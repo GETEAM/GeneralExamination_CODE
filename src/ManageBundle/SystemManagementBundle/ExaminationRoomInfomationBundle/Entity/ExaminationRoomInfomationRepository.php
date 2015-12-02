@@ -11,3 +11,4 @@ namespace ManageBundle\SystemManagementBundle\ExaminationRoomInfomationBundle\En
 class ExaminationRoomInfomationRepository extends \Doctrine\ORM\EntityRepository
 {
 }
+

@@ -1,15 +1,26 @@
-{% extends '::base.html.twig' %}
+{% extends 'ManageBundleSystemManagementBundleGradeInformationBundle:GradeInformation:grade.html.twig' %}
 
-{% block body -%}
-    <h1>AcademyInfomation creation</h1>
+{% block title %}添加学院信息—基本信息设置—系统管理{% endblock %}
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
+{% block right -%}
+    <h1>
+        添加学院
         <a href="{{ path('academyinfomation') }}">
-            Back to the list
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
+            {% endimage %}
+            <span>返回学院信息列表</span>
         </a>
-    </li>
-</ul>
+    </h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.academyID, {'attr': {'placeholder': '请输入学院代号', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.academyName, {'attr': {'placeholder': '请输入学院名称', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.submit, {'attr': {'class': 'btn' } }) }}
+
+    {{ form_end(form, {'render_rest': true}) }}
+
 {% endblock %}
+
