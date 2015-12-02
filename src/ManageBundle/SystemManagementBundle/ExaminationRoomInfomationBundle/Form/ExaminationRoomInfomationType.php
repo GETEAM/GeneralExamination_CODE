@@ -15,11 +15,11 @@ class ExaminationRoomInfomationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('roomName')
-            ->add('row')
-            ->add('list')
-            ->add('availableMachineNumber')
-            ->add('faultMachine')
+            ->add('roomName', 'text', array('label' => '考场名称'))
+            ->add('row', 'text', array('label' => '机器行数'))
+            ->add('list', 'text', array('label' => '机器列数'))
+            ->add('availableMachineNumber', 'text', array('label' => '可用机器数'))
+            ->add('faultMachine', 'text', array('label' => '故障机器'))
         ;
     }
     

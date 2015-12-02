@@ -40,7 +40,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [AppBundle, ManageBundleSystemManagementBundleGradeInformationBundle]
+    bundles:        [AppBundle, ManageBundleSystemManagementBundleGradeInformationBundle, ManageBundleSystemManagementBundleExaminationRoomInfomationBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
