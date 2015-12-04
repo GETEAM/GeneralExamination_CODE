@@ -1,0 +1,26 @@
+{% extends 'GESystemManageBundle:GradeInformation:grade.html.twig' %}
+
+{% block title %}添加学院信息—基本信息设置—系统管理{% endblock %}
+
+{% block right -%}
+    <h1>
+        添加学院
+        <a href="{{ path('academyinfomation') }}">
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
+            {% endimage %}
+            <span>返回学院信息列表</span>
+        </a>
+    </h1>
+
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.academyID, {'attr': {'placeholder': '请输入学院代号', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.academyName, {'attr': {'placeholder': '请输入学院名称', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.submit, {'attr': {'class': 'btn' } }) }}
+
+    {{ form_end(form, {'render_rest': true}) }}
+
+{% endblock %}
+

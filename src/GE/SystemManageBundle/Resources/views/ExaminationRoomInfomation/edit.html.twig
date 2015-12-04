@@ -1,0 +1,30 @@
+{% extends 'GESystemManageBundle:GradeInformation:grade.html.twig' %}
+
+{% block title %}修改考场信息—基本信息设置—系统管理{% endblock %}
+
+{% block right -%}
+    <h1>
+        查看考场信息
+        <a href="{{ path('examinationroominfomation') }}">
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回考场信息列表" title="返回考场信息列表">
+            {% endimage %}
+            <span>返回考场信息列表</span>
+        </a>
+    </h1>
+
+    {{ form_start(edit_form) }}
+        {{ form_errors(edit_form) }}
+
+        {{ form_row(edit_form.roomName, {'attr': {'placeholder': '请输入考场名称', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.row, {'attr': {'placeholder': '请输入机器行数', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.list, {'attr': {'placeholder': '请输入机器列数', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.submit, {'attr': {'class': 'btn' } }) }}
+
+    {{ form_end(edit_form, {'render_rest': true}) }}
+
+{% endblock %}
+
+

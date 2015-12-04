@@ -1,0 +1,45 @@
+{% extends 'GESystemManageBundle:GradeInformation:grade.html.twig' %}
+
+{% block title %}查看年级信息—基本信息设置—系统管理{% endblock %}
+
+{% block right -%}
+    <h1>
+        添加学院
+        <a href="{{ path('academyinfomation') }}">
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
+            {% endimage %}
+            <span>返回学院信息列表</span>
+        </a>
+    </h1>
+    <div class="common-action">
+        <a href="{{ path('academyinfomation_edit', { 'id': entity.id }) }}" class="btn btn-common-action">
+            {% image '@AppBundle/Resources/public/images/edit.png' %}
+                <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
+            {% endimage %}
+            编辑
+        </a>
+        <a href="{{ path('academyinfomation_delete', { 'id': entity.id }) }}" class="btn btn-common-action">
+            {% image '@AppBundle/Resources/public/images/delete.png' %}
+                <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
+            {% endimage %}
+            删除
+        </a>
+    </div>
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>编号</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>学院代号</th>
+                <td>{{ entity.academyID }}</td>
+            </tr>
+            <tr>
+                <th>学院名称</th>
+                <td>{{ entity.academyName }}</td>
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
