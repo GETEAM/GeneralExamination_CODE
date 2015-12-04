@@ -26,7 +26,7 @@ class GradeInformationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ManageBundle\SystemManagementBundle\GradeInformationBundle\Entity\GradeInformation'
+            'data_class' => 'GE\SystemManageBundle\Entity\GradeInformation'
         ));
     }
 
@@ -35,6 +35,6 @@ class GradeInformationType extends AbstractType
      */
     public function getName()
     {
-        return 'managebundle_systemmanagementbundle_gradeinformationbundle_gradeinformation';
+        return 'systemmanagebundle_gradeinformation';
     }
 }

@@ -29,7 +29,7 @@ class ExaminationRoomInfomationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ManageBundle\SystemManagementBundle\ExaminationRoomInfomationBundle\Entity\ExaminationRoomInfomation'
+            'data_class' => 'GE\SystemManageBundle\Entity\ExaminationRoomInfomation'
         ));
     }
 
@@ -38,6 +38,6 @@ class ExaminationRoomInfomationType extends AbstractType
      */
     public function getName()
     {
-        return 'managebundle_systemmanagementbundle_examinationroominfomationbundle_examinationroominfomation';
+        return 'systemmanagebundle_examinationroominfomation';
     }
 }

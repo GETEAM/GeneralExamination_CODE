@@ -26,7 +26,7 @@ class AcademyInfomationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'ManageBundle\SystemManagementBundle\AcademyBundle\Entity\AcademyInfomation'
+            'data_class' => 'GE\SystemManageBundle\Entity\AcademyInfomation'
         ));
     }
 
@@ -35,6 +35,6 @@ class AcademyInfomationType extends AbstractType
      */
     public function getName()
     {
-        return 'managebundle_systemmanagementbundle_academybundle_academyinfomation';
+        return 'GE_systemmanagebundle_academyinfomation';
     }
 }
