@@ -193,7 +193,7 @@ class GradeInformationController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('gradeinformation_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('gradeinformation'));
         }
 
         return array(
