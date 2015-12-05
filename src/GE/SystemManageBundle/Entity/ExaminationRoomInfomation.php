@@ -29,30 +29,30 @@ class ExaminationRoomInfomation
     private $roomName;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="row", type="string", length=255)
+     * @ORM\Column(name="row", type="integer", length=255)
      */
     private $row;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="list", type="string", length=255)
+     * @ORM\Column(name="col", type="integer", length=255)
      */
-    private $list;
+    private $col;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="AvailableMachineNumber", type="string", length=255)
+     * @ORM\Column(name="AvailableMachineNumber", type="integer", length=255)
      */
     private $availableMachineNumber;
 
     /**
-     * @var string
+     * @var integer
      *
-     * @ORM\Column(name="FaultMachine", type="string", length=255)
+     * @ORM\Column(name="FaultMachine", type="integer", length=255)
      */
     private $faultMachine;
 
