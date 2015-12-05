@@ -169,6 +169,9 @@
 .right .common-table tr {
     border: 1px solid #dedede;
 }
+.right .common-table tr.selected {
+    background-color: #D7FFD7!important;
+}
 .right .common-table tr th, .right .common-table tr td {
     padding: 5px;
 }
