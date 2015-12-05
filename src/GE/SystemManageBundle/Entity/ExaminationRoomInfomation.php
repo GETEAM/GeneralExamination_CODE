@@ -116,27 +116,27 @@ class ExaminationRoomInfomation
     }
 
     /**
-     * Set list
+     * Set col
      *
-     * @param string $list
+     * @param string $col
      *
      * @return ExaminationRoomInfomation
      */
-    public function setList($list)
+    public function setCol($col)
     {
-        $this->list = $list;
+        $this->col = $col;
 
         return $this;
     }
 
     /**
-     * Get list
+     * Get col
      *
      * @return string
      */
-    public function getList()
+    public function getCol()
     {
-        return $this->list;
+        return $this->col;
     }
 
     /**

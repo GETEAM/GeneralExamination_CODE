@@ -39,7 +39,9 @@
         {{ form_row(form.roomName, {'attr': {'placeholder': '请输入考场名称', 'autocomplete': 'off'} }) }}
         <div class="er-rows-cols">
             {{ form_row(form.row, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-rows'} }) }}
-            {{ form_row(form.list, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
+            <span>行</span>
+            {{ form_row(form.col, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
+            <span>列</span>
         </div>
         <div id="table">
             <table>
