@@ -16,7 +16,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts 
-        '@GESystemManageBundle/Resources/public/js/examination-room.js'
+        '@GESystemManageBundle/Resources/public/js/examination-room-new.js'
     %} 
     <script type="text/javascript" src="{{ asset_url }}"></script>   
     {% endjavascripts %}
@@ -43,8 +43,8 @@
             {{ form_row(form.col, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
             <span>列</span>
         </div>
-        <div id="table">
-            <table>
+        <div id="selectedtable">
+            <table id="table">
                 <tr>
                     <td><div class="box"></div></td>
                     <td><div class="box"></div></td>

@@ -14,14 +14,6 @@
             {% endstylesheets %}
         {% endblock %}
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-
-        {% block javascripts %}
-            {% javascripts 
-                '@AppBundle/Resources/public/js/jquery.js'
-            %} 
-            <script type="text/javascript" src="{{ asset_url }}"></script>   
-        {% endjavascripts %}
-{% endblock %}
     </head>
     <body>
         {% block header %}{% endblock %}
@@ -30,6 +22,12 @@
 
         {% block footer %}{% endblock %}
 
-        {% block javascripts %}{% endblock %}
+        {% block javascripts %}
+            {% javascripts 
+                '@AppBundle/Resources/public/js/jquery.js'
+            %} 
+            <script type="text/javascript" src="{{ asset_url }}"></script>
+            {% endjavascripts %}  
+        {% endblock %}
     </body>
 </html>

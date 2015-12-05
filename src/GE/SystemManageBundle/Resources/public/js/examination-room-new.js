@@ -2,11 +2,11 @@ $(function(){
 	$('.box').mouseover(function(event){
 		//获取到行
 		var rows = $(this).parent().parent().prevAll().length+1;
-		$('#er-rows').val(rows);
+		$('.er-rows').val(rows);
 		
 		//获取到列
 		var cols = $(this).parent().prevAll().length+1;
-		$('#er-cols').val(cols);
+		$('.er-cols').val(cols);
 
 		//改变颜色
 		$(this).addClass('color');
@@ -28,10 +28,10 @@ $(function(){
 		$('#table').hide();
 	});
 	//输入时表格显示
-	$('#er-rows').focus(function(){
+	$('.er-rows').focus(function(){
 		$('#table').show();
 	});
-	$('#er-cols').focus(function(){
+	$('.er-cols').focus(function(){
 		$('#table').show();
 	})
 });
