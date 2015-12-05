@@ -13,6 +13,10 @@ $(function(){
 		$(this).parent().parent().next().prevAll().each(function(){
 			$(this).find('td:nth-child('+(cols)+')').next().prevAll().addClass('color');
 		});	
+
+		//计算总机器数
+		var totalMachine=rows * cols;
+		$('.tatal-machine').val(totalMachine);
 	});
 
 	$('.box').mouseout(function(event){

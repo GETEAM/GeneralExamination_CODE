@@ -19,7 +19,7 @@
 	width: 20px;
 }
 #selectedtable{
-	margin: 50px;
+	margin-left: 120px;
 }
 #table{
 	border: 1px solid #333;
@@ -29,6 +29,7 @@
 	width: 15px;
 	height: 15px;
 	border: 1px solid #333;
+	margin: 2px;
 }
 .color{
 	background-color: #FFD39B;
