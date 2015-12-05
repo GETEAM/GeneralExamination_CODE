@@ -13,6 +13,15 @@
     
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@GESystemManageBundle/Resources/public/js/examination-room.js'
+    %} 
+    <script type="text/javascript" src="{{ asset_url }}"></script>   
+    {% endjavascripts %}
+{% endblock %}
+
 {% block right -%}
     <h1>
         添加考场
@@ -33,6 +42,130 @@
             <span>行</span>
             {{ form_row(form.col, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
             <span>列</span>
+        </div>
+        <div id="table">
+            <table>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+                <tr>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                    <td><div class="box"></div></td>
+                </tr>
+            </table>
         </div>
         {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off'} }) }}
         {{ form_row(form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off'} }) }}
