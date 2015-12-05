@@ -159,26 +159,26 @@
 .right h1 + table {
     margin-top: 40px;
 }
-.right table {
+.right .common-table {
     width: 100%;
     margin: 0 auto;
     text-align: center;
     border: 1px solid #dedede;
     border-collapse: collapse;
 }
-.right table tr {
+.right .common-table tr {
     border: 1px solid #dedede;
 }
-.right table tr th, .right table tr td {
+.right .common-table tr th, .right .common-table tr td {
     padding: 5px;
 }
-.right table thead tr {
+.right .common-table thead tr {
     background-color: #999;
 }
-.right table tbody tr:nth-child(2n) {
+.right .common-table tbody tr:nth-child(2n) {
     background-color: #f8f8f8;
 }
-.right table tr td {
+.right .common-table tr td {
     border: 1px solid #dedede;
 }
 
