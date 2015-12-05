@@ -16,8 +16,8 @@ class ExaminationRoomInfomationType extends AbstractType
     {
         $builder
             ->add('roomName', 'text', array('label' => '考场名称'))
-            ->add('row', 'number', array('label' => '机器行数'))
-            ->add('list', 'number', array('label' => '机器列数'))
+            ->add('row', 'number', array('label' => '机器行列数'))
+            ->add('list', 'number', array('label' => ' x '))
             ->add('availableMachineNumber', 'text', array('label' => '可用机器数'))
             ->add('faultMachine', 'text', array('label' => '故障机器'))
         ;

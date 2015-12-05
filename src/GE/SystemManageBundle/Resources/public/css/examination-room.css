@@ -1,3 +1,11 @@
-.er-rows {
-	width: 
+.er-rows-cols {
+	overflow: hidden;
 }
+.er-rows-cols div {
+	width: auto;
+	display: inline-block;
+	float: left;
+}
+.er-rows-cols input.er-rows, .er-rows-cols input.er-cols {
+	width: 30px;
+} 
