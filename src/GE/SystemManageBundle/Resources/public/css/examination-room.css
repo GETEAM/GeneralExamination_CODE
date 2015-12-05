@@ -1,11 +1,20 @@
 .er-rows-cols {
 	overflow: hidden;
 }
-.er-rows-cols div {
+.er-rows-cols > div, .er-rows-cols > span {
 	width: auto;
 	display: inline-block;
 	float: left;
 }
+.er-rows-cols > span {
+	vertical-align: middle;
+	line-height: 31px;
+	font-size: 12px;
+}
 .er-rows-cols input.er-rows, .er-rows-cols input.er-cols {
-	width: 30px;
+	width: 40px;
+	margin-right: 5px;
 } 
+.er-rows-cols label[for='systemmanagebundle_examinationroominfomation_col'] {
+	width: 20px;
+}
