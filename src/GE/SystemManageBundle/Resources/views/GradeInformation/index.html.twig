@@ -32,7 +32,7 @@
         <tbody>
         {% for grade in grades %}
             <tr>
-                <td><input type="checkbox" name="grades" /><a href="{{ path('gradeinformation_show', { 'id': grade.id }) }}">{{ grade.id }}</a></td>
+                <td><input type="checkbox" name="grades" hidden /><a href="{{ path('gradeinformation_show', { 'id': grade.id }) }}">{{ grade.id }}</a></td>
                 <td>{{ grade.grade }}</td>
                 <td>{{ grade.description }}</td>
                 <td>
@@ -59,7 +59,7 @@
 {% endblock %}
 
 {% block javascripts %}
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.2.6/jquery.min.js" type="text/javascript"></script>
+    {{ parent() }}
     {% javascripts '@GESystemManageBundle/Resources/public/js/grade_index.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
