@@ -1,0 +1,218 @@
+/*各个功能模块样式*/
+.function-module {
+    margin-top: 20px;
+}
+.function-module:first-child {
+    margin-top: 50px;
+}
+
+/*块级li标签的样式*/
+.li-block {
+    margin: 0 150px 20px;
+    padding: 10px 30px;
+    overflow: hidden;
+    border-radius: 10px;
+    transition: background-color 0.6s;
+}
+.li-block:hover {
+    background-color: #dedede;
+}
+.li-block h2 {
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 1;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.li-block h2 a.btn {
+    float: right;
+    line-height: 24px;
+    padding: 0 10px;
+}
+.li-block img {
+    float: left;
+    margin-right: 20px;
+    border-radius: 15px;
+}
+
+/*无权限的.li-block的样式*/
+.li-block.no-role {
+    position: relative;
+
+}
+.li-block.no-role img, .li-block.no-role h2, .li-block.no-role p {
+    opacity: 0.15;
+}
+.li-block.no-role:hover {
+    background-color: inherit;
+}
+.li-block.no-role:hover:after {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    display: table-cell;
+    content: "对不起，您没有相应的权限";
+    text-align: center;
+    line-height: 120px;
+    font-size: 16px;
+    color: #fa0;
+    background-color: rgba(222, 222, 222, .4);
+}
+
+/*管理界面侧边栏导航样式*/
+.manage {
+    margin-top: 50px;
+    overflow: hidden;
+}
+.manage .left {
+    float: left;
+    width: 200px;
+}
+.manage .left-title {
+    text-align: center;
+    background-color: #f70;
+    line-height: 3;
+    color: #fff;
+    font-size: 18px;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px; 
+}
+.manage-nav {
+    background-color: #f8f8f8;
+    text-align: center;
+    border: 1px solid #eee;
+    padding: 10px;
+}
+.manage-nav label {
+    display: block;
+    line-height: 2.5;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+    margin-top: 15px;
+    color: #333;
+}
+.manage-nav label:first-child {
+    margin-top: 0;
+}
+.manage-nav ul {
+    padding-top: 5px;
+    border-bottom: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-left: 1px solid #ddd;;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+.manage-nav ul li {
+    margin-bottom: 5px;
+}
+.manage-nav ul li a {
+    display: inline-block;
+    width: 100%;
+    color: #333;
+    text-align: center;
+    line-height: 2;
+    /*border-radius: 3px;*/
+}
+.manage-nav ul li a:hover,.manage-nav ul li a.selected {
+    background-color: #e9e9e9;
+}
+
+/*管理端右侧样式*/
+.manage .right {
+    padding-left: 40px;
+    overflow: hidden;
+}
+
+.right h1 {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-weight: normal;
+}
+.right h1 a {
+    padding-left: 5px;
+    font-size: 14px;
+    color: inherit;
+}
+.right h1 a:hover {
+    color: #f70;
+}
+.right h1 a img {
+    vertical-align: baseline;
+}
+.right .common-action {
+    line-height: 20px;
+    margin-bottom: 10px;
+}
+.right .common-action a {
+    display: inline-block;
+    padding: 5px 8px;
+}
+.right .common-action a img {
+    vertical-align: middle;
+}
+
+/*右侧表格样式*/
+.right h1 + table {
+    margin-top: 40px;
+}
+.right table {
+    width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #dedede;
+    border-collapse: collapse;
+}
+.right table tr {
+    border: 1px solid #dedede;
+}
+.right table tr th, .right table tr td {
+    padding: 5px;
+}
+.right table thead tr {
+    background-color: #999;
+}
+.right table tbody tr:nth-child(2n) {
+    background-color: #f8f8f8;
+}
+.right table tr td {
+    border: 1px solid #dedede;
+}
+
+/*右侧表单样式*/
+.right form {
+    width: 80%;
+    margin: 40px auto 0;
+    border: 1px solid #eee;
+    padding: 50px 80px;
+    font-size: 16px;
+}
+.right form > div {
+    margin-bottom: 15px;
+}
+.right form > div:last-of-type {
+    padding-left: 120px;
+}
+.right form label {
+    display: inline-block;
+    width: 100px;
+    text-align: right;
+    line-height: 20px;
+    padding-right: 20px;
+}
+.right form input {
+    width: 300px;
+    padding: 5px;
+    font-size: 14px;
+}
+.right form .btn {
+    background-color: #f70;
+    color: #fff;
+    padding: 10px 15px;
+}
+.right form .btn:hover {
+    background-color: #f80;
+}
