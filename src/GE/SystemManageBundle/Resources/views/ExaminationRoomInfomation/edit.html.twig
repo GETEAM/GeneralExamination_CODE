@@ -1,4 +1,4 @@
-{% extends 'GESystemManageBundle:GradeInformation:grade.html.twig' %}
+{% extends 'GESystemManageBundle::system-manage.html.twig' %}
 
 {% block title %}修改考场信息—基本信息设置—系统管理{% endblock %}
 
@@ -17,8 +17,8 @@
         {{ form_errors(edit_form) }}
 
         {{ form_row(edit_form.roomName, {'attr': {'placeholder': '请输入考场名称', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.row, {'attr': {'placeholder': '请输入机器行数', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.list, {'attr': {'placeholder': '请输入机器列数', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.row, {'attr': {'placeholder': '请输入机器行数', 'autocomplete': 'off', 'class': 'er_rows'} }) }}
+        {{ form_row(edit_form.list, {'attr': {'placeholder': '请输入机器列数', 'autocomplete': 'off', 'class': 'er_cols'} }) }}
         {{ form_row(edit_form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off'} }) }}
         {{ form_row(edit_form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off'} }) }}
         {{ form_row(edit_form.submit, {'attr': {'class': 'btn' } }) }}
