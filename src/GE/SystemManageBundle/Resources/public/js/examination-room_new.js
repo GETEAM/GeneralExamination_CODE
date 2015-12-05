@@ -16,7 +16,7 @@ $(function(){
 
 		//计算总机器数
 		var totalMachine=rows * cols;
-		$('.tatal-machine').val(totalMachine);
+		$('.available-machine').val(totalMachine);
 	});
 
 	$('.box').mouseout(function(event){
@@ -38,4 +38,13 @@ $(function(){
 	$('.er-cols').focus(function(){
 		$('#table').show();
 	})
+
+	//故障机器提交
+	//获取机器行数、列数
+	var $er_rows = $('.er-rows');
+	var $er_cols = $('.er-cols');
+	var $fault_machine = $('.fault-machine');;
+	$fault_machine.focus(function() {
+
+	});
 });
