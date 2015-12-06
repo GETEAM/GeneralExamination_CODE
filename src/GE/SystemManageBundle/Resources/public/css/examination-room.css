@@ -21,6 +21,7 @@
 #selectedtable{
 	margin-left: 120px;
 }
+
 #table{
 	border: 1px solid #333;
 	text-align: center;
@@ -33,4 +34,19 @@
 }
 .color{
 	background-color: #d7ffd7;
+}
+.fault-machine-table {
+	display: none;
+	margin-left: 120px;
+	font-size: 12px;
+	overflow: auto;
+	max-width: 600px;
+}
+.fault-machine-table table {
+	width: auto;
+}
+.fault-machine-table table td{
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: center;
 }

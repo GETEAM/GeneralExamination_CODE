@@ -47,6 +47,11 @@
         </div>
         {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off', 'class': 'available-machine'} }) }}
         {{ form_row(form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off', 'class': 'fault-machine'} }) }}
+
+        <div class="fault-machine-table">
+            <table>
+            </table>
+        </div>
         {{ form_row(form.submit, {'attr': {'class': 'btn' } }) }}
 
     {{ form_end(form, {'render_rest': true}) }}
