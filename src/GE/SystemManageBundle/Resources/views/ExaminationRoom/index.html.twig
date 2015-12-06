@@ -1,17 +1,17 @@
 {% extends 'GESystemManageBundle::system-manage.html.twig' %}
 
-{% block title %}年级信息管理—系统管理{% endblock %}
+{% block title %}考场信息管理—系统管理{% endblock %}
 
-{% block right %}
+{% block right -%}
     <h1>
-        年级信息列表
+        考场信息列表
     </h1>
     <div class="common-action">
-        <a href="{{ path('gradeinformation_new') }}" class="btn btn-common-action">
+        <a href="{{ path('examinationroom_new') }}" class="btn btn-common-action">
             {% image '@AppBundle/Resources/public/images/add.png' %}
-                <img src="{{ asset_url }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
+                <img src="{{ asset_url }}" width="20" height="20" alt="添加考场信息" title="添加考场信息">
             {% endimage %}
-            添加年级信息
+            添加考场信息
         </a>
         <a href="#" class="btn btn-common-action">
             {% image '@AppBundle/Resources/public/images/deletes.png' %}
@@ -20,41 +20,47 @@
             批量删除
         </a>
     </div>
-    <table class="common-table grades">
+    <table class="common-table examination-romms">
         <thead>
             <tr>
                 <th>编号</th>
-                <th>年级代号</th>
-                <th>描述</th>
+                <th>考场名</th>
+                <th>机器行数</th>
+                <th>机器列数</th>
+                <th>可用机器数</th>
+                <th>故障机器</th>
                 <th>操作</th>
             </tr>
         </thead>
         <tbody>
-        {% if grades|length == 0 %}
+        {% if entities|length == 0 %}
             <tr>
-                <td colspan=4>尚不存在年级信息，请您添加！</td>
+                <td colspan=7>尚不存在考场信息，请您添加！</td>
             <tr>
         {% else %}
-            {% for grade in grades %}
+            {% for entity in entities %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="grades" hidden />
-                        <a href="{{ path('gradeinformation_show', { 'id': grade.id }) }}">{{ grade.id }}</a>
+                        <input type="checkbox" name="examination-romms" hidden />
+                        <a href="{{ path('examinationroom_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
                     </td>
-                    <td>{{ grade.grade }}</td>
-                    <td>{{ grade.description }}</td>
+                    <td>{{ entity.roomName }}</td>
+                    <td>{{ entity.row }}</td>
+                    <td>{{ entity.col }}</td>
+                    <td>{{ entity.availableMachineNumber }}</td>
+                    <td>{{ entity.faultMachine }}</td>
                     <td>
-                        <a href="{{ path('gradeinformation_show', { 'id': grade.id }) }}">
+                        <a href="{{ path('examinationroom_show', { 'id': entity.id }) }}">
                             {% image '@AppBundle/Resources/public/images/view.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="查看" title="查看">
                             {% endimage %}
                         </a>
-                        <a href="{{ path('gradeinformation_edit', { 'id': grade.id }) }}">
+                        <a href="{{ path('examinationroom_edit', { 'id': entity.id }) }}">
                             {% image '@AppBundle/Resources/public/images/edit.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
                             {% endimage %}
                         </a>
-                        <a href="{{ path('gradeinformation_delete', { 'id': grade.id }) }}">
+                        <a href="{{ path('examinationroom_delete', { 'id': entity.id }) }}">
                             {% image '@AppBundle/Resources/public/images/delete.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
                             {% endimage %}
@@ -71,7 +77,7 @@
     {{ parent() }}
     {% javascripts 
         '@GESystemManageBundle/Resources/public/js/common.js'        
-        '@GESystemManageBundle/Resources/public/js/grade_index.js'
+        '@GESystemManageBundle/Resources/public/js/examination-room_index.js'
          %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}

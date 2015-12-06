@@ -5,12 +5,12 @@ namespace GE\SystemManageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * AcademyInfomation
+ * Academy
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="GE\SystemManageBundle\Entity\AcademyInfomationRepository")
+ * @ORM\Entity(repositoryClass="GE\SystemManageBundle\Entity\AcademyRepository")
  */
-class AcademyInfomation
+class Academy
 {
     /**
      * @var integer
@@ -51,7 +51,7 @@ class AcademyInfomation
      *
      * @param string $academyID
      *
-     * @return AcademyInfomation
+     * @return Academy
      */
     public function setAcademyID($academyID)
     {
@@ -75,7 +75,7 @@ class AcademyInfomation
      *
      * @param string $academyName
      *
-     * @return AcademyInfomation
+     * @return Academy
      */
     public function setAcademyName($academyName)
     {

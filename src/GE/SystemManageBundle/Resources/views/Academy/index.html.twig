@@ -7,7 +7,7 @@
         学院信息列表
     </h1>
     <div class="common-action">
-        <a href="{{ path('academyinfomation_new') }}" class="btn btn-common-action">
+        <a href="{{ path('academy_new') }}" class="btn btn-common-action">
             {% image '@AppBundle/Resources/public/images/add.png' %}
                 <img src="{{ asset_url }}" width="20" height="20" alt="添加学院信息" title="添加学院信息">
             {% endimage %}
@@ -39,22 +39,22 @@
                 <tr>
                     <td>
                         <input type="checkbox" name="academies" hidden />
-                        <a href="{{ path('academyinfomation_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
+                        <a href="{{ path('academy_show', { 'id': entity.id }) }}">{{ entity.id }}</a>
                     </td>
                     <td>{{ entity.academyID }}</td>
                     <td>{{ entity.academyName }}</td>
                     <td>
-                        <a href="{{ path('academyinfomation_show', { 'id': entity.id }) }}">
+                        <a href="{{ path('academy_show', { 'id': entity.id }) }}">
                             {% image '@AppBundle/Resources/public/images/view.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="查看" title="查看">
                             {% endimage %}
                         </a>
-                        <a href="{{ path('academyinfomation_edit', { 'id': entity.id }) }}">
+                        <a href="{{ path('academy_edit', { 'id': entity.id }) }}">
                             {% image '@AppBundle/Resources/public/images/edit.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
                             {% endimage %}
                         </a>
-                        <a href="{{ path('academyinfomation_delete', { 'id': entity.id }) }}">
+                        <a href="{{ path('academy_delete', { 'id': entity.id }) }}">
                             {% image '@AppBundle/Resources/public/images/delete.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
                             {% endimage %}
