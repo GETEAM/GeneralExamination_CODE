@@ -2,6 +2,7 @@
 
 namespace GE\SystemManageBundle\Entity;
 
+use Doctrine\ORM\EntityRepository;
 /**
  * AcademyRepository
  *
@@ -10,4 +11,10 @@ namespace GE\SystemManageBundle\Entity;
  */
 class AcademyRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function delete($id)
+    {
+        $academy = $this-> find($id);  
+        $this->getEntityManager()->remove($academy);
+        $this->getEntityManager()->flush();
+    }	
 }

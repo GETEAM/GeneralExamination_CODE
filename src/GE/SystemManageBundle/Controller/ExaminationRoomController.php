@@ -76,7 +76,7 @@ class ExaminationRoomController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => '创建'));
 
         return $form;
     }
@@ -165,7 +165,7 @@ class ExaminationRoomController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => '更新'));
 
         return $form;
     }
@@ -205,24 +205,13 @@ class ExaminationRoomController extends Controller
     /**
      * Deletes a ExaminationRoom entity.
      *
-     * @Route("/{id}", name="examinationroom_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="examinationroom_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if ($id) {
+           $examid = $this->getDoctrine()->getRepository('GESystemManageBundle:ExaminationRoom')->delete($id);
         }
 
         return $this->redirect($this->generateUrl('examinationroom'));
@@ -240,7 +229,7 @@ class ExaminationRoomController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('examinationroom_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => '删除'))
             ->getForm()
         ;
     }

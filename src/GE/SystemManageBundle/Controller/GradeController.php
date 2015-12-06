@@ -135,17 +135,17 @@ class GradeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:Grade')->find($id);
+        $grade = $em->getRepository('GESystemManageBundle:Grade')->find($id);
 
-        if (!$entity) {
+        if (!$grade) {
             throw $this->createNotFoundException('Unable to find Grade entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($grade);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $grade,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -180,14 +180,14 @@ class GradeController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:Grade')->find($id);
+        $grade = $em->getRepository('GESystemManageBundle:Grade')->find($id);
 
-        if (!$entity) {
+        if (!$grade) {
             throw $this->createNotFoundException('Unable to find Grade entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($grade);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -197,7 +197,7 @@ class GradeController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $grade,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -208,13 +208,10 @@ class GradeController extends Controller
      * @Route("/delete/{id}", name="grade_delete")
      * @Method("GET")
      */
-    public function deleteAction(Request $request, $id)
+   public function deleteAction(Request $request, $id)
     {
         if($id) {
-            $em = $this->getDoctrine()->getManager();
-            $grade = $em->getRepository('GESystemManageBundle:Grade')->find($id);
-            $em->remove($grade);
-            $em->flush();
+            $greadid = $this->getDoctrine()->getRepository('GESystemManageBundle:Grade')->delete($id);
         }
         return $this->redirect($this->generateUrl('grade'));
     }

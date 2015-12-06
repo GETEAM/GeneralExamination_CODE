@@ -76,7 +76,7 @@ class AcademyController extends Controller
             'method' => 'POST',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Create'));
+        $form->add('submit', 'submit', array('label' => '创建'));
 
         return $form;
     }
@@ -165,7 +165,7 @@ class AcademyController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', 'submit', array('label' => '更新'));
 
         return $form;
     }
@@ -205,26 +205,14 @@ class AcademyController extends Controller
     /**
      * Deletes a Academy entity.
      *
-     * @Route("/{id}", name="academy_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="academy_delete")
+     * @Method("GET")
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('GESystemManageBundle:Academy')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Academy entity.');
-            }
-
-            $em->remove($entity);
-            $em->flush();
+        if ($id) {
+            $academyid = $this->getDoctrine()->getRepository('GESystemManageBundle:Academy')->delete($id);
         }
-
         return $this->redirect($this->generateUrl('academy'));
     }
 
@@ -240,7 +228,7 @@ class AcademyController extends Controller
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('academy_delete', array('id' => $id)))
             ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
+            ->add('submit', 'submit', array('label' => '删除'))
             ->getForm()
         ;
     }

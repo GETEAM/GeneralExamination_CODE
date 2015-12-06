@@ -1,6 +1,8 @@
 <?php
 
 namespace GE\SystemManageBundle\Entity;
+
+use Doctrine\ORM\EntityRepository;
 /**
  * GradeRepository
  *
@@ -9,5 +11,11 @@ namespace GE\SystemManageBundle\Entity;
  */
 class GradeRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function delete($id)
+    {
+        $grade = $this-> find($id);  
+        $this->getEntityManager()->remove($grade);
+        $this->getEntityManager()->flush();
+    }	
 }
 
