@@ -13,15 +13,18 @@
     
 {% endblock %}
 
+<<<<<<< HEAD
 {% block javascripts %}
     {{ parent() }}
     {% javascripts 
-        '@GESystemManageBundle/Resources/public/js/examination_room_new.js'
+        '@GESystemManageBundle/Resources/public/js/examination-room_new.js'
     %} 
     <script type="text/javascript" src="{{ asset_url }}"></script>   
     {% endjavascripts %}
 {% endblock %}
 
+=======
+>>>>>>> c5e2351979858460450c41575fa83d801c7fcd83
 {% block right -%}
     <h1>
         添加考场
@@ -45,132 +48,28 @@
         </div>
         <div id="selectedtable">
             <table id="table">
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
-                <tr>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                    <td><div class="box"></div></td>
-                </tr>
+                {% for i in 1..10 %}
+                    <tr>
+                        {% for i in 1..10 %}
+                            <td><div class="box"></div></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
             </table>
         </div>
-        {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off', 'class': 'tatal-machine'} }) }}
-        {{ form_row(form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off', 'class': 'available-machine'} }) }}
+        {{ form_row(form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off', 'class': 'fault-machine'} }) }}
         {{ form_row(form.submit, {'attr': {'class': 'btn' } }) }}
 
     {{ form_end(form, {'render_rest': true}) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@GESystemManageBundle/Resources/public/js/examination-room_new.js'
+    %} 
+    <script type="text/javascript" src="{{ asset_url }}"></script>   
+    {% endjavascripts %}
 {% endblock %}
