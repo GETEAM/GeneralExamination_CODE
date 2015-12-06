@@ -18,10 +18,9 @@
 .er-rows-cols label[for='systemmanagebundle_examinationroominfomation_col'] {
 	width: 20px;
 }
-#selectedtable{
+
+#er-rows-cols-table{
 	margin-left: 120px;
-}
-#table{
 	border: 1px solid #333;
 	text-align: center;
 }

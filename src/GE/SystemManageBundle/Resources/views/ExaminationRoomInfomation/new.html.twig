@@ -13,18 +13,6 @@
     
 {% endblock %}
 
-<<<<<<< HEAD
-{% block javascripts %}
-    {{ parent() }}
-    {% javascripts 
-        '@GESystemManageBundle/Resources/public/js/examination-room_new.js'
-    %} 
-    <script type="text/javascript" src="{{ asset_url }}"></script>   
-    {% endjavascripts %}
-{% endblock %}
-
-=======
->>>>>>> c5e2351979858460450c41575fa83d801c7fcd83
 {% block right -%}
     <h1>
         添加考场
@@ -46,8 +34,8 @@
             {{ form_row(form.col, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
             <span>列</span>
         </div>
-        <div id="selectedtable">
-            <table id="table">
+        
+            <table id="er-rows-cols-table">
                 {% for i in 1..10 %}
                     <tr>
                         {% for i in 1..10 %}
@@ -56,7 +44,7 @@
                     </tr>
                 {% endfor %}
             </table>
-        </div>
+        
         {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off', 'class': 'available-machine'} }) }}
         {{ form_row(form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off', 'class': 'fault-machine'} }) }}
         {{ form_row(form.submit, {'attr': {'class': 'btn' } }) }}

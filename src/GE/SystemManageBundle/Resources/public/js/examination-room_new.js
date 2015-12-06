@@ -15,7 +15,7 @@ $(function(){
 		}else if(!$(this).parent().next().is('td')){   //如果是最后一列
 			$(this).parent().parent().next().prevAll().addClass('color');
 		}else if(!$(this).parent().parent().next().is('tr')){   //如果是最后一行
-			$('#table').find('tr').each(function(){
+			$('#er-rows-cols-table').find('tr').each(function(){
 				$(this).find('td:nth-child('+(cols+1)+')').prevAll().addClass('color');
 			})
 		}else{
@@ -38,7 +38,7 @@ $(function(){
 		}else if(!$(this).parent().next().is('td')){
 			$(this).parent().parent().next().prevAll().removeClass('color');
 		}else if(!$(this).parent().parent().next().is('tr')){
-			$('#table').find('tr').each(function(){
+			$('#er-rows-cols-table').find('tr').each(function(){
 				$(this).find('td:nth-child('+(cols+1)+')').prevAll().removeClass('color');
 			})
 		}else{
