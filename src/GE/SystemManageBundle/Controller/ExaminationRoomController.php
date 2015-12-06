@@ -7,21 +7,21 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use GE\SystemManageBundle\Entity\ExaminationRoomInfomation;
-use GE\SystemManageBundle\Form\ExaminationRoomInfomationType;
+use GE\SystemManageBundle\Entity\ExaminationRoom;
+use GE\SystemManageBundle\Form\ExaminationRoomType;
 
 /**
- * ExaminationRoomInfomation controller.
+ * ExaminationRoom controller.
  *
- * @Route("/examinationroominfomation")
+ * @Route("/examinationroom")
  */
-class ExaminationRoomInfomationController extends Controller
+class ExaminationRoomController extends Controller
 {
 
     /**
-     * Lists all ExaminationRoomInfomation entities.
+     * Lists all ExaminationRoom entities.
      *
-     * @Route("/", name="examinationroominfomation")
+     * @Route("/", name="examinationroom")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +29,22 @@ class ExaminationRoomInfomationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('GESystemManageBundle:ExaminationRoomInfomation')->findAll();
+        $entities = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new ExaminationRoomInfomation entity.
+     * Creates a new ExaminationRoom entity.
      *
-     * @Route("/", name="examinationroominfomation_create")
+     * @Route("/", name="examinationroom_create")
      * @Method("POST")
-     * @Template("GESystemManageBundle:ExaminationRoomInfomation:new.html.twig")
+     * @Template("GESystemManageBundle:ExaminationRoom:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new ExaminationRoomInfomation();
+        $entity = new ExaminationRoom();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +53,7 @@ class ExaminationRoomInfomationController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('examinationroominfomation_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('examinationroom_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +63,16 @@ class ExaminationRoomInfomationController extends Controller
     }
 
     /**
-     * Creates a form to create a ExaminationRoomInfomation entity.
+     * Creates a form to create a ExaminationRoom entity.
      *
-     * @param ExaminationRoomInfomation $entity The entity
+     * @param ExaminationRoom $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(ExaminationRoomInfomation $entity)
+    private function createCreateForm(ExaminationRoom $entity)
     {
-        $form = $this->createForm(new ExaminationRoomInfomationType(), $entity, array(
-            'action' => $this->generateUrl('examinationroominfomation_create'),
+        $form = $this->createForm(new ExaminationRoomType(), $entity, array(
+            'action' => $this->generateUrl('examinationroom_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +82,15 @@ class ExaminationRoomInfomationController extends Controller
     }
 
     /**
-     * Displays a form to create a new ExaminationRoomInfomation entity.
+     * Displays a form to create a new ExaminationRoom entity.
      *
-     * @Route("/new", name="examinationroominfomation_new")
+     * @Route("/new", name="examinationroom_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new ExaminationRoomInfomation();
+        $entity = new ExaminationRoom();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +100,9 @@ class ExaminationRoomInfomationController extends Controller
     }
 
     /**
-     * Finds and displays a ExaminationRoomInfomation entity.
+     * Finds and displays a ExaminationRoom entity.
      *
-     * @Route("/{id}", name="examinationroominfomation_show")
+     * @Route("/{id}", name="examinationroom_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +110,10 @@ class ExaminationRoomInfomationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoomInfomation')->find($id);
+        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ExaminationRoomInfomation entity.');
+            throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +125,9 @@ class ExaminationRoomInfomationController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing ExaminationRoomInfomation entity.
+     * Displays a form to edit an existing ExaminationRoom entity.
      *
-     * @Route("/{id}/edit", name="examinationroominfomation_edit")
+     * @Route("/{id}/edit", name="examinationroom_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +135,10 @@ class ExaminationRoomInfomationController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoomInfomation')->find($id);
+        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ExaminationRoomInfomation entity.');
+            throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +152,16 @@ class ExaminationRoomInfomationController extends Controller
     }
 
     /**
-    * Creates a form to edit a ExaminationRoomInfomation entity.
+    * Creates a form to edit a ExaminationRoom entity.
     *
-    * @param ExaminationRoomInfomation $entity The entity
+    * @param ExaminationRoom $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(ExaminationRoomInfomation $entity)
+    private function createEditForm(ExaminationRoom $entity)
     {
-        $form = $this->createForm(new ExaminationRoomInfomationType(), $entity, array(
-            'action' => $this->generateUrl('examinationroominfomation_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ExaminationRoomType(), $entity, array(
+            'action' => $this->generateUrl('examinationroom_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +170,20 @@ class ExaminationRoomInfomationController extends Controller
         return $form;
     }
     /**
-     * Edits an existing ExaminationRoomInfomation entity.
+     * Edits an existing ExaminationRoom entity.
      *
-     * @Route("/{id}", name="examinationroominfomation_update")
+     * @Route("/{id}", name="examinationroom_update")
      * @Method("PUT")
-     * @Template("GESystemManageBundle:ExaminationRoomInfomation:edit.html.twig")
+     * @Template("GESystemManageBundle:ExaminationRoom:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoomInfomation')->find($id);
+        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find ExaminationRoomInfomation entity.');
+            throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +193,7 @@ class ExaminationRoomInfomationController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('examinationroominfomation_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('examinationroom_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +203,9 @@ class ExaminationRoomInfomationController extends Controller
         );
     }
     /**
-     * Deletes a ExaminationRoomInfomation entity.
+     * Deletes a ExaminationRoom entity.
      *
-     * @Route("/{id}", name="examinationroominfomation_delete")
+     * @Route("/{id}", name="examinationroom_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +215,21 @@ class ExaminationRoomInfomationController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('GESystemManageBundle:ExaminationRoomInfomation')->find($id);
+            $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find ExaminationRoomInfomation entity.');
+                throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('examinationroominfomation'));
+        return $this->redirect($this->generateUrl('examinationroom'));
     }
 
     /**
-     * Creates a form to delete a ExaminationRoomInfomation entity by id.
+     * Creates a form to delete a ExaminationRoom entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +238,7 @@ class ExaminationRoomInfomationController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('examinationroominfomation_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('examinationroom_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
