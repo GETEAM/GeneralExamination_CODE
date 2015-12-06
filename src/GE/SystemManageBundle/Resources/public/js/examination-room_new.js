@@ -10,23 +10,44 @@ $(function(){
 
 		//改变颜色
 		$(this).addClass('color');
-		$(this).parent().parent().next().prevAll().each(function(){
+		if(!$(this).parent().next().is('td') && !$(this).parent().parent().next().is('tr')){
+			$('.box').addClass('color');
+		}else if(!$(this).parent().next().is('td')){   //如果是最后一列
+			$(this).parent().parent().next().prevAll().addClass('color');
+		}else if(!$(this).parent().parent().next().is('tr')){   //如果是最后一行
+			$('#table').find('tr').each(function(){
+				$(this).find('td:nth-child('+(cols+1)+')').prevAll().addClass('color');
+			})
+		}else{
+			$(this).parent().parent().next().prevAll().each(function(){
 			$(this).find('td:nth-child('+(cols)+')').next().prevAll().addClass('color');
-		});	
+			});
+		}
 
 		//计算总机器数
 		var totalMachine=rows * cols;
-		$('.available-machine').val(totalMachine);
+		$('.tatal-machine').val(totalMachine);
 	});
 
 	$('.box').mouseout(function(event){
 		var cols = $(this).parent().prevAll().length+1;
 		//删除颜色
 		$(this).removeClass('color');
-		$(this).parent().parent().next().prevAll().each(function(){
+		if(!$(this).parent().next().is('td') && !$(this).parent().parent().next().is('tr')){
+			$('.box').removeClass('color');
+		}else if(!$(this).parent().next().is('td')){
+			$(this).parent().parent().next().prevAll().removeClass('color');
+		}else if(!$(this).parent().parent().next().is('tr')){
+			$('#table').find('tr').each(function(){
+				$(this).find('td:nth-child('+(cols+1)+')').prevAll().removeClass('color');
+			})
+		}else{
+			$(this).parent().parent().next().prevAll().each(function(){
 			$(this).find('td:nth-child('+(cols)+')').next().prevAll().removeClass('color');
 		});
+		}	
 	});
+
 	//点击确定表格消失
 	$('.box').click(function(){
 		$('#table').hide();
