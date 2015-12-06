@@ -5,12 +5,12 @@ namespace GE\SystemManageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * GradeInformation
+ * Grade
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="GE\SystemManageBundle\Entity\GradeInformationRepository")
+ * @ORM\Entity(repositoryClass="GE\SystemManageBundle\Entity\GradeRepository")
  */
-class GradeInformation
+class Grade
 {
     /**
      * @var integer
@@ -51,7 +51,7 @@ class GradeInformation
      *
      * @param string $grade
      *
-     * @return GradeInformation
+     * @return Grade
      */
     public function setGrade($grade)
     {
@@ -75,7 +75,7 @@ class GradeInformation
      *
      * @param string $description
      *
-     * @return GradeInformation
+     * @return Grade
      */
     public function setDescription($description)
     {

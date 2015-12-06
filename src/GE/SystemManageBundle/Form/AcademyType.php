@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class GradeInformationType extends AbstractType
+class AcademyType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,8 +15,8 @@ class GradeInformationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('grade', 'text', array('label' => '年级代号'))
-            ->add('description', 'text', array('label' => '描述'))
+            ->add('academyID', 'text', array('label' => '学院代号'))
+            ->add('academyName', 'text', array('label' => '学院名称'))
         ;
     }
     
@@ -26,7 +26,7 @@ class GradeInformationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GE\SystemManageBundle\Entity\GradeInformation'
+            'data_class' => 'GE\SystemManageBundle\Entity\Academy'
         ));
     }
 
@@ -35,6 +35,6 @@ class GradeInformationType extends AbstractType
      */
     public function getName()
     {
-        return 'systemmanagebundle_gradeinformation';
+        return 'GE_systemmanagebundle_academy';
     }
 }

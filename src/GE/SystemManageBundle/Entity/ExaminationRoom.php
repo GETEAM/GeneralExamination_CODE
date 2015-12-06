@@ -5,12 +5,12 @@ namespace GE\SystemManageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * ExaminationRoomInfomation
+ * ExaminationRoom
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="GE\SystemManageBundle\Entity\ExaminationRoomInfomationRepository")
+ * @ORM\Entity(repositoryClass="GE\SystemManageBundle\Entity\ExaminationRoomRepository")
  */
-class ExaminationRoomInfomation
+class ExaminationRoom
 {
     /**
      * @var integer
@@ -72,7 +72,7 @@ class ExaminationRoomInfomation
      *
      * @param string $roomName
      *
-     * @return ExaminationRoomInfomation
+     * @return ExaminationRoom
      */
     public function setRoomName($roomName)
     {
@@ -96,7 +96,7 @@ class ExaminationRoomInfomation
      *
      * @param string $row
      *
-     * @return ExaminationRoomInfomation
+     * @return ExaminationRoom
      */
     public function setRow($row)
     {
@@ -120,7 +120,7 @@ class ExaminationRoomInfomation
      *
      * @param string $col
      *
-     * @return ExaminationRoomInfomation
+     * @return ExaminationRoom
      */
     public function setCol($col)
     {
@@ -144,7 +144,7 @@ class ExaminationRoomInfomation
      *
      * @param string $availableMachineNumber
      *
-     * @return ExaminationRoomInfomation
+     * @return ExaminationRoom
      */
     public function setAvailableMachineNumber($availableMachineNumber)
     {
@@ -168,7 +168,7 @@ class ExaminationRoomInfomation
      *
      * @param string $faultMachine
      *
-     * @return ExaminationRoomInfomation
+     * @return ExaminationRoom
      */
     public function setFaultMachine($faultMachine)
     {

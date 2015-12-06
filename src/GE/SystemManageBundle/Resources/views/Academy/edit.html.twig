@@ -4,21 +4,20 @@
 
 {% block right -%}
     <h1>
-        修改年级信息
-        <a href="{{ path('gradeinformation') }}">
+        添加学院
+        <a href="{{ path('academy') }}">
             {% image '@AppBundle/Resources/public/images/back.png' %}
-                <img src="{{ asset_url }}" width="12" height="12" alt="返回年级信息列表" title="返回年级信息列表">
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
             {% endimage %}
-            <span>返回年级信息列表</span>
+            <span>返回学院信息列表</span>
         </a>
     </h1>
 
     {{ form_start(edit_form) }}
-    
         {{ form_errors(edit_form) }}
 
-        {{ form_row(edit_form.grade, {'attr': {'placeholder': '请输入年级代号', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.description, {'attr': {'placeholder': '请输入年级描述信息', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.academyID, {'attr': {'placeholder': '请输入学院代号', 'autocomplete': 'off'} }) }}
+        {{ form_row(edit_form.academyName, {'attr': {'placeholder': '请输入学院名称', 'autocomplete': 'off'} }) }}
         {{ form_row(edit_form.submit, {'attr': {'class': 'btn' } }) }}
 
     {{ form_end(edit_form, {'render_rest': true}) }}

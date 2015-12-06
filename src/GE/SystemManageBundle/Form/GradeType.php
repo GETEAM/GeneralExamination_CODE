@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ExaminationRoomInfomationType extends AbstractType
+class GradeType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -15,11 +15,8 @@ class ExaminationRoomInfomationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('roomName', 'text', array('label' => '考场名称'))
-            ->add('row', 'number', array('label' => '机器行列数'))
-            ->add('col', 'number', array('label' => ' x '))
-            ->add('availableMachineNumber', 'text', array('label' => '可用机器数'))
-            ->add('faultMachine', 'text', array('label' => '故障机器'))
+            ->add('grade', 'text', array('label' => '年级代号'))
+            ->add('description', 'text', array('label' => '描述'))
         ;
     }
     
@@ -29,7 +26,7 @@ class ExaminationRoomInfomationType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GE\SystemManageBundle\Entity\ExaminationRoomInfomation'
+            'data_class' => 'GE\SystemManageBundle\Entity\Grade'
         ));
     }
 
@@ -38,6 +35,6 @@ class ExaminationRoomInfomationType extends AbstractType
      */
     public function getName()
     {
-        return 'systemmanagebundle_examinationroominfomation';
+        return 'systemmanagebundle_grade';
     }
 }
