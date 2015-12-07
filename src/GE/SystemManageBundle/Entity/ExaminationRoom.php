@@ -50,9 +50,9 @@ class ExaminationRoom
     private $availableMachineNumber;
 
     /**
-     * @var integer
+     * @var string
      *
-     * @ORM\Column(name="FaultMachine", type="integer", length=255)
+     * @ORM\Column(name="FaultMachine", type="string", length=255)
      */
     private $faultMachine;
 

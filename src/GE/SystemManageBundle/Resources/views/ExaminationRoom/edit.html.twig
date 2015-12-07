@@ -2,6 +2,17 @@
 
 {% block title %}修改考场信息—基本信息设置—系统管理{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {%  stylesheets                
+        '@GESystemManageBundle/Resources/public/css/examination-room.css'    
+        filter='cssrewrite'  
+    %}
+        <link rel="stylesheet" href="{{asset_url}}"/>
+    {% endstylesheets %}
+    
+{% endblock %}
+
 {% block right -%}
     <h1>
         查看考场信息
@@ -17,14 +28,45 @@
         {{ form_errors(edit_form) }}
 
         {{ form_row(edit_form.roomName, {'attr': {'placeholder': '请输入考场名称', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.row, {'attr': {'placeholder': '请输入机器行数', 'autocomplete': 'off', 'class': 'er_rows'} }) }}
-        {{ form_row(edit_form.col, {'attr': {'placeholder': '请输入机器列数', 'autocomplete': 'off', 'class': 'er_cols'} }) }}
-        {{ form_row(edit_form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off'} }) }}
+        <div class="er-rows-cols">
+            {{ form_row(edit_form.row, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-rows'} }) }}
+            <span>行</span>
+            {{ form_row(edit_form.col, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
+            <span>列</span>
+        </div>
+        <div class="er-rows-cols-table">
+            <table>
+                {% for i in 1..10 %}
+                    <tr>
+                        {% for i in 1..10 %}
+                            <td></td>
+                        {% endfor %}
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+        {{ form_row(edit_form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off',  'class': 'available-machine'} }) }}
+        {{ form_row(edit_form.faultMachine, {'attr': {'placeholder': '请从下列机器列表中选择故障机器', 'autocomplete': 'off', 'class': 'fault-machines'} }) }}
+        <div class="fault-machine-table">
+            <div class="tips">
+                <span>单击相应表格添加/取消故障机器:</span>
+                <span class="normal">正常</span>
+                <span class="fault">故障</span> 
+            </div>
+            <table>
+            </table>
+        </div>
         {{ form_row(edit_form.submit, {'attr': {'class': 'btn' } }) }}
 
     {{ form_end(edit_form, {'render_rest': true}) }}
 
 {% endblock %}
 
-
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@GESystemManageBundle/Resources/public/js/examination-room_new&edit.js'
+    %} 
+    <script type="text/javascript" src="{{ asset_url }}"></script>   
+    {% endjavascripts %}
+{% endblock %}

@@ -34,21 +34,27 @@
             {{ form_row(form.col, {'attr': {'placeholder': '0', 'autocomplete': 'off', 'class': 'er-cols'} }) }}
             <span>列</span>
         </div>
-        <div id="selectedtable">
-            <table id="table">
+        <div class="er-rows-cols-table">
+            <table>
                 {% for i in 1..10 %}
                     <tr>
                         {% for i in 1..10 %}
-                            <td><div class="box"></div></td>
+                            <td></td>
                         {% endfor %}
                     </tr>
                 {% endfor %}
             </table>
         </div>
-        {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off', 'class': 'available-machine'} }) }}
-        {{ form_row(form.faultMachine, {'attr': {'placeholder': '请填写故障机器编号，用逗号隔开', 'autocomplete': 'off', 'class': 'fault-machine'} }) }}
+        
+        {{ form_row(form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off',  'class': 'available-machine'} }) }}
+        {{ form_row(form.faultMachine, {'attr': {'placeholder': '请从下列机器列表中选择故障机器', 'autocomplete': 'off', 'class': 'fault-machines'} }) }}
 
         <div class="fault-machine-table">
+            <div class="tips">
+                <span>单击相应表格添加/取消故障机器:</span>
+                <span class="normal">正常</span>
+                <span class="fault">故障</span> 
+            </div>
             <table>
             </table>
         </div>
@@ -61,7 +67,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts 
-        '@GESystemManageBundle/Resources/public/js/examination-room_new.js'
+        '@GESystemManageBundle/Resources/public/js/examination-room_new&edit.js'
     %} 
     <script type="text/javascript" src="{{ asset_url }}"></script>   
     {% endjavascripts %}
