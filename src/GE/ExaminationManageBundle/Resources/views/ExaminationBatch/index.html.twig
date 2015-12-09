@@ -1,0 +1,55 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ExaminationBatch list</h1>
+
+    <table class="records_list">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Examinationid</th>
+                <th>Roomid</th>
+                <th>Paperid</th>
+                <th>Startime</th>
+                <th>Endtime</th>
+                <th>Degreestate</th>
+                <th>Teacherid</th>
+                <th>Studentnum</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                <td><a href="{{ path('examinationbatch_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.examinationID }}</td>
+                <td>{{ entity.roomID }}</td>
+                <td>{{ entity.paperID }}</td>
+                <td>{{ entity.starTime }}</td>
+                <td>{{ entity.endTime }}</td>
+                <td>{{ entity.degreeState }}</td>
+                <td>{{ entity.teacherID }}</td>
+                <td>{{ entity.studentNum }}</td>
+                <td>
+                <ul>
+                    <li>
+                        <a href="{{ path('examinationbatch_show', { 'id': entity.id }) }}">show</a>
+                    </li>
+                    <li>
+                        <a href="{{ path('examinationbatch_edit', { 'id': entity.id }) }}">edit</a>
+                    </li>
+                </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+        <ul>
+        <li>
+            <a href="{{ path('examinationbatch_new') }}">
+                Create a new entry
+            </a>
+        </li>
+    </ul>
+    {% endblock %}

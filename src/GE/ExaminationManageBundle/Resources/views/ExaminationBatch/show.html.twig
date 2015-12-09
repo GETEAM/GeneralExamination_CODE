@@ -1,0 +1,60 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>ExaminationBatch</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Examinationid</th>
+                <td>{{ entity.examinationID }}</td>
+            </tr>
+            <tr>
+                <th>Roomid</th>
+                <td>{{ entity.roomID }}</td>
+            </tr>
+            <tr>
+                <th>Paperid</th>
+                <td>{{ entity.paperID }}</td>
+            </tr>
+            <tr>
+                <th>Startime</th>
+                <td>{{ entity.starTime }}</td>
+            </tr>
+            <tr>
+                <th>Endtime</th>
+                <td>{{ entity.endTime }}</td>
+            </tr>
+            <tr>
+                <th>Degreestate</th>
+                <td>{{ entity.degreeState }}</td>
+            </tr>
+            <tr>
+                <th>Teacherid</th>
+                <td>{{ entity.teacherID }}</td>
+            </tr>
+            <tr>
+                <th>Studentnum</th>
+                <td>{{ entity.studentNum }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('examinationbatch') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('examinationbatch_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

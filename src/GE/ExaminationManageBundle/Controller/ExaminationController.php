@@ -1,27 +1,27 @@
 <?php
 
-namespace GE\UserBundle\Controller;
+namespace GE\ExaminationManageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use GE\UserBundle\Entity\User;
-use GE\UserBundle\Form\UserType;
+use GE\ExaminationManageBundle\Entity\Examination;
+use GE\ExaminationManageBundle\Form\ExaminationType;
 
 /**
- * User controller.
+ * Examination controller.
  *
- * @Route("/user")
+ * @Route("/examination")
  */
-class UserController extends Controller
+class ExaminationController extends Controller
 {
 
     /**
-     * Lists all User entities.
+     * Lists all Examination entities.
      *
-     * @Route("/", name="user")
+     * @Route("/", name="examination")
      * @Method("GET")
      * @Template()
      */
@@ -29,22 +29,22 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('GEUserBundle:User')->findAll();
+        $entities = $em->getRepository('GEExaminationManageBundle:Examination')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new User entity.
+     * Creates a new Examination entity.
      *
-     * @Route("/", name="user_create")
+     * @Route("/", name="examination_create")
      * @Method("POST")
-     * @Template("GEUserBundle:User:new.html.twig")
+     * @Template("GEExaminationManageBundle:Examination:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new User();
+        $entity = new Examination();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -53,7 +53,7 @@ class UserController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('examination_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -63,16 +63,16 @@ class UserController extends Controller
     }
 
     /**
-     * Creates a form to create a User entity.
+     * Creates a form to create a Examination entity.
      *
-     * @param User $entity The entity
+     * @param Examination $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(User $entity)
+    private function createCreateForm(Examination $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_create'),
+        $form = $this->createForm(new ExaminationType(), $entity, array(
+            'action' => $this->generateUrl('examination_create'),
             'method' => 'POST',
         ));
 
@@ -82,15 +82,15 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to create a new User entity.
+     * Displays a form to create a new Examination entity.
      *
-     * @Route("/new", name="user_new")
+     * @Route("/new", name="examination_new")
      * @Method("GET")
      * @Template()
      */
     public function newAction()
     {
-        $entity = new User();
+        $entity = new Examination();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,9 +100,9 @@ class UserController extends Controller
     }
 
     /**
-     * Finds and displays a User entity.
+     * Finds and displays a Examination entity.
      *
-     * @Route("/{id}", name="user_show")
+     * @Route("/{id}", name="examination_show")
      * @Method("GET")
      * @Template()
      */
@@ -110,10 +110,10 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GEUserBundle:User')->find($id);
+        $entity = $em->getRepository('GEExaminationManageBundle:Examination')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Examination entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,9 +125,9 @@ class UserController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing User entity.
+     * Displays a form to edit an existing Examination entity.
      *
-     * @Route("/{id}/edit", name="user_edit")
+     * @Route("/{id}/edit", name="examination_edit")
      * @Method("GET")
      * @Template()
      */
@@ -135,10 +135,10 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GEUserBundle:User')->find($id);
+        $entity = $em->getRepository('GEExaminationManageBundle:Examination')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Examination entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,16 +152,16 @@ class UserController extends Controller
     }
 
     /**
-    * Creates a form to edit a User entity.
+    * Creates a form to edit a Examination entity.
     *
-    * @param User $entity The entity
+    * @param Examination $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(User $entity)
+    private function createEditForm(Examination $entity)
     {
-        $form = $this->createForm(new UserType(), $entity, array(
-            'action' => $this->generateUrl('user_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ExaminationType(), $entity, array(
+            'action' => $this->generateUrl('examination_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -170,20 +170,20 @@ class UserController extends Controller
         return $form;
     }
     /**
-     * Edits an existing User entity.
+     * Edits an existing Examination entity.
      *
-     * @Route("/{id}", name="user_update")
+     * @Route("/{id}", name="examination_update")
      * @Method("PUT")
-     * @Template("GEUserBundle:User:edit.html.twig")
+     * @Template("GEExaminationManageBundle:Examination:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GEUserBundle:User')->find($id);
+        $entity = $em->getRepository('GEExaminationManageBundle:Examination')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find User entity.');
+            throw $this->createNotFoundException('Unable to find Examination entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -193,7 +193,7 @@ class UserController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('user_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('examination_edit', array('id' => $id)));
         }
 
         return array(
@@ -203,9 +203,9 @@ class UserController extends Controller
         );
     }
     /**
-     * Deletes a User entity.
+     * Deletes a Examination entity.
      *
-     * @Route("/{id}", name="user_delete")
+     * @Route("/{id}", name="examination_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -215,21 +215,21 @@ class UserController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('GEUserBundle:User')->find($id);
+            $entity = $em->getRepository('GEExaminationManageBundle:Examination')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find User entity.');
+                throw $this->createNotFoundException('Unable to find Examination entity.');
             }
 
             $em->remove($entity);
             $em->flush();
         }
 
-        return $this->redirect($this->generateUrl('user'));
+        return $this->redirect($this->generateUrl('examination'));
     }
 
     /**
-     * Creates a form to delete a User entity by id.
+     * Creates a form to delete a Examination entity by id.
      *
      * @param mixed $id The entity id
      *
@@ -238,7 +238,7 @@ class UserController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('user_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('examination_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()

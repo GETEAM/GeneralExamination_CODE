@@ -7,6 +7,14 @@
         <thead>
             <tr>
                 <th>Id</th>
+                <th>Userid</th>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Password</th>
+                <th>Academicid</th>
+                <th>Gradeid</th>
+                <th>Telenumber</th>
+                <th>Authority</th>
                 <th>Actions</th>
             </tr>
         </thead>
@@ -14,6 +22,14 @@
         {% for entity in entities %}
             <tr>
                 <td><a href="{{ path('user_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
+                <td>{{ entity.UserID }}</td>
+                <td>{{ entity.UserName }}</td>
+                <td>{{ entity.Email }}</td>
+                <td>{{ entity.Password }}</td>
+                <td>{{ entity.academicID }}</td>
+                <td>{{ entity.gradeID }}</td>
+                <td>{{ entity.telenumber }}</td>
+                <td>{{ entity.authority }}</td>
                 <td>
                 <ul>
                     <li>
