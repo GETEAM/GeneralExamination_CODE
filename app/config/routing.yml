@@ -1,3 +1,13 @@
+ge_examination_manage:
+    resource: "@GEExaminationManageBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+ge_user:
+    resource: "@GEUserBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
 ge_system_manage:
     resource: "@GESystemManageBundle/Controller/"
     type:     annotation
@@ -7,3 +17,6 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
     prefix:   /
+fos_user_security:
+    resource: "@FOSUserBundle/Resources/config/routing/security.xml"
+    prefix: /admin
