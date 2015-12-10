@@ -93,7 +93,7 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $student = $em->getRepository('GEUserBundle:User')->findOneBy(array('UserID')=>'$UserID','gradeID'=>'$gradeID');
+        $student = $em->getRepository('GEUserBundle:User')->findOneBy(array('UserID'=>'$UserID','gradeID'=>'$gradeID'));
 
         return array(
             'entities' => $student,
