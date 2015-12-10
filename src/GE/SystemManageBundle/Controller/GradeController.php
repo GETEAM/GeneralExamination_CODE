@@ -44,20 +44,20 @@ class GradeController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new Grade();
-        $form = $this->createCreateForm($entity);
+        $grade = new Grade();
+        $form = $this->createCreateForm($grade);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($grade);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('grade_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('grade_show', array('id' => $grade->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $grade,
             'form'   => $form->createView(),
         );
     }
@@ -90,11 +90,11 @@ class GradeController extends Controller
      */
     public function newAction()
     {
-        $entity = new Grade();
-        $form   = $this->createCreateForm($entity);
+        $grade = new Grade();
+        $form   = $this->createCreateForm($grade);
 
         return array(
-            'entity' => $entity,
+            'entity' => $grade,
             'form'   => $form->createView(),
         );
     }

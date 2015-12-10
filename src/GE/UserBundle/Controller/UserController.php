@@ -36,6 +36,90 @@ class UserController extends Controller
         );
     }
     /**
+     * Lists all User teachers.
+     *
+     * @Route("/", name="teacher")
+     * @Method("GET")
+     * @Template()
+     */
+    public function findteacherAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $teachers = $em->getRepository('GEUserBundle:User')->findAllTeacherByAuthority();
+
+        return array(
+            'entities' => $teachers,
+        );
+    }
+    /**
+     * Lists all User students.
+     *
+     * @Route("/", name="student")
+     * @Method("GET")
+     * @Template()
+     */
+    public function findstudentAction()
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $students = $em->getRepository('GEUserBundle:User')->findAllStudentByAuthority();
+
+        return array(
+            'entities' => $students,
+        );
+    }
+    public function findOneUserIDAction($UserID)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('GEUserBundle:User')->findOneUserByUserID($UserID);
+
+        return array(
+            'entities' => $user,
+        );
+    }
+    public function findOneUserNameAction($UserID)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $user = $em->getRepository('GEUserBundle:User')->findOneUserByUserName($UserName);
+
+        return array(
+            'entities' => $user,
+        );
+    }
+    public function findOneStuByGradeAction($UserID,$gradeID)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $student = $em->getRepository('GEUserBundle:User')->findOneBy(array('UserID'=>'$UserID','gradeID'=>'$gradeID'));
+
+        return array(
+            'entities' => $student,
+        );
+    }
+    public function findAllstudentByGradeAction($gradeID)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $students = $em->getRepository('GEUserBundle:User')->findByGrade($gradeID);
+
+        return array(
+            'entities' => $students,
+        );
+    }
+    public function findAllTeacherByauthorityAction($authority)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $teachers = $em->getRepository('GEUserBundle:User')->findByauthority($authority);
+
+        return array(
+            'entities' => $teachers,
+        );
+    }
+    /**
      * Creates a new User entity.
      *
      * @Route("/", name="user_create")
