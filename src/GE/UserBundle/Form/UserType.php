@@ -15,14 +15,11 @@ class UserType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('UserID')
-            ->add('UserName')
-            ->add('Email')
-            ->add('Password')
-            ->add('academicID')
-            ->add('gradeID')
-            ->add('telenumber')
-            ->add('authority')
+            ->add('UserID','text',array('label') => '教师工号')
+            ->add('UserName','text',array('label') => '教师姓名')
+            ->add('Password','text',array('label') => '密码')
+            ->add('telenumber','text',array('label') => '教师电话')
+            ->add('authority','text',array('label') => '教师权限')
         ;
     }
     

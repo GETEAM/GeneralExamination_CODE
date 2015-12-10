@@ -11,11 +11,11 @@
             <h2>系统管理<a href="{{ path('grade') }}" class="btn">点击进入</a></h2>
             <p>系统管理为管理员提供相应的功能，包括基本信息维护，系统维护，题库管理以及学生信息管理</p>
         </li>
-        <li class="function-module li-block no-role">
+        <li class="function-module li-block">
             {% image '@AppBundle/Resources/public/images/exam-manage.png' %}
                 <img src="{{ asset_url }}" width="100" height="100" alt="考务管理">
             {% endimage %}
-            <h2>考务管理<a href="systemManage.html" class="btn">点击进入</a></h2>
+            <h2>考务管理<a href="{{ path('user') }}" class="btn">点击进入</a></h2>
             <p>考务管理员通过该模块进行教师信息管理、学生信息管理、考试管理、考场安排、考务安排、阅卷安排以及归档考试</p>
         </li>
         <li class="function-module li-block">

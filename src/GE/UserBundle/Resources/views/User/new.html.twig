@@ -1,15 +1,29 @@
-{% extends '::base.html.twig' %}
+{% extends 'GEExaminationManageBundle::examination-manage.html.twig' %}
 
-{% block body -%}
-    <h1>User creation</h1>
+{% block title %}添加教师—基本信息设置—考务管理{% endblock %}
 
-    {{ form(form) }}
-
-        <ul class="record_actions">
-    <li>
+{% block right -%}
+    <div class="user-add">
+        <a href="#" class="selected">单个添加教师信息</a>   
+        <a href="#" >批量导入教师信息</a>
         <a href="{{ path('user') }}">
-            Back to the list
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回教师信息列表" title="返回教师信息列表">
+            {% endimage %}
+            <span>返回教师信息列表</span>
         </a>
-    </li>
-</ul>
+    </h1>
+    
+    {{ form_start(form) }}
+        {{ form_errors(form) }}
+
+        {{ form_row(form.UserId, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.UserName, {'attr': {'placeholder': '请输入教师姓名', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.Password, {'attr': {'value': '123', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.telenumber, {'attr': {'placeholder': '请输入教师电话', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.authority, {'attr': {'placeholder': '请输入教师权限', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.submit, {'attr': {'class': 'btn' } }) }}
+
+    {{ form_end(form, {'render_rest': true}) }}
+
 {% endblock %}
