@@ -29,10 +29,10 @@ class ExaminationRoomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
+        $rooms = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
 
         return array(
-            'entities' => $entities,
+            'entities' => $rooms,
         );
     }
     /**
@@ -44,20 +44,20 @@ class ExaminationRoomController extends Controller
      */
     public function createAction(Request $request)
     {
-        $entity = new ExaminationRoom();
-        $form = $this->createCreateForm($entity);
+        $room = new ExaminationRoom();
+        $form = $this->createCreateForm($room);
         $form->handleRequest($request);
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
+            $em->persist($room);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('examinationroom_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('examinationroom_show', array('id' => $room->getId())));
         }
 
         return array(
-            'entity' => $entity,
+            'entity' => $room,
             'form'   => $form->createView(),
         );
     }
@@ -69,9 +69,9 @@ class ExaminationRoomController extends Controller
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(ExaminationRoom $entity)
+    private function createCreateForm(ExaminationRoom $room)
     {
-        $form = $this->createForm(new ExaminationRoomType(), $entity, array(
+        $form = $this->createForm(new ExaminationRoomType(), $room, array(
             'action' => $this->generateUrl('examinationroom_create'),
             'method' => 'POST',
         ));
@@ -90,11 +90,11 @@ class ExaminationRoomController extends Controller
      */
     public function newAction()
     {
-        $entity = new ExaminationRoom();
-        $form   = $this->createCreateForm($entity);
+        $room = new ExaminationRoom();
+        $form   = $this->createCreateForm($room);
 
         return array(
-            'entity' => $entity,
+            'entity' => $room,
             'form'   => $form->createView(),
         );
     }
@@ -110,16 +110,16 @@ class ExaminationRoomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
+        $room = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
-        if (!$entity) {
+        if (!$room) {
             throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $room,
             'delete_form' => $deleteForm->createView(),
         );
     }
@@ -135,17 +135,17 @@ class ExaminationRoomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
+        $room = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
-        if (!$entity) {
+        if (!$room) {
             throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($room);
         $deleteForm = $this->createDeleteForm($id);
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $room,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
@@ -158,10 +158,10 @@ class ExaminationRoomController extends Controller
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(ExaminationRoom $entity)
+    private function createEditForm(ExaminationRoom $room)
     {
-        $form = $this->createForm(new ExaminationRoomType(), $entity, array(
-            'action' => $this->generateUrl('examinationroom_update', array('id' => $entity->getId())),
+        $form = $this->createForm(new ExaminationRoomType(), $room, array(
+            'action' => $this->generateUrl('examinationroom_update', array('id' => $room->getId())),
             'method' => 'PUT',
         ));
 
@@ -180,14 +180,14 @@ class ExaminationRoomController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
+        $room = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
 
-        if (!$entity) {
+        if (!$room) {
             throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
+        $editForm = $this->createEditForm($room);
         $editForm->handleRequest($request);
 
         if ($editForm->isValid()) {
@@ -197,7 +197,7 @@ class ExaminationRoomController extends Controller
         }
 
         return array(
-            'entity'      => $entity,
+            'entity'      => $room,
             'edit_form'   => $editForm->createView(),
             'delete_form' => $deleteForm->createView(),
         );
