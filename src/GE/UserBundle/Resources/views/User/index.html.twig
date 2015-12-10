@@ -11,7 +11,11 @@
             <li>教师账号：<input type="text" name="teacherName" class="common-findByText"></li>
             <li>教师姓名：<input type="text" name="teacherId " class="common-findByText"></li>
             <li>教师权限：<input type="text" name="teacherRole " class="common-findByText"></li>
-            <li><a href="#"><img src="images/view.png"  alt="查找" title="查找">查找</a></li>
+            <li><a href="#">
+            {% image '@AppBundle/Resources/public/images/view.png' %}
+                <img src="{{ asset_url }}"  alt="查找" title="查找" />
+            {% endimage %}
+                查找</a></li>
         </ul> 
     </div>
 
@@ -22,7 +26,7 @@
             {% endimage %}
             添加教师信息
         </a>
-        <a href="{{ path('user_edit') }}" class="btn btn-common-action">
+        <a href="#" class="btn btn-common-action">
             {% image '@AppBundle/Resources/public/images/edit.png' %}
                 <img src="{{ asset_url }}" width="20" height="20" alt="批量修改" title="批量修改">
             {% endimage %}
@@ -47,7 +51,9 @@
             </tr>
         </thead>
         <tbody>
-        {% if teachers|length == 0 %}
+        {# 
+
+{% if teachers|length == 0 %}
             <tr>
                 <td colspan=4>尚不存在教师信息，请您添加！</td>
             <tr>
@@ -63,17 +69,17 @@
                     <td>{{ teacher.Telenumber }}</td>
                     <td>{{ teacher.Authority }}</td>
                     <td>
-                        <a href="{{ path( 'teacher_show', { 'id': teacher.id }) }}">
+                        <a href="{{ path( 'user_show', { 'id': teacher.id }) }}">
                             {% image '@AppBundle/Resources/public/images/view.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="查看" title="查看">
                             {% endimage %}
                         </a>
-                        <a href="{{ path( 'teacher_edit', { 'id': teacher.id }) }}">
+                        <a href="{{ path( 'user_edit', { 'id': teacher.id }) }}">
                             {% image '@AppBundle/Resources/public/images/edit.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
                             {% endimage %}
                         </a>
-                        <a href="{{ path( 'teacher_delete', { 'id': teacher.id }) }}">
+                        <a href="{{ path( 'user_delete', { 'id': teacher.id }) }}">
                             {% image '@AppBundle/Resources/public/images/delete.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
                             {% endimage %}
@@ -82,6 +88,11 @@
                 </tr>
             {% endfor %}
         {% endif %}
+
+
+
+        #}
+        
         </tbody>
     </table>
 {% endblock %}

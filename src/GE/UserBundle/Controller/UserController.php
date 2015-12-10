@@ -49,7 +49,7 @@ class UserController extends Controller
         $teachers = $em->getRepository('GEUserBundle:User')->findAllTeacherByAuthority();
 
         return array(
-            'entities' => $teachers,
+            'teachers' => $teachers,
         );
     }
     /**

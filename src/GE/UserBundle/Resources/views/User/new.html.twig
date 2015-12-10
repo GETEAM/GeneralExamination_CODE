@@ -2,22 +2,33 @@
 
 {% block title %}添加教师—基本信息设置—考务管理{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {%  stylesheets                
+        '@GEUserBundle/Resources/public/css/user_add.css'    
+        filter='cssrewrite'  
+    %}
+        <link rel="stylesheet" href="{{asset_url}}"/>
+    {% endstylesheets %}
+    
+{% endblock %}
+
 {% block right -%}
     <div class="user-add">
-        <a href="#" class="selected">单个添加教师信息</a>   
-        <a href="#" >批量导入教师信息</a>
+        <a href="#" class="add-selected">单个添加教师信息</a>   
+        <a href="#" class="no-selected">批量导入教师信息</a>
         <a href="{{ path('user') }}">
             {% image '@AppBundle/Resources/public/images/back.png' %}
                 <img src="{{ asset_url }}" width="12" height="12" alt="返回教师信息列表" title="返回教师信息列表">
             {% endimage %}
             <span>返回教师信息列表</span>
         </a>
-    </h1>
+    </div>
     
-    {{ form_start(form) }}
+    {{ form_start(form,{'attr': {'class': 'single-teacher-add'}} ) }}
         {{ form_errors(form) }}
 
-        {{ form_row(form.UserId, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
+        {{ form_row(form.UserID, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
         {{ form_row(form.UserName, {'attr': {'placeholder': '请输入教师姓名', 'autocomplete': 'off'} }) }}
         {{ form_row(form.Password, {'attr': {'value': '123', 'autocomplete': 'off'} }) }}
         {{ form_row(form.telenumber, {'attr': {'placeholder': '请输入教师电话', 'autocomplete': 'off'} }) }}
@@ -26,4 +37,13 @@
 
     {{ form_end(form, {'render_rest': true}) }}
 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@GEUserBundle/Resources/public/js/user_add.js'
+    %} 
+    <script type="text/javascript" src="{{ asset_url }}"></script>   
+    {% endjavascripts %}
 {% endblock %}
