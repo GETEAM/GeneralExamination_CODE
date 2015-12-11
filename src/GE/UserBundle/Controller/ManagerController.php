@@ -57,7 +57,7 @@ class ManagerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('GEUserBundle:Manager')->add($manager);
 
-            return $this->redirect($this->generateUrl('manager_new'));
+            return $this->redirect($this->generateUrl('manager_index'));
         }
 
         return array(
@@ -65,6 +65,26 @@ class ManagerController extends Controller
         );
     }
 
+    /**
+     * 显示管理者信息.
+     *
+     * @Route("/show/{id}", name="manager_show")
+     * @Method("GET")
+     * @Template("GEUserBundle:Manager:show.html.twig")
+     */
+    public function showAction(Request $request,$id)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $manager = $em->getRepository('GEUserBundle:Manager')->find($id);
+
+        if (!$manager) {
+            throw $this->createNotFoundException('Unable to find manager entity.');
+        }
+        return array(
+            'manager' => $manager,
+        );
+    }
     /**
      * 编辑管理者信息.
      *

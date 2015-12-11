@@ -10,7 +10,15 @@
         <ul>
             <li>教师账号：<input type="text" name="managerName" class="common-findByText"></li>
             <li>教师姓名：<input type="text" name="managerId " class="common-findByText"></li>
-            <li>教师权限：<input type="text" name="managerRole " class="common-findByText"></li>
+            <li>教师权限：
+                <select>
+                    <option value="zs">系统管理员</option>
+                    <option value="zs">考务员</option>
+                    <option value="zs">英语教师</option>
+                    <option value="zs">调度员</option>
+                    <option value="zs">题库管理员</option>
+                </select>
+            </li>
             <li><a href="#">
             {% image '@AppBundle/Resources/public/images/view.png' %}
                 <img src="{{ asset_url }}"  alt="查找" title="查找" />
@@ -52,7 +60,7 @@
         </thead>
         <tbody>
 
-{% if managers|length == 0 %}
+        {% if managers|length == 0 %}
             <tr>
                 <td colspan=4>尚不存在教师信息，请您添加！</td>
             <tr>
@@ -61,14 +69,14 @@
                 <tr>
                     <td>
                         <input type="checkbox" name= managers" hidden />
-                        <a href="#">{{ manager.id }}</a>
+                        <a href="{{ path('manager_show', { 'id': manager.id }) }}">{{ manager.id }}</a>
                     </td>
                     <td>{{ manager.username }}</td>
                     <td>{{ manager.name }}</td>
                     <td>{{ manager.telephone }}</td>
                     <td>{{ manager.email }}</td>
                     <td>
-                        <a href="#">
+                        <a href="{{ path('manager_show', { 'id': manager.id }) }}">
                             {% image '@AppBundle/Resources/public/images/view.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="查看" title="查看">
                             {% endimage %}
@@ -87,10 +95,6 @@
                 </tr>
             {% endfor %}
         {% endif %}
-
-
-
-        
         </tbody>
     </table>
 {% endblock %}
