@@ -1,0 +1,60 @@
+{% extends 'GEExaminationManageBundle::examination-manage.html.twig' %}
+
+{% block title %}查看管理员信息—基本信息设置—考试管理{% endblock %}
+
+{% block right -%}
+    <h1>
+        查看管理员信息
+        <a href="{{ path('manager_index') }}">
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回考场信息列表" title="返回考场信息列表">
+            {% endimage %}
+            <span>返回考场信息列表</span>
+        </a>
+    </h1>
+    <div class="common-action">
+        <a href="{{ path('manager_edit', { 'id': manager.id }) }}" class="btn btn-common-action">
+            {% image '@AppBundle/Resources/public/images/edit.png' %}
+                <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
+            {% endimage %}
+            编辑
+        </a>
+        <a href="{{ path('manager_delete', { 'id': manager.id }) }}" class="btn btn-common-action">
+            {% image '@AppBundle/Resources/public/images/delete.png' %}
+                <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
+            {% endimage %}
+            删除
+        </a>
+    </div>
+    <table class="common-table">
+        <tbody>
+            <tr>
+                <th>编号</th>
+                <td>{{ manager.id }}</td>
+            </tr>
+            <tr>
+                <th>教师工号</th>
+                <td>{{ manager.username }}</td>
+            </tr>
+            <tr>
+                <th>教师姓名</th>
+                <td>{{ manager.name }}</td>
+            </tr>
+            <tr>
+                <th>教师邮箱</th>
+                <td>{{ manager.email }}</td>
+            </tr>
+            <tr>
+                <th>教师电话</th>
+                <td>{{ manager.telephone }}</td>
+            </tr>
+            {#
+			<tr>
+                <th>权限</th>
+                <td>{{ manager.roles }}</td>
+            </tr>
+            #}
+        </tbody>
+    </table>
+{% endblock %}
+
