@@ -19,7 +19,7 @@ class GradeController extends Controller
 {
 
     /**
-     * Lists all Grade entities.
+     *** 获取年级信息列表 ***
      *
      * @Route("/", name="grade")
      * @Method("GET")

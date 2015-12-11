@@ -1,0 +1,50 @@
+{% extends 'GEExaminationManageBundle::examination-manage.html.twig' %}
+
+{% block title %}添加教师—基本信息设置—考务管理{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {%  stylesheets                
+        '@GEUserBundle/Resources/public/css/manager_new.css'    
+        filter='cssrewrite'  
+    %}
+        <link rel="stylesheet" href="{{asset_url}}"/>
+    {% endstylesheets %}
+    
+{% endblock %}
+
+{% block right -%}
+    <div class="user-add">
+        <a href="#" class="add-selected">单个添加教师信息</a>   
+        <a href="#" class="no-selected">批量导入教师信息</a>
+        <a href="{{ path('user') }}">
+            {% image '@AppBundle/Resources/public/images/back.png' %}
+                <img src="{{ asset_url }}" width="12" height="12" alt="返回教师信息列表" title="返回教师信息列表">
+            {% endimage %}
+            <span>返回教师信息列表</span>
+        </a>
+    </div>
+
+    {{ form_start(new_form,{'attr': {'class': 'single-teacher-add'}} ) }}
+        {{ form_errors(new_form) }}
+
+        {{ form_row(new_form.username, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
+        {{ form_row(new_form.name, {'attr': {'placeholder': '请输入姓名', 'autocomplete': 'off'} }) }}
+        {{ form_row(new_form.email, {'attr': {'placeholder': '请输入邮箱', 'autocomplete': 'off'} }) }}
+        {{ form_row(new_form.telephone, {'attr': {'placeholder': '请输入手机号码', 'autocomplete': 'off'} }) }}
+        {{ form_row(new_form.roles) }}
+        {{ form_row(new_form.plainPassword) }}
+        {{ form_row(new_form.save, {'attr': {'class': 'btn'} }) }}
+
+    {{ form_end(new_form, {'render_rest': true}) }}
+
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% javascripts 
+        '@GEUserBundle/Resources/public/js/user_add.js'
+    %} 
+    <script type="text/javascript" src="{{ asset_url }}"></script>   
+    {% endjavascripts %}
+{% endblock %}

@@ -11,7 +11,7 @@ use FOS\UserBundle\Model\User as BaseUser;
  * @ORM\Table(name="fos_user")
  * @ORM\Entity(repositoryClass="GE\UserBundle\Entity\UserRepository")
  */
-class User extends BaseUser
+class User
 {
     /**
      * @var integer
@@ -205,5 +205,77 @@ class User extends BaseUser
     public function getAuthority()
     {
         return $this->authority;
+    }
+
+    /**
+     * Set userName
+     *
+     * @param string $userName
+     *
+     * @return User
+     */
+    public function setUserName($userName)
+    {
+        $this->UserName = $userName;
+
+        return $this;
+    }
+
+    /**
+     * Get userName
+     *
+     * @return string
+     */
+    public function getUserName()
+    {
+        return $this->UserName;
+    }
+
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return User
+     */
+    public function setEmail($email)
+    {
+        $this->Email = $email;
+
+        return $this;
+    }
+
+    /**
+     * Get email
+     *
+     * @return string
+     */
+    public function getEmail()
+    {
+        return $this->Email;
+    }
+
+    /**
+     * Set password
+     *
+     * @param string $password
+     *
+     * @return User
+     */
+    public function setPassword($password)
+    {
+        $this->Password = $password;
+
+        return $this;
+    }
+
+    /**
+     * Get password
+     *
+     * @return string
+     */
+    public function getPassword()
+    {
+        return $this->Password;
     }
 }

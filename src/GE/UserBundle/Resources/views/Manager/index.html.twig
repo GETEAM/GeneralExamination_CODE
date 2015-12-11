@@ -8,9 +8,9 @@
     </h1>
     <div class="common-find">
         <ul>
-            <li>教师账号：<input type="text" name="teacherName" class="common-findByText"></li>
-            <li>教师姓名：<input type="text" name="teacherId " class="common-findByText"></li>
-            <li>教师权限：<input type="text" name="teacherRole " class="common-findByText"></li>
+            <li>教师账号：<input type="text" name="managerName" class="common-findByText"></li>
+            <li>教师姓名：<input type="text" name="managerId " class="common-findByText"></li>
+            <li>教师权限：<input type="text" name="managerRole " class="common-findByText"></li>
             <li><a href="#">
             {% image '@AppBundle/Resources/public/images/view.png' %}
                 <img src="{{ asset_url }}"  alt="查找" title="查找" />
@@ -20,7 +20,7 @@
     </div>
 
     <div class="common-action">
-        <a href="{{ path('user_new') }}" class="btn btn-common-action">
+        <a href="{{ path('manager_new') }}" class="btn btn-common-action">
             {% image '@AppBundle/Resources/public/images/add.png' %}
                 <img src="{{ asset_url }}" width="20" height="20" alt="添加教师信息" title="添加教师信息">
             {% endimage %}
@@ -52,33 +52,33 @@
         </thead>
         <tbody>
 
-{% if teachers|length == 0 %}
+{% if managers|length == 0 %}
             <tr>
-                <td colspan=4>尚不存在管理者信息，请您添加！</td>
+                <td colspan=4>尚不存在教师信息，请您添加！</td>
             <tr>
         {% else %}
-            {% for teacher in teachers %}
+            {% for manager in managers %}
                 <tr>
                     <td>
-                        <input type="checkbox" name= teachers" hidden />
-                        <a href="">{{ teacher.id }}</a>
+                        <input type="checkbox" name= managers" hidden />
+                        <a href="#">{{ manager.id }}</a>
                     </td>
-                    <td>{{ teacher.UserId }}</td>
-                    <td>{{ teacher.UserName }}</td>
-                    <td>{{ teacher.Telenumber }}</td>
-                    <td>{{ teacher.Authority }}</td>
+                    <td>{{ manager.username }}</td>
+                    <td>{{ manager.name }}</td>
+                    <td>{{ manager.telephone }}</td>
+                    <td>{{ manager.email }}</td>
                     <td>
-                        <a href="">
+                        <a href="#">
                             {% image '@AppBundle/Resources/public/images/view.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="查看" title="查看">
                             {% endimage %}
                         </a>
-                        <a href="">
+                        <a href="{{ path('manager_edit', { 'id': manager.id }) }}">
                             {% image '@AppBundle/Resources/public/images/edit.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="编辑" title="编辑">
                             {% endimage %}
                         </a>
-                        <a href="">
+                        <a href="{{ path('manager_delete', { 'id': manager.id }) }}">
                             {% image '@AppBundle/Resources/public/images/delete.png' %}
                                 <img src="{{ asset_url }}" width="20" height="20" alt="删除" title="删除">
                             {% endimage %}
@@ -87,6 +87,7 @@
                 </tr>
             {% endfor %}
         {% endif %}
+
 
 
         

@@ -30,6 +30,9 @@
 .no-selected{
  	color: #D1D1D1;
 }
+#ge_userbundle_manager_new_roles {
+	display: inline-block;
+}
 
 /* 表单的隐藏 */
 .import-information-form{

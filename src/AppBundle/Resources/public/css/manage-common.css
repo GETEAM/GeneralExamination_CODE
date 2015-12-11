@@ -237,6 +237,18 @@
     line-height: 20px;
     padding-right: 20px;
 }
+.right input + label {
+    width: auto;
+    border-radius: 3px;
+    padding: 2px 5px;
+    margin-right: 5px;
+}
+.right form input[type='checkbox'] {
+    display: none;
+}
+.right form input[type='checkbox']:checked + label {
+    background-color: #B8F3B8;
+}
 .right form input {
     width: 300px;
     padding: 5px;
