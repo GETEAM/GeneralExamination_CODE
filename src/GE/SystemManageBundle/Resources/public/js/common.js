@@ -17,3 +17,11 @@ function multipleSelectTR( $selector ) {
 		}
 	})
 }
+/*获取所有选中的tr*/
+function getSelectedTRs($name) {
+	var trs = [];
+	$('input:checkbox[name="'+$name+'"]:checked').each(function(){
+		trs.push($(this).val());
+	});
+	return trs;
+}

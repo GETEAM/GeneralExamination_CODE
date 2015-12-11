@@ -121,10 +121,19 @@ class ManagerController extends Controller
      */
     public function multiDeleteAction(Request $request, $ids)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('GEUserBundle:Manager')->multiDelete($ids);
+        $ids = $request->request->get('ids');
 
-        return $this->redirect($this->generateUrl('manager_index'));
+        $success = $em->getRepository('GEUserBundle:Manager')->multiDelete($ids);        
+        $result = array(
+                'success' => $success
+                );
+        $this->get('session')->getFlashBag()->add(
+            'notice',
+            '选中项删除成功!'
+        ); 
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
 }

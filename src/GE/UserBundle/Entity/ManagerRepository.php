@@ -10,7 +10,7 @@ namespace GE\UserBundle\Entity;
  */
 class ManagerRepository extends \Doctrine\ORM\EntityRepository
 {
-	//添加单个管理者
+	//添加/编辑单个管理者(编辑管理者时的操作和添加管理者相似)
     public function add($manager) {
     	$em = $this->getEntityManager();
         $em->persist($manager);
@@ -30,5 +30,6 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
     	foreach( $ids as $id ) {
     		$this->delete($id);
     	}
+    	return 1;
     }
 }
