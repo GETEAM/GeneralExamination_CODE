@@ -126,5 +126,19 @@ class GradeController extends Controller
             'edit_form' => $edit_form->createView(),
         );
     }
-    
+
+    /**
+     * 删除年级信息.
+     *
+     * @Route("/delete/{id}", name="grade_delete")
+     * @Method("GET")
+     * @Template()
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $em->getRepository('GESystemManageBundle:Grade')->delete($id);
+
+        return $this->redirect($this->generateUrl('grade_index'));
+    }
 }
