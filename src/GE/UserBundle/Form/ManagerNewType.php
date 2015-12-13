@@ -32,7 +32,8 @@ class ManagerNewType extends AbstractType
             ->add('save', 'submit', array('label' => '添加'));
     }
 
-    /***继承fos_user_registration的表单***
+    /**
+     * 继承fos_user_registration的表单***
      *
      * @return [type] [description]
      */

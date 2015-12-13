@@ -8,20 +8,21 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use GE\SystemManageBundle\Entity\Grade;
-use GE\SystemManageBundle\Form\GradeType;
+use GE\SystemManageBundle\Form\GradeNewType;
+use GE\SystemManageBundle\Form\GradeEditType;
 
 /**
- * Grade controller.
+ * 年级信息管理Controller.
  *
- * @Route("/grade")
+ * @Route("/manage/grade")
  */
 class GradeController extends Controller
 {
 
     /**
-     *** 获取年级信息列表 ***
+     * 获取并显示年级信息列表.
      *
-     * @Route("/", name="grade")
+     * @Route("/", name="grade_index")
      * @Method("GET")
      * @Template("GESystemManageBundle:Grade:index.html.twig")
      */
@@ -32,204 +33,98 @@ class GradeController extends Controller
         $grades = $em->getRepository('GESystemManageBundle:Grade')->findAll();
 
         return array(
-            'grades' => $grades,
-        );
-    }
-    /**
-     * Creates a new Grade entity.
-     *
-     * @Route("/", name="grade_create")
-     * @Method("POST")
-     * @Template("GESystemManageBundle:Grade:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $grade = new Grade();
-        $form = $this->createCreateForm($grade);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($grade);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('grade_show', array('id' => $grade->getId())));
-        }
-
-        return array(
-            'entity' => $grade,
-            'form'   => $form->createView(),
+            'nav_title' => 'grade',
+            'grades' => $grades
         );
     }
 
     /**
-     * Creates a form to create a Grade entity.
-     *
-     * @param Grade $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Grade $entity)
-    {
-        $form = $this->createForm(new GradeType(), $entity, array(
-            'action' => $this->generateUrl('grade_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => '创建'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Grade entity.
+     * 添加年级信息.
      *
      * @Route("/new", name="grade_new")
      * @Method("GET")
-     * @Template()
+     * @Template("GESystemManageBundle:Grade:new.html.twig")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
         $grade = new Grade();
-        $form   = $this->createCreateForm($grade);
+
+        $new_form = $this->createForm(new GradeNewType(), $grade, array(
+            'action' => $this->generateUrl('grade_new'),
+            'method' => 'GET'
+        ));
+        
+        $new_form->handleRequest($request);
+
+        if ($new_form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository('GESystemManageBundle:Grade')->add($grade);
+
+            return $this->redirect($this->generateUrl('grade_show', array(
+                'id' => $grade->getId()
+            )));
+        }
 
         return array(
-            'entity' => $grade,
-            'form'   => $form->createView(),
+            'nav_title' => 'grade',
+            'new_form' => $new_form->createView()
         );
     }
 
     /**
-     * Finds and displays a Grade entity.
+     * 显示年级信息.
      *
-     * @Route("/{id}", name="grade_show")
+     * @Route("/show/{id}", name="grade_show")
      * @Method("GET")
-     * @Template()
+     * @Template("GESystemManageBundle:Grade:show.html.twig")
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
         $grade = $em->getRepository('GESystemManageBundle:Grade')->find($id);
 
         if (!$grade) {
-            throw $this->createNotFoundException('Unable to find Grade entity.');
+            throw $this->createNotFoundException('Unable to find grade entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-
+        
         return array(
-            'grade'      => $grade,
-            'delete_form' => $deleteForm->createView(),
+            'nav_title' => 'grade',
+            'grade' => $grade
         );
     }
 
     /**
-     * Displays a form to edit an existing Grade entity.
+     * 编辑年级信息.
      *
      * @Route("/edit/{id}", name="grade_edit")
      * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $grade = $em->getRepository('GESystemManageBundle:Grade')->find($id);
-
-        if (!$grade) {
-            throw $this->createNotFoundException('Unable to find Grade entity.');
-        }
-
-        $editForm = $this->createEditForm($grade);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $grade,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Grade entity.
-    *
-    * @param Grade $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Grade $entity)
-    {
-        $form = $this->createForm(new GradeType(), $entity, array(
-            'action' => $this->generateUrl('grade_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => '更新'));
-
-        return $form;
-    }
-    /**
-     * Edits an existing Grade entity.
-     *
-     * @Route("/{id}", name="grade_update")
-     * @Method("PUT")
      * @Template("GESystemManageBundle:Grade:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-
         $grade = $em->getRepository('GESystemManageBundle:Grade')->find($id);
 
-        if (!$grade) {
-            throw $this->createNotFoundException('Unable to find Grade entity.');
-        }
+        $edit_form = $this->createForm(new GradeEditType(), $grade, array(
+            'action' => $this->generateUrl('grade_edit', array('id' => $id ) ),
+            'method' => 'GET'
+        ));
+        
+        $edit_form->handleRequest($request);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($grade);
-        $editForm->handleRequest($request);
+        if ($edit_form->isValid()) {
 
-        if ($editForm->isValid()) {
-            $em->flush();
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository('GESystemManageBundle:Grade')->add($grade);
 
-            return $this->redirect($this->generateUrl('grade'));
+            return $this->redirect($this->generateUrl('grade_index'));
         }
 
         return array(
-            'entity'      => $grade,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'nav_title' => 'grade',
+            'edit_form' => $edit_form->createView(),
         );
     }
-    /**
-     * Deletes a Grade entity.
-     *
-     * @Route("/delete/{id}", name="grade_delete")
-     * @Method("GET")
-     */
-   public function deleteAction(Request $request, $id)
-    {
-        if($id) {
-            $greadid = $this->getDoctrine()->getRepository('GESystemManageBundle:Grade')->delete($id);
-        }
-        return $this->redirect($this->generateUrl('grade'));
-    }
-
-    /**
-     * Creates a form to delete a Grade entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('grade_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => '删除'))
-            ->getForm()
-        ;
-    }
+    
 }

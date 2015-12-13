@@ -11,11 +11,27 @@ use Doctrine\ORM\EntityRepository;
  */
 class GradeRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function delete($id)
-    {
-        $grade = $this-> find($id);  
-        $this->getEntityManager()->remove($grade);
-        $this->getEntityManager()->flush();
-    }	
+	//添加/编辑(单个)年级(编辑的操作和添加相似)
+    public function add($grade) {
+    	$em = $this->getEntityManager();
+        $em->persist($grade);
+        $em->flush();
+    }
+
+	//删除单个管理者
+    public function delete($id) {
+    	$em = $this->getEntityManager();
+        $grade=$this->findOneById($id);
+        $em->remove($grade);
+        $em->flush();
+    }
+
+    //批量删除管理者
+    public function multiDelete($ids) {
+    	foreach( $ids as $id ) {
+    		$this->delete($id);
+    	}
+    	return 1;
+    }
 }
 

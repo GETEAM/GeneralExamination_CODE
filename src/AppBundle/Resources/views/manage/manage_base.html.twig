@@ -2,13 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {%  stylesheets                
-        '@AppBundle/Resources/public/css/manage-common.css'    
-        filter='cssrewrite'  
-    %}
-        <link rel="stylesheet" href="{{asset_url}}"/>
-    {% endstylesheets %}
-    
+    <link href="{{ asset('bundles/app/css/manage/manage-common.css') }}" rel="stylesheet" />
 {% endblock %}
 
 {% block header %}
@@ -24,4 +18,20 @@
             </nav>
         </div>
     </div>
+{% endblock %}
+
+{% block content -%}
+    <div class="common-block manage">
+        <div class="left">
+            {% block left -%}{% endblock %}
+        </div>
+        <div class="right">
+            {% block right -%}{% endblock %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/app/js/common/manage_common.js') }}"></script>
 {% endblock %}

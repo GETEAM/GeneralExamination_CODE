@@ -21,7 +21,7 @@ class AcademyController extends Controller
     /**
      * Lists all Academy entities.
      *
-     * @Route("/", name="academy")
+     * @Route("/", name="academy_index")
      * @Method("GET")
      * @Template()
      */

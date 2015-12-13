@@ -21,7 +21,7 @@ class ExaminationRoomController extends Controller
     /**
      * Lists all ExaminationRoom entities.
      *
-     * @Route("/", name="examinationroom")
+     * @Route("/", name="examination_room_index")
      * @Method("GET")
      * @Template()
      */
