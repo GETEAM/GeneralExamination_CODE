@@ -8,22 +8,24 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use GE\SystemManageBundle\Entity\Academy;
-use GE\SystemManageBundle\Form\AcademyType;
+use GE\SystemManageBundle\Form\AcademyNewType;
+use GE\SystemManageBundle\Form\AcademyEditType;
+
 
 /**
- * Academy controller.
+ * 学院信息管理controller.
  *
- * @Route("/academy")
+ * @Route("/manage/academy")
  */
 class AcademyController extends Controller
 {
 
     /**
-     * Lists all Academy entities.
+     * 获取显示学院信息列表.
      *
      * @Route("/", name="academy_index")
      * @Method("GET")
-     * @Template()
+     * @Template("GESystemManageBundle:Academy:index.html.twig")
      */
     public function indexAction()
     {
@@ -36,200 +38,104 @@ class AcademyController extends Controller
         );
     }
     /**
-     * Creates a new Academy entity.
-     *
-     * @Route("/", name="academy_create")
-     * @Method("POST")
-     * @Template("GESystemManageBundle:Academy:new.html.twig")
-     */
-    public function createAction(Request $request)
-    {
-        $entity = new Academy();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('academy_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Academy entity.
-     *
-     * @param Academy $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Academy $entity)
-    {
-        $form = $this->createForm(new AcademyType(), $entity, array(
-            'action' => $this->generateUrl('academy_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => '创建'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Academy entity.
+     * 添加学院信息.
      *
      * @Route("/new", name="academy_new")
      * @Method("GET")
-     * @Template()
+     * @Template("GESystemManageBundle:Academy:new.html.twig")
      */
-    public function newAction()
+    public function newAction(Request $request)
     {
-        $entity = new Academy();
-        $form   = $this->createCreateForm($entity);
+        $academy = new Academy();
+
+        $new_form = $this->createForm(new AcademyNewType(), $academy, array(
+            'action' => $this->generateUrl('academy_new'),
+            'method' => 'GET'
+        ));
+        
+        $new_form->handleRequest($request);
+
+        if ($new_form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository('GESystemManageBundle:Academy')->add($academy);
+
+            return $this->redirect($this->generateUrl('academy_show', array(
+                'id' => $academy->getId()
+            )));
+        }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'nav_title' => 'academy',
+            'new_form' => $new_form->createView()
         );
     }
 
     /**
-     * Finds and displays a Academy entity.
+     * 显示学院.
      *
-     * @Route("/{id}", name="academy_show")
+     * @Route("/show/{id}", name="academy_show")
      * @Method("GET")
-     * @Template()
+     * @Template("GESystemManageBundle:Academy:show.html.twig")
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('GESystemManageBundle:Academy')->find($id);
+        $academy = $em->getRepository('GESystemManageBundle:Academy')->find($id);
 
-        if (!$entity) {
+        if (!$academy) {
             throw $this->createNotFoundException('Unable to find Academy entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'nav_title' => 'academy',
+            'academy' => $academy
         );
     }
 
     /**
-     * Displays a form to edit an existing Academy entity.
+     * 编辑学院信息.
      *
-     * @Route("/{id}/edit", name="academy_edit")
+     * @Route("/edit/{id}", name="academy_edit")
      * @Method("GET")
-     * @Template()
+     * @Template("GESystemManageBundle:Academy:edit.html.twig")
      */
     public function editAction($id)
     {
         $em = $this->getDoctrine()->getManager();
+        $academy = $em->getRepository('GESystemManageBundle:Academy')->find($id);
 
-        $entity = $em->getRepository('GESystemManageBundle:Academy')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Academy entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Academy entity.
-    *
-    * @param Academy $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Academy $entity)
-    {
-        $form = $this->createForm(new AcademyType(), $entity, array(
-            'action' => $this->generateUrl('academy_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
+        $edit_form = $this->createForm(new AcademyEditType(), $academy, array(
+            'action' => $this->generateUrl('academy_edit', array('id' => $id ) ),
+            'method' => 'GET'
         ));
+        
+        $edit_form->handleRequest($request);
 
-        $form->add('submit', 'submit', array('label' => '更新'));
+        if ($edit_form->isValid()) {
 
-        return $form;
-    }
-    /**
-     * Edits an existing Academy entity.
-     *
-     * @Route("/{id}", name="academy_update")
-     * @Method("PUT")
-     * @Template("GESystemManageBundle:Academy:edit.html.twig")
-     */
-    public function updateAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository('GESystemManageBundle:Academy')->add($academy);
 
-        $entity = $em->getRepository('GESystemManageBundle:Academy')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Academy entity.');
-        }
-
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
-
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('academy_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('academy_index'));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'nav_title' => 'academy',
+            'edit_form' => $edit_form->createView(),
         );
     }
     /**
-     * Deletes a Academy entity.
+     * 删除学院信息.
      *
      * @Route("/delete/{id}", name="academy_delete")
      * @Method("GET")
+     * @Template()
      */
     public function deleteAction(Request $request, $id)
     {
-        if ($id) {
-            $academyid = $this->getDoctrine()->getRepository('GESystemManageBundle:Academy')->delete($id);
-        }
-        return $this->redirect($this->generateUrl('academy'));
-    }
+        $em = $this->getDoctrine()->getManager();
+        $em->getRepository('GESystemManageBundle:Academy')->delete($id);
 
-    /**
-     * Creates a form to delete a Academy entity by id.
-     *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createDeleteForm($id)
-    {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('academy_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => '删除'))
-            ->getForm()
-        ;
+        return $this->redirect($this->generateUrl('academy_index'));
     }
 }

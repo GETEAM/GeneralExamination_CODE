@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class AcademyType extends AbstractType
+class AcademyNewType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -17,7 +17,7 @@ class AcademyType extends AbstractType
         $builder
             ->add('academyID', 'text', array('label' => '学院代号'))
             ->add('academyName', 'text', array('label' => '学院名称'))
-        ;
+            ->add('save', 'submit', array('label' => '修改'));
     }
     
     /**
@@ -35,6 +35,6 @@ class AcademyType extends AbstractType
      */
     public function getName()
     {
-        return 'GE_systemmanagebundle_academy';
+        return 'ge_systemmanage_academy_new';
     }
 }

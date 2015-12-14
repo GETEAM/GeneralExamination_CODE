@@ -11,10 +11,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class AcademyRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function delete($id)
-    {
-        $academy = $this-> find($id);  
-        $this->getEntityManager()->remove($academy);
-        $this->getEntityManager()->flush();
-    }	
+	//添加/编辑(单个)学院(编辑的操作和添加相似)
+    public function add($academy) {
+    	$em = $this->getEntityManager();
+        $em->persist($academy);
+        $em->flush();
+    }
+
+	//删除单个学院信息
+    public function delete($id) {
+    	$em = $this->getEntityManager();
+        $academy=$this->findOneById($id);
+        $em->remove($academy);
+        $em->flush();
+    }
+
+    //批量删除学院信息
+    public function multiDelete($ids) {
+    	foreach( $ids as $id ) {
+    		$this->delete($id);
+    	}
+    	return 1;
+    }
 }
