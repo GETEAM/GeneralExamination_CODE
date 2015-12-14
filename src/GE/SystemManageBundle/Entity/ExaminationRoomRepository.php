@@ -11,17 +11,26 @@ use Doctrine\ORM\EntityRepository;
  */
 class ExaminationRoomRepository extends \Doctrine\ORM\EntityRepository
 {
-	public function delete($id)
-    {
-        // $grade = $this-> find($id);  
-        // $this->getEntityManager()->remove($grade);
-        // $this->getEntityManager()->flush();
-        $examination = $this->find($id);
-        if (!$examination) {
-            throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
-        }
-        $this->getEntityManager()->remove($examination);
-        $this->getEntityManager()->flush();
-    }	
-}
+	//添加/编辑(单个)考场(编辑的操作和添加相似)
+    public function add($examinationroom) {
+        $em = $this->getEntityManager();
+        $em->persist($examinationroom);
+        $em->flush();
+    }
 
+    //删除单个考场信息
+    public function delete($id) {
+        $em = $this->getEntityManager();
+        $examinationroom=$this->findOneById($id);
+        $em->remove($examinationroom);
+        $em->flush();
+    }
+
+    //批量删除考场信息
+    public function multiDelete($ids) {
+        foreach( $ids as $id ) {
+            $this->delete($id);
+        }
+        return 1;
+    }
+}

@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class ExaminationRoomType extends AbstractType
+class ExaminationRoomNewType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder
@@ -20,7 +20,7 @@ class ExaminationRoomType extends AbstractType
             ->add('col', 'number', array('label' => ' x '))
             ->add('availableMachineNumber', 'text', array('label' => '可用机器数'))
             ->add('faultMachine', 'text', array('label' => '故障机器'))
-        ;
+            ->add('save', 'submit', array('label' => '添加'));
     }
     
     /**
@@ -38,6 +38,6 @@ class ExaminationRoomType extends AbstractType
      */
     public function getName()
     {
-        return 'systemmanagebundle_examinationroom';
+        return 'ge_systemmanage_examinationroom_new';
     }
 }
