@@ -59,9 +59,12 @@ class GradeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('GESystemManageBundle:Grade')->add($grade);
 
-            return $this->redirect($this->generateUrl('grade_show', array(
-                'id' => $grade->getId()
-            )));
+            $this->addFlash(
+                'success',
+                $grade->getDescription().'添加成功'
+            );
+
+            return $this->redirect($this->generateUrl('grade_index'));
         }
 
         return array(
