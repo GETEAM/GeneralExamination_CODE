@@ -27,6 +27,26 @@
         </div>
         <div class="right">
             {% block right -%}{% endblock %}
+            <div class="flash-message">
+                <div class="notice warning">
+                    成功成功成功成功成功成功成功成功成功
+                </div>
+                {% for flash_message in app.session.flashbag.get('success') %}
+                    <div class="notice success">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+                {% for flash_message in app.session.flashbag.get('warning') %}
+                    <div class="notice warning">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+                {% for flash_message in app.session.flashbag.get('error') %}
+                    <div class="notice error">
+                        {{ flash_message }}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </div>
 {% endblock %}
