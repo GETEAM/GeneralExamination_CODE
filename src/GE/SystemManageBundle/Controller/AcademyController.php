@@ -31,10 +31,10 @@ class AcademyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('GESystemManageBundle:Academy')->findAll();
+        $academies = $em->getRepository('GESystemManageBundle:Academy')->findAll();
 
         return array(
-            'entities' => $entities,
+            'academies' => $academies
         );
     }
     /**
@@ -65,7 +65,6 @@ class AcademyController extends Controller
         }
 
         return array(
-            'nav_title' => 'academy',
             'new_form' => $new_form->createView()
         );
     }
@@ -87,7 +86,6 @@ class AcademyController extends Controller
             throw $this->createNotFoundException('Unable to find Academy entity.');
         }
         return array(
-            'nav_title' => 'academy',
             'academy' => $academy
         );
     }
@@ -120,7 +118,6 @@ class AcademyController extends Controller
         }
 
         return array(
-            'nav_title' => 'academy',
             'edit_form' => $edit_form->createView(),
         );
     }

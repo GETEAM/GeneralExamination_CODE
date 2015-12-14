@@ -33,7 +33,6 @@ class GradeController extends Controller
         $grades = $em->getRepository('GESystemManageBundle:Grade')->findAll();
 
         return array(
-            'nav_title' => 'grade',
             'grades' => $grades
         );
     }
@@ -66,7 +65,6 @@ class GradeController extends Controller
         }
 
         return array(
-            'nav_title' => 'grade',
             'new_form' => $new_form->createView()
         );
     }
@@ -89,7 +87,6 @@ class GradeController extends Controller
         }
         
         return array(
-            'nav_title' => 'grade',
             'grade' => $grade
         );
     }
@@ -122,7 +119,6 @@ class GradeController extends Controller
         }
 
         return array(
-            'nav_title' => 'grade',
             'edit_form' => $edit_form->createView(),
         );
     }
