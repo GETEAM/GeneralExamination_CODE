@@ -1,24 +1,23 @@
 {% extends 'GESystemManageBundle::system-manage.html.twig' %}
 
-{% block title %}修改年级信息—基本信息设置—系统管理{% endblock %}
+{% block title %}修改学院信息—基本信息设置—系统管理{% endblock %}
 
 {% block right -%}
     <h1>
-        添加学院
-        <a href="{{ path('academy') }}">
-            {% image '@AppBundle/Resources/public/images/back.png' %}
-                <img src="{{ asset_url }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
-            {% endimage %}
+        修改学院信息
+        <a href="{{ path('academy_index') }}">
+            <img src="{{ asset('bundles/app/images/manage/back.png') }}" width="12" height="12" alt="返回学院信息列表" title="返回学院信息列表">
             <span>返回学院信息列表</span>
         </a>
     </h1>
 
     {{ form_start(edit_form) }}
+    
         {{ form_errors(edit_form) }}
 
         {{ form_row(edit_form.academyID, {'attr': {'placeholder': '请输入学院代号', 'autocomplete': 'off'} }) }}
         {{ form_row(edit_form.academyName, {'attr': {'placeholder': '请输入学院名称', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.submit, {'attr': {'class': 'btn' } }) }}
+        {{ form_row(edit_form.save, {'attr': {'class': 'btn' } }) }}
 
     {{ form_end(edit_form, {'render_rest': true}) }}
 
