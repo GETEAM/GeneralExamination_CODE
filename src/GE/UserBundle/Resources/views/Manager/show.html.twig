@@ -48,12 +48,16 @@
                 <th>教师电话</th>
                 <td>{{ manager.telephone }}</td>
             </tr>
-            {#
+           
 			<tr>
                 <th>权限</th>
-                <td>{{ manager.roles }}</td>
+                <td>
+                	{% for role in manager.roles %}
+                	{{ role }}
+                	{% endfor %}
+                </td>
             </tr>
-            #}
+            
         </tbody>
     </table>
 {% endblock %}

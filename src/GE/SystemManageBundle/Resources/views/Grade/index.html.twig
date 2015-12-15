@@ -47,20 +47,30 @@
                             <img src="{{  asset('bundles/app/images/manage/view.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
                         </a>
                         <a href="{{ path('grade_edit', { 'id': grade.id }) }}">
-                            <img src="{{  asset('bundles/app/images/manage/edit.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
+                            <img src="{{  asset('bundles/app/images/manage/edit.png')  }}" width="20" height="20" alt="编辑年级信息" title="编辑年级信息">
                         </a>
-                        <a href="{{ path('grade_delete', { 'id': grade.id }) }}">
-                            <img src="{{  asset('bundles/app/images/manage/delete.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
+                        <a href="javascript:void(0)" class="delete_btn">
+                            <img src="{{  asset('bundles/app/images/manage/delete.png')  }}" width="20" height="20" alt="删除年级信息" title="删除年级信息">
                         </a>
+                        <div class="delete-dialog" title="删除">
+                            <p>你确定要删除{{grade.description}}的年级信息吗？</p>
+                            <div class="dialog-btn">
+                                <a href="{{ path('grade_delete', { 'id': grade.id }) }}" class="delete">删除</a><a href="javascript:void(0)" class="close">取消</a>
+                            </div>
+                        </div>
                     </td>
                 </tr>
+                
+
             {% endfor %}
         {% endif %}
         </tbody>
     </table>
+    
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
     <script src="{{ asset('bundles/gesystemmanage/js/grade_index.js') }}"></script>
+    <script src="{{ asset('bundles/gesystemmanage/js/grade_delete.js') }}"></script>
 {% endblock %}

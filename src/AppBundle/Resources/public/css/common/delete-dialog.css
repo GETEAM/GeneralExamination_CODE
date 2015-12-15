@@ -1,0 +1,20 @@
+.delete-dialog .dialog-btn{
+	border-top: 1px solid #EBEBEB;
+	margin-top: 20px;
+	margin-bottom: 15px;
+	padding-top: 20px;
+	padding-left: 110px;
+}
+.delete-dialog .dialog-btn a{
+	display: inline-block;
+	border: 1px solid #B3B3B3;
+	border-radius: 4px;
+	margin-top: 10px;
+	margin-left: 15px;
+	text-decoration: none;
+	padding: 5px 15px;
+	background-color: #F7F7F7;
+}
+.delete-dialog .dialog-btn a:hover{
+	background-color: #E5E5E5;
+}
