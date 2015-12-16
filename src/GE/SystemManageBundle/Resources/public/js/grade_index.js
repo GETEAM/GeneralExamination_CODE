@@ -7,7 +7,7 @@ $(function() {
 	/*** 单个删除 ***/
 	// 对话框 初始化
 	$( '.delete-dialog' ).dialog({ 
-		closeOnEscape: false,//按下ESC后是否退出
+		closeOnEscape: true,//按下ESC后是否退出
 		modal: true,//出现模态弹出框
 		resized: false,
 		autoOpen: false,

@@ -49,18 +49,16 @@
                         <a href="{{ path('academy_edit', { 'id': academy.id }) }}">
                             <img src="{{  asset('bundles/app/images/manage/edit.png')  }}" width="20" height="20" alt="编辑" title="编辑">
                         </a>
-                        <a href="{{ path('academy_delete', { 'id': academy.id }) }}">
+                        <a href="javascript:void(0)" class="delete-btn" academy-id="{{ academy.id }}">
                             <img src="{{  asset('bundles/app/images/manage/delete.png')  }}" width="20" height="20" alt="删除" title="删除">
                         </a>
+                        <div id="academy_{{ academy.id }}" class="delete-dialog" title="删除确认" academy-id={{ academy.id }} hidden>
+                            <p>你确定要删除   <span class="dialog-item-key">{{academy.academyName}}</span>   的学院信息吗？</p>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
         {% endif %}
         </tbody>
     </table>
-{% endblock %}
-
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/gesystemmanage/js/academy_index.js') }}"></script>
 {% endblock %}

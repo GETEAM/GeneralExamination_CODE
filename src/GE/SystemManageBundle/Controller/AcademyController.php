@@ -58,8 +58,12 @@ class AcademyController extends Controller
         if ($new_form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('GESystemManageBundle:Academy')->add($academy);
+            
+            $this->addFlash('success',
+                $academy->getAcademyName().'添加成功'
+            );
 
-            return $this->redirect($this->generateUrl('academy_show', array(
+            return $this->redirect($this->generateUrl('academy_index', array(
                 'id' => $academy->getId()
             )));
         }
@@ -114,6 +118,8 @@ class AcademyController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('GESystemManageBundle:Academy')->add($academy);
 
+            $this->addFlash('success','学院信息修改成功');
+
             return $this->redirect($this->generateUrl('academy_index'));
         }
 
@@ -130,8 +136,14 @@ class AcademyController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('GESystemManageBundle:Academy')->delete($id);
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('GESystemManageBundle:Academy')->delete($id);
+            $this->addFlash('success','删除成功');
+        }catch(\Exception $e){
+            $this->addFlash('error','网络原因或数据库故障，删除失败');
+        }
+        
 
         return $this->redirect($this->generateUrl('academy_index'));
     }

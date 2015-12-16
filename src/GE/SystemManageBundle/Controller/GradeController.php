@@ -118,6 +118,8 @@ class GradeController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('GESystemManageBundle:Grade')->add($grade);
 
+            $this->addFlash('success','年级信息修改成功');
+
             return $this->redirect($this->generateUrl('grade_index'));
         }
 
