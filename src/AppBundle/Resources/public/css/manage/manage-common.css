@@ -314,3 +314,9 @@
         opacity: 0;
     }
 }
+
+/*管理端删除确认框样式*/
+//删除确认框中的确认字段样式
+.dialog-item-key {
+    text-decoration: underline;
+}

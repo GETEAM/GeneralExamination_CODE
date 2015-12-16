@@ -134,9 +134,14 @@ class GradeController extends Controller
      * @Template()
      */
     public function deleteAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('GESystemManageBundle:Grade')->delete($id);
+    {   
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('GESystemManageBundle:Grade')->delete($id);
+            $this->addFlash('success', '删除成功!');
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，删除失败');
+        }
 
         return $this->redirect($this->generateUrl('grade_index'));
     }
