@@ -1,3 +1,13 @@
 {% extends 'GESystemManageBundle::system-manage.html.twig' %}
 
 {% set nav_title = 'examinationroom' %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/gesystemmanage/css/examination-room.css') }}"/>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/gesystemmanage/js/examination-room_index.js') }}"></script>
+{% endblock %}

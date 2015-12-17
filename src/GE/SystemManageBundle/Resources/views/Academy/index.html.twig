@@ -6,7 +6,12 @@
     <h1>
         学院信息列表
     </h1>
-
+    <div class="wait-load">
+        <div class="wait-load-image">
+            <img src="{{  asset('bundles/app/images/manage/nowloading.gif')  }}" alt="正在加载" title="正在加载"/>
+            <p>正在加载学院信息列表</p>
+        </div>
+    </div>
     <div class="common-action">
         <a href="{{ path('academy_new') }}" class="btn btn-common-action">
             <img src="{{  asset('bundles/app/images/manage/add.png')  }}" width="20" height="20" alt="添加学院信息" title="添加学院信息">

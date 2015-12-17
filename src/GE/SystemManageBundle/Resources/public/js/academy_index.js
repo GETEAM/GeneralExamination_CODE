@@ -8,14 +8,14 @@ $(function() {
 		resized: false,
 		autoOpen: false,
 		buttons: {
-			'取消': function() {
-				//此处的this为$( '.delete-dialog' )
-				$(this).dialog('close');
-			},
 			'确认': function() {
 				var academy_id = $(this).attr('academy-id');
 				//跳转到删除页面
 				location.href = '/manage/academy/delete/' + academy_id;
+			},
+			'取消': function() {
+				//此处的this为$( '.delete-dialog' )
+				$(this).dialog('close');
 			}
 		}
 	})

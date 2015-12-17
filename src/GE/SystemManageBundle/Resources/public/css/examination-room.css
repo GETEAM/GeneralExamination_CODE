@@ -89,3 +89,12 @@
 .fault-machine-table table td.fault-machine {
 	background-color: #ffb179;
 }
+
+/* index 界面鼠标上浮显示故障机器表样式 */
+.show-fault-machine{
+	width: 100%;
+    margin: 0 auto;
+    text-align: center;
+    border: 1px solid #dedede;
+    display: none;
+}

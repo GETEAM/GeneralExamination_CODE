@@ -59,9 +59,7 @@ class ExaminationRoomController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('GESystemManageBundle:ExaminationRoom')->add($examinationroom);
 
-            return $this->redirect($this->generateUrl('examinationroom_show', array(
-                'id' => $examinationroom->getId()
-            )));
+            return $this->redirect($this->generateUrl('examinationroom_index'));
         }
 
         return array(
@@ -97,7 +95,7 @@ class ExaminationRoomController extends Controller
      * @Method("GET")
      * @Template("GESystemManageBundle:ExaminationRoom:edit.html.twig")
      */
-     public function editAction($id)
+     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $examinationroom = $em->getRepository('GESystemManageBundle:ExaminationRoom')->find($id);
