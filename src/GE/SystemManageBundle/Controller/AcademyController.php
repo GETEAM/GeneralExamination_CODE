@@ -63,9 +63,7 @@ class AcademyController extends Controller
                 $academy->getAcademyName().'添加成功'
             );
 
-            return $this->redirect($this->generateUrl('academy_index', array(
-                'id' => $academy->getId()
-            )));
+            return $this->redirect($this->generateUrl('academy_index'));
         }
 
         return array(

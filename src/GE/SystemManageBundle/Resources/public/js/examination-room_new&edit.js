@@ -147,7 +147,7 @@ function handleFaultMachine($available_machine, $fault_machines, $fault_machine_
 			checkbox.attr('checked', false);			
 			$(this).removeClass('fault-machine');			
 		}
-
+		
 		//获取所有故障机器
 		var fault_machines_arr = [];
 		$('input:checkbox[name="fault-machine-checkbox"]:checked', $fault_machine_table).each(function(){

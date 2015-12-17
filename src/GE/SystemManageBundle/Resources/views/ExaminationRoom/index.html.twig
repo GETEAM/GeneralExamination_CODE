@@ -6,6 +6,12 @@
     <h1>
         考场信息列表
     </h1>
+    <div class="wait-load">
+        <div class="wait-load-image">
+            <img src="{{  asset('bundles/app/images/manage/nowloading.gif')  }}" alt="正在加载" title="正在加载"/>
+            <p>正在加载考场信息列表</p>
+        </div>
+    </div>
     <div class="common-action">
         <a href="{{ path('examinationroom_new') }}" class="btn btn-common-action">
             <img src="{{  asset('bundles/app/images/manage/add.png')  }}" width="20" height="20" alt="添加考场信息" title="添加考场信息">
@@ -16,7 +22,7 @@
             批量删除
         </a>
     </div>
-    <table class="common-table examination-romms">
+    <table class="common-table examination-rooms">
         <thead>
             <tr>
                 <th>编号</th>
@@ -44,7 +50,7 @@
                     <td>{{ examinationroom.row }}</td>
                     <td>{{ examinationroom.col }}</td>
                     <td>{{ examinationroom.availableMachineNumber }}</td>
-                    <td>{{ examinationroom.faultMachine }}</td>
+                    <td class="fault-machine-td">{{ examinationroom.faultMachine }}</td>
                     <td>
                          <a href="{{ path('examinationroom_show', { 'id': examinationroom.id }) }}">
                             <img src="{{  asset('bundles/app/images/manage/view.png')  }}" width="20" height="20" alt="查看" title="查看">
@@ -52,18 +58,22 @@
                         <a href="{{ path('examinationroom_edit', { 'id': examinationroom.id }) }}">
                             <img src="{{  asset('bundles/app/images/manage/edit.png')  }}" width="20" height="20" alt="编辑" title="编辑">
                         </a>
-                        <a href="{{ path('examinationroom_delete', { 'id': examinationroom.id }) }}">
+                        <a href="javascript:void(0)" class="delete-btn" examinationroom-id="{{ examinationroom.id }}">
                             <img src="{{  asset('bundles/app/images/manage/delete.png')  }}" width="20" height="20" alt="删除" title="删除">
                         </a>
+                        <div id="examinationroom_{{ examinationroom.id }}" class="delete-dialog" title="删除确认" examinationroom-id={{ examinationroom.id }} hidden>
+                            <p>你确定要删除   <span class="dialog-item-key">{{examinationroom.roomName}}</span>   的考场信息吗？</p>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
         {% endif %}
         </tbody>
     </table>
+    <div class="show-fault-machine">
+        <table>
+
+        </table>
+    </div>
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('bundles/gesystemmanage/js/examinationroom_index.js') }}"></script>
-{% endblock %}
