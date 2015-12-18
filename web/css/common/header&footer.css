@@ -28,3 +28,13 @@
 .header nav ul li a:hover {
 	color: #f70;
 }
+
+/*底部样式*/
+.footer .common-block{
+	height: 50px;
+	line-height: 50px;
+	margin-top: 50px;
+	padding: 10px 15px;
+	text-align: center;
+	border-top: 1px solid #ddd;
+}
