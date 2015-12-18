@@ -1,0 +1,8 @@
+{% extends 'SystemManageBundle::system-manage.html.twig' %}
+
+{% set nav_title = 'academy' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/systemmanage/js/academy_index.js') }}"></script>
+{% endblock %}

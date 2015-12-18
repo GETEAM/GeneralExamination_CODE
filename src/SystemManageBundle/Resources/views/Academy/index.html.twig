@@ -1,0 +1,76 @@
+{% extends 'SystemManageBundle:Academy:layout.html.twig' %}
+
+{% block title %}学院信息管理—系统管理{% endblock %}
+
+{% block right %}
+    <h1>
+        学院信息列表
+    </h1>
+    <div class="wait-load">
+        <div class="wait-load-image">
+            <img src="{{  asset('images/manage/nowloading.gif')  }}" alt="正在加载" title="正在加载"/>
+            <p>正在加载学院信息列表</p>
+        </div>
+    </div>
+    <div class="common-action">
+        <a href="{{ path('academy_new') }}" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加学院信息" title="添加学院信息">
+            添加年级信息
+        </a>
+        <a href="#" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
+            批量删除
+        </a>
+    </div>
+
+    <table class="common-table academies">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>学院代号</th>
+                <th>学院名称</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% if academies|length == 0 %}
+            <tr>
+                <td colspan=4>尚不存在学院信息，请您添加！</td>
+            </tr>
+        {% else %}
+            {% for academy in academies %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="academies" hidden />
+                        <a href="{{ path('academy_show', { 'id': academy.id }) }}">{{ academy.id }}</a>
+                    </td>
+                    <td>{{ academy.academyID }}</td>
+                    <td>{{ academy.academyName }}</td>
+                    <td>
+                        <a href="{{ path('academy_show', { 'id': academy.id }) }}">
+                            <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="查看" title="查看">
+                        </a>
+                        <a href="{{ path('academy_edit', { 'id': academy.id }) }}">
+                            <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑" title="编辑">
+                        </a>
+                        <a href="javascript:void(0)" class="delete-btn" academy-id="{{ academy.id }}">
+                            <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除" title="删除">
+                        </a>
+                        <div id="academy_{{ academy.id }}" class="delete-dialog" title="删除确认" academy-id={{ academy.id }} hidden>
+                            <p>你确定要删除   <span class="dialog-item-key">{{academy.academyName}}</span>   的学院信息吗？</p>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+         <tfoot>
+            <tr>
+            <td colspan="4">
+                {{ knp_pagination_render(academies) }}            
+            </td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

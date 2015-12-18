@@ -1,0 +1,95 @@
+.er-rows-cols {
+	overflow: hidden;
+}
+.er-rows-cols > div, .er-rows-cols > span {
+	width: auto;
+	display: inline-block;
+	float: left;
+}
+.er-rows-cols > span {
+	vertical-align: middle;
+	line-height: 31px;
+	font-size: 12px;
+}
+.er-rows-cols input.er-rows, .er-rows-cols input.er-cols {
+	width: 40px;
+	margin-right: 5px;
+} 
+.er-rows-cols label[for='systemmanagebundle_examinationroom_col'] {
+	width: 20px;
+}
+.er-rows-cols-table {
+	display: none;
+}
+.er-rows-cols-table table{
+	position: relative;
+	left: -2px;
+	top: -2px;
+	height: auto;
+	margin-left: 120px;
+	text-align: center;
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+.er-rows-cols-table table td{
+	width: 25px;
+	height: 25px;
+	border: 1px solid #aeaeae;
+}
+.selected-rows-cols{
+	background-color: #B8F3B8;
+}
+/*故障机器列表样式*/
+.fault-machines {
+	display: none;
+}
+.fault-machine-table {
+	margin-left: 120px;
+	margin-top: -40.5px;
+	font-size: 12px;
+	overflow: auto;
+	max-width: 600px;
+}
+.fault-machine-table .tips {
+	margin-top: 5px;
+	padding-bottom: 10px;
+}
+.fault-machine-table .tips span {
+	font-size: 14px;
+	line-height: 1.4;
+	border-radius: 3px;
+}
+.fault-machine-table .tips .normal, .fault-machine-table .tips .fault{
+	padding: 3px 5px;
+	margin-left: 5px;
+}
+.fault-machine-table .tips .normal {
+	background-color: #B8F3B8;
+}
+.fault-machine-table .tips .fault {
+	background-color: #ffb179;
+}
+.fault-machine-table table {
+	position: relative;
+	left: -2px;
+	top: -2px;
+	width: auto;
+	border-collapse: separate;
+	border-spacing: 2px;
+}
+.fault-machine-table table td{
+	cursor: pointer;
+	box-sizing: border-box;
+	padding: 10px;
+	border: 1px solid #ddd;
+	text-align: center;
+	background-color: #B8F3B8;
+	border-radius: 3px;
+}
+.fault-machine-table table td.fault-machine {
+	background-color: #ffb179;
+}
+
+.fault-table tr td{
+	font-size: 14px;
+}

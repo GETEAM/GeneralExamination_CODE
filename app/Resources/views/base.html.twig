@@ -8,11 +8,11 @@
         </title>
         
         {% block stylesheets %}
-            <link href="{{ asset('bundles/app/css/common/reset.css') }}" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/common/common.css') }}" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/common/header.css') }}" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/common/jquery-ui.css') }}" rel="stylesheet" />
-            <link href="{{ asset('bundles/app/css/common/wait-loading.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/common/reset.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/common/common.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/common/header.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/common/jquery-ui.css') }}" rel="stylesheet" />
+            <link href="{{ asset('css/common/wait-loading.css') }}" rel="stylesheet" />
         {% endblock %}
         
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -26,9 +26,9 @@
         {% block footer %}{% endblock %}
 
         {% block javascripts %}
-            <script src="{{ asset('bundles/app/js/common/jquery.js') }}"></script>
-            <script src="{{ asset('bundles/app/js/common/jquery-ui.js') }}"></script>
-            <script src="{{ asset('bundles/app/js/common/wait-loading.js') }}"></script>
+            <script src="{{ asset('js/common/jquery.js') }}"></script>
+            <script src="{{ asset('js/common/jquery-ui.js') }}"></script>
+            <script src="{{ asset('js/common/wait-loading.js') }}"></script>
         {% endblock %}
         
     </body>
