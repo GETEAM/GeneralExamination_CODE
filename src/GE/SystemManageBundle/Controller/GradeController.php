@@ -26,15 +26,15 @@ class GradeController extends Controller
      * @Method("GET")
      * @Template("GESystemManageBundle:Grade:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $grades = $em->getRepository('GESystemManageBundle:Grade')->findAll();
-
-        return array(
-            'grades' => $grades
-        );
+        $grade = $em->getRepository('GESystemManageBundle:Grade')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $grades = $paginator->paginate($grade, $request->query->getInt('page', 1));
+        return $this->render('GESystemManageBundle:Grade:index.html.twig', [
+        'grades' => $grades,
+    ]);
     }
 
     /**
