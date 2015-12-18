@@ -27,15 +27,15 @@ class AcademyController extends Controller
      * @Method("GET")
      * @Template("GESystemManageBundle:Academy:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $academies = $em->getRepository('GESystemManageBundle:Academy')->findAll();
-
-        return array(
-            'academies' => $academies
-        );
+        $academy = $em->getRepository('GESystemManageBundle:Academy')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $academies = $paginator->paginate($academy, $request->query->getInt('page', 1));
+        return $this->render('GESystemManageBundle:Academy:index.html.twig', [
+        'academies' => $academies,
+    ]);
     }
     /**
      * 添加学院信息.

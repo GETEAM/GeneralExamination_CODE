@@ -69,6 +69,13 @@
             {% endfor %}
         {% endif %}
         </tbody>
+        <tfoot>
+            <tr>
+            <td colspan="7">
+                {{ knp_pagination_render(examinationrooms) }}            
+            </td>
+            </tr>
+        </tfoot>
     </table>
     <div class="show-fault-machine">
         <table>

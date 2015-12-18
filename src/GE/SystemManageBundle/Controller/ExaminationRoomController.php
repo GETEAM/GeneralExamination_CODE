@@ -26,17 +26,16 @@ class ExaminationRoomController extends Controller
      * @Method("GET")
      * @Template("GESystemManageBundle:ExaminationRoom:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
-        $examinationrooms = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
-
-        return array(
-            'examinationrooms' => $examinationrooms,
-        );
+        $examinationroom = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $examinationrooms = $paginator->paginate($examinationroom, $request->query->getInt('page', 1));
+        return $this->render('GESystemManageBundle:ExaminationRoom:index.html.twig', [
+        'examinationrooms' => $examinationrooms,
+    ]);
     }
-
     /**
      * 添加考场信息.
      *
