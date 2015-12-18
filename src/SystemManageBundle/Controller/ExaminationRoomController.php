@@ -29,21 +29,17 @@ class ExaminationRoomController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-<<<<<<< HEAD:src/GE/SystemManageBundle/Controller/ExaminationRoomController.php
         $examinationroom = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
         $paginator = $this->get('knp_paginator');
         $examinationrooms = $paginator->paginate($examinationroom, $request->query->getInt('page', 1));
         return $this->render('GESystemManageBundle:ExaminationRoom:index.html.twig', [
         'examinationrooms' => $examinationrooms,
     ]);
-=======
-
         $examinationrooms = $em->getRepository('SystemManageBundle:ExaminationRoom')->findAll();
 
         return array(
             'examinationrooms' => $examinationrooms,
         );
->>>>>>> c6b639e65dc4ee10760fb0d7bff2b82ea8b86a0f:src/SystemManageBundle/Controller/ExaminationRoomController.php
     }
     /**
      * 添加考场信息.
