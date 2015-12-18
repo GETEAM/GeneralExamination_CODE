@@ -1,20 +1,20 @@
-ge_examination_manage:
-    resource: "@GEExaminationManageBundle/Controller/"
+examination_manage:
+    resource: "@ExaminationManageBundle/Controller/"
     type:     annotation
     prefix:   /
 
-ge_user:
-    resource: "@GEUserBundle/Controller/"
+user:
+    resource: "@UserBundle/Controller/"
     type:     annotation
     prefix:   /
 
-ge_system_manage:
-    resource: "@GESystemManageBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-app:
+app: 
     resource: "@AppBundle/Controller/"
+    type:     annotation
+    prefix:   /
+
+system_manage:
+    resource: "@SystemManageBundle/Controller/"
     type:     annotation
     prefix:   /
 
