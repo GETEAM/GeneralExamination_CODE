@@ -50,7 +50,9 @@
                     <td>{{ examinationroom.row }}</td>
                     <td>{{ examinationroom.col }}</td>
                     <td>{{ examinationroom.availableMachineNumber }}</td>
-                    <td class="fault-machine-td">{{ examinationroom.faultMachine }}</td>
+                    <td class="fault-machine-td" examinationroom-id="{{ examinationroom.id }}" examinationroom-row="{{ examinationroom.row }}" examinationroom-col="{{ examinationroom.col }}" examinationroom-available-machine="{{ examinationroom.availableMachineNumber }}" >
+                        {{ examinationroom.faultMachine }}
+                    </td>
                     <td>
                          <a href="{{ path('examinationroom_show', { 'id': examinationroom.id }) }}">
                             <img src="{{  asset('bundles/app/images/manage/view.png')  }}" width="20" height="20" alt="查看" title="查看">
@@ -66,14 +68,25 @@
                         </div>
                     </td>
                 </tr>
+                 <tr id="examinationroom_{{ examinationroom.id }}" class="show-fault-machine" examinationroom-id="{{ examinationroom.id }}">
+                    <td colspan="7">
+                    <div class="fault-machine-table">
+                        <div class="tips">
+                            <span>黄色表示故障机器:</span>
+                            <span class="normal">正常</span>
+                            <span class="fault">故障</span> 
+                        </div>
+                        <table class="fault-table">
+                        </table>
+                    </div>
+                    </td>
+                </tr>
             {% endfor %}
         {% endif %}
-        </tbody>
-    </table>
-    <div class="show-fault-machine">
-        <table>
 
-        </table>
-    </div>
+        </tbody>
+        
+    </table>
+    
 {% endblock %}
 

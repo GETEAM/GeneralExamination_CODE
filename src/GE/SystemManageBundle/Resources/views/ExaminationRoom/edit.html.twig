@@ -2,17 +2,6 @@
 
 {% block title %}修改考场信息—基本信息设置—系统管理{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    {%  stylesheets                
-        '@GESystemManageBundle/Resources/public/css/examination-room.css'    
-        filter='cssrewrite'  
-    %}
-        <link rel="stylesheet" href="{{asset_url}}"/>
-    {% endstylesheets %}
-    
-{% endblock %}
-
 {% block right -%}
     <h1>
         修改考场信息

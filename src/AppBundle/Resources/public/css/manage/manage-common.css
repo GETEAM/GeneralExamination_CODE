@@ -211,6 +211,14 @@
 .right .common-table tr {
     border: 1px solid #dedede;
 }
+.right .common-table tr.show-fault-machine{
+    height: 280px;
+    display: none;
+    background-color: #EBEBEB;
+    border: 1px solid inherit;
+    padding-top: 10px;
+}
+
 .right .common-table tr.selected {
     background-color: #B8F3B8!important;
 }
