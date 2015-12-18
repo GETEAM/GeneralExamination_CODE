@@ -65,5 +65,12 @@
             {% endfor %}
         {% endif %}
         </tbody>
+         <tfoot>
+            <tr>
+            <td colspan="4">
+                {{ knp_pagination_render(academies) }}            
+            </td>
+            </tr>
+        </tfoot>
     </table>
 {% endblock %}

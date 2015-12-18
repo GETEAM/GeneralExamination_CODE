@@ -12,7 +12,7 @@
 	float: left;
 	height: 100%;
 	line-height: 60px;
-	font-size: 2em;
+	font-size: 24px;
 	padding-right: 60px;
 }
 .header nav, .header nav ul, .header nav ul li {
@@ -27,4 +27,14 @@
 }
 .header nav ul li a:hover {
 	color: #f70;
+}
+
+/*底部样式*/
+.footer .common-block{
+	height: 50px;
+	line-height: 50px;
+	margin-top: 50px;
+	padding: 10px 15px;
+	text-align: center;
+	border-top: 1px solid #ddd;
 }

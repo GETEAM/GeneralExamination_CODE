@@ -27,10 +27,15 @@ class AcademyController extends Controller
      * @Method("GET")
      * @Template("SystemManageBundle:Academy:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-
+        $academy = $em->getRepository('GESystemManageBundle:Academy')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $academies = $paginator->paginate($academy, $request->query->getInt('page', 1));
+        return $this->render('GESystemManageBundle:Academy:index.html.twig', [
+        'academies' => $academies,
+        ]);
         $academies = $em->getRepository('SystemManageBundle:Academy')->findAll();
 
         return array(
