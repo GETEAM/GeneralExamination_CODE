@@ -17,10 +17,10 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\DoctrineBundle\DoctrineBundle(),
             new Sensio\Bundle\FrameworkExtraBundle\SensioFrameworkExtraBundle(),
             new AppBundle\AppBundle(),
-            new GE\SystemManageBundle\GESystemManageBundle(),
+            new SystemManageBundle\SystemManageBundle(),
             new FOS\UserBundle\FOSUserBundle(),
-            new GE\UserBundle\GEUserBundle(),
-            new GE\ExaminationManageBundle\GEExaminationManageBundle(),
+            new UserBundle\UserBundle(),
+            new ExaminationManageBundle\ExaminationManageBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
         );
 

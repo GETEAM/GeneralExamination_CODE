@@ -1,0 +1,78 @@
+{% extends 'SystemManageBundle:Grade:layout.html.twig' %}
+
+{% block title %}年级信息管理—系统管理{% endblock %}
+
+{% block right %}
+    <h1>
+        年级信息列表
+    </h1>
+    <div class="wait-load">
+        <div class="wait-load-image">
+            <img src="{{  asset('images/manage/nowloading.gif')  }}" alt="正在加载" title="正在加载"/>
+            <p>正在加载年级信息列表</p>
+        </div>
+    </div>
+    
+    <div class="common-action">
+        <a href="{{ path('grade_new') }}" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
+            添加年级信息
+        </a>
+        <a href="#" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
+            批量删除
+        </a>
+    </div>
+
+    <table class="common-table grades">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>年级代号</th>
+                <th>描述</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% if grades|length == 0 %}
+            <tr>
+                <td colspan=4>尚不存在年级信息，请您添加！</td>
+            </tr>
+        {% else %}
+            {% for grade in grades %}
+                <tr>
+                    <td>
+                        <input type="checkbox" name="grades" hidden />
+                        <a href="{{ path('grade_show', { 'id': grade.id }) }}">{{ grade.id }}</a>
+                    </td>
+                    <td>{{ grade.grade }}</td>
+                    <td>{{ grade.description }}</td>
+                    <td>
+                        <a href="{{ path('grade_show', { 'id': grade.id }) }}">
+                            <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
+                        </a>
+                        <a href="{{ path('grade_edit', { 'id': grade.id }) }}">
+                            <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑年级信息" title="编辑年级信息">
+                        </a>
+                        <a href="javascript:void(0)" class="delete-btn" grade-id="{{ grade.id }}">
+                            <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除年级信息" title="删除年级信息">
+                        </a>
+                        <div id="grade_{{ grade.id }}" class="delete-dialog" title="删除确认" grade-id={{ grade.id }} hidden>
+                            <p>你确定要删除   <span class="dialog-item-key">{{grade.description}}</span>   的年级信息吗？</p>
+                        </div>
+                    </td>
+                </tr>
+            {% endfor %}
+        {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+            <td colspan="4">
+                {{ knp_pagination_render(grades) }}            
+            </td>
+            </tr>
+        </tfoot>
+    </table>
+   
+{% endblock %}

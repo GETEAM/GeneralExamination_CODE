@@ -40,7 +40,7 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [AppBundle,GESystemManageBundle,GEUserBundle]
+    bundles:        [AppBundle, SystemManageBundle, UserBundle]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -82,4 +82,4 @@ swiftmailer:
 fos_user:
     db_driver: orm 
     firewall_name: main
-    user_class: GE\UserBundle\Entity\Manager
+    user_class: UserBundle\Entity\Manager
