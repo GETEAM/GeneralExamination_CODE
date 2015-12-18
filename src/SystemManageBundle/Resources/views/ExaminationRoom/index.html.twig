@@ -2,16 +2,13 @@
 
 {% block title %}考场信息管理—系统管理{% endblock %}
 
+{% block loading %}正在加载考场信息列表{% endblock %}
+
 {% block right -%}
     <h1>
         考场信息列表
     </h1>
-    <div class="wait-load">
-        <div class="wait-load-image">
-            <img src="{{  asset('images/manage/nowloading.gif')  }}" alt="正在加载" title="正在加载"/>
-            <p>正在加载考场信息列表</p>
-        </div>
-    </div>
+    
     <div class="common-action">
         <a href="{{ path('examinationroom_new') }}" class="btn btn-common-action">
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加考场信息" title="添加考场信息">
@@ -52,6 +49,8 @@
                     <td>{{ examinationroom.availableMachineNumber }}</td>
                     <td class="fault-machine-td" examinationroom-id="{{ examinationroom.id }}" examinationroom-row="{{ examinationroom.row }}" examinationroom-col="{{ examinationroom.col }}" examinationroom-available-machine="{{ examinationroom.availableMachineNumber }}" >
                         {{ examinationroom.faultMachine }}
+                        <div id="examinationroom_{{ examinationroom.id }}" class="show-fault-machine" examinationroom-id="{{ examinationroom.id }}" >
+                        </div>
                     </td>
                     <td>
                          <a href="{{ path('examinationroom_show', { 'id': examinationroom.id }) }}">
@@ -63,24 +62,12 @@
                         <a href="javascript:void(0)" class="delete-btn" examinationroom-id="{{ examinationroom.id }}">
                             <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除" title="删除">
                         </a>
-                        <div id="examinationroom_{{ examinationroom.id }}" class="delete-dialog" title="删除确认" examinationroom-id={{ examinationroom.id }} hidden>
+                        <div id="delete_examinationroom_{{ examinationroom.id }}" class="delete-dialog" title="删除确认" examinationroom-id={{ examinationroom.id }} hidden>
                             <p>你确定要删除   <span class="dialog-item-key">{{examinationroom.roomName}}</span>   的考场信息吗？</p>
                         </div>
                     </td>
                 </tr>
-                 <tr id="examinationroom_{{ examinationroom.id }}" class="show-fault-machine" examinationroom-id="{{ examinationroom.id }}">
-                    <td colspan="7">
-                    <div class="fault-machine-table">
-                        <div class="tips">
-                            <span>黄色表示故障机器:</span>
-                            <span class="normal">正常</span>
-                            <span class="fault">故障</span> 
-                        </div>
-                        <table class="fault-table">
-                        </table>
-                    </div>
-                    </td>
-                </tr>
+                
             {% endfor %}
         {% endif %}
 

@@ -9,6 +9,9 @@ $(function() {
 		autoOpen: false,
 		buttons: {
 			'确认': function() {
+				$(this).dialog('close');
+				$('.load-describe').text("正在删除,请稍等！");
+				$('.wait-load').show();
 				var academy_id = $(this).attr('academy-id');
 				//跳转到删除页面
 				location.href = '/manage/academy/delete/' + academy_id;

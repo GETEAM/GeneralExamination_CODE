@@ -10,8 +10,11 @@ $(function() {
 		autoOpen: false,
 		buttons: {
 			'确认': function() {
-				var examinationroom_id = $(this).attr('examinationroom-id');
+				$(this).dialog('close');
+				$('.load-describe').text("正在删除,请稍等！");
+				$('.wait-load').show();
 				//跳转到删除页面
+				var examinationroom_id = $(this).attr('examinationroom-id');
 				location.href = '/manage/examinationroom/delete/' + examinationroom_id;
 			},
 			'取消': function() {
@@ -25,7 +28,8 @@ $(function() {
 		
 		var examinationroom_id = $(this).closest('a').attr('examinationroom-id');
 		//对应的对话框id
-		var dialog_id = '#examinationroom_' + examinationroom_id;
+		var dialog_id = '#delete_examinationroom_' + examinationroom_id;
+
 		//打开对话框
 		$(dialog_id).dialog('open');
 	});

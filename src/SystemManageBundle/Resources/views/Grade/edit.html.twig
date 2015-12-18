@@ -2,6 +2,8 @@
 
 {% block title %}修改年级信息—基本信息设置—系统管理{% endblock %}
 
+{% block loading %}正在加载编辑表单{% endblock %}
+
 {% block right -%}
     <h1>
         修改年级信息
@@ -17,7 +19,7 @@
 
         {{ form_row(edit_form.grade, {'attr': {'placeholder': '请输入年级代号', 'autocomplete': 'off'} }) }}
         {{ form_row(edit_form.description, {'attr': {'placeholder': '请输入年级描述信息', 'autocomplete': 'off'} }) }}
-        {{ form_row(edit_form.save, {'attr': {'class': 'btn' } }) }}
+        {{ form_row(edit_form.save, {'attr': {'class': 'btn edit-btn' } }) }}
 
     {{ form_end(edit_form, {'render_rest': true}) }}
 

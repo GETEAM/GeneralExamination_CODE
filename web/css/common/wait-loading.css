@@ -11,7 +11,7 @@
     z-index:200;
 }
 .wait-load-image{
-	width: 200px;
+	width: 250px;
 	margin: auto;
 	position: absolute;
 	left: 50%;
@@ -21,11 +21,9 @@
 }
 
 .wait-load .wait-load-image img{
-	width:100px;
-	height: 100px;
 	vertical-align: middle;
-	margin-top: 20px;
-	margin-left: 40px;
+	margin-bottom: 10px;
+	margin-left: 70px;
 }
 .wait-load .wait-load-image p{
 	text-align: center;
