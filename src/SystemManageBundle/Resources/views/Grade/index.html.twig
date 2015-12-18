@@ -73,6 +73,10 @@
             </td>
             </tr>
         </tfoot>
-    </table>
-   
+    </table> 
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/systemmanage/js/grade_index.js') }}"></script>
 {% endblock %}
