@@ -29,10 +29,10 @@ class ExaminationRoomController extends Controller
     public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $examinationroom = $em->getRepository('GESystemManageBundle:ExaminationRoom')->findAll();
+        $examinationroom = $em->getRepository('SystemManageBundle:ExaminationRoom')->findAll();
         $paginator = $this->get('knp_paginator');
         $examinationrooms = $paginator->paginate($examinationroom, $request->query->getInt('page', 1));
-        return $this->render('GESystemManageBundle:ExaminationRoom:index.html.twig', [
+        return $this->render('SystemManageBundle:ExaminationRoom:index.html.twig', [
         'examinationrooms' => $examinationrooms,
     ]);
         $examinationrooms = $em->getRepository('SystemManageBundle:ExaminationRoom')->findAll();

@@ -13,6 +13,9 @@ $(function() {
 		autoOpen: false,
 		buttons: {
 			'确认': function() {
+				$(this).dialog('close');
+				$('.load-describe').text("正在删除,请稍等！");
+				$('.wait-load').show();
 				var grade_id = $(this).attr('grade-id');
 				//跳转到删除页面
 				location.href = '/manage/grade/delete/' + grade_id;
@@ -31,4 +34,5 @@ $(function() {
 		//打开对话框
 		$(dialog_id).dialog('open');
 	});
+	
 })

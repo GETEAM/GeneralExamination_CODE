@@ -17,7 +17,13 @@
         
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
-    <body>
+    <body>   
+        <div class="wait-load">
+            <div class="wait-load-image">
+                <img src="{{  asset('images/manage/nowloading.gif')  }}" alt="正在加载" title="正在加载"/>
+                <p class="load-describe">{% block loading %}{% endblock %}</p>
+            </div>
+        </div>
         
         {% block header %}{% endblock %}
     

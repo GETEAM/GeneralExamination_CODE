@@ -2,6 +2,7 @@
 
 {% block title %}添加考场—基本信息设置—系统管理{% endblock %}
 
+{% block loading %}正在加载添加表单{% endblock %}
 
 {% block right -%}
     <h1>
@@ -46,7 +47,7 @@
             <table>
             </table>
         </div>
-        {{ form_row(new_form.save, {'attr': {'class': 'btn' } }) }}
+        {{ form_row(new_form.save, {'attr': {'class': 'btn add-btn' } }) }}
 
     {{ form_end(new_form, {'render_rest': true}) }}
 

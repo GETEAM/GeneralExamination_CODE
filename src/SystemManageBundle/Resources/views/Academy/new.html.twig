@@ -2,6 +2,8 @@
 
 {% block title %}添加学院—基本信息设置—系统管理{% endblock %}
 
+{% block loading %}正在加载添加表单{% endblock %}
+
 {% block right -%}
     <h1>
         添加学院
@@ -16,7 +18,7 @@
 
         {{ form_row(new_form.academyID, {'attr': {'placeholder': '请输入学院代号', 'autocomplete': 'off'} }) }}
         {{ form_row(new_form.academyName, {'attr': {'placeholder': '请输入学院名称', 'autocomplete': 'off'} }) }}
-        {{ form_row(new_form.save, {'attr': {'class': 'btn' } }) }}
+        {{ form_row(new_form.save, {'attr': {'class': 'btn add-btn' } }) }}
 
     {{ form_end(new_form, {'render_rest': true}) }}
 

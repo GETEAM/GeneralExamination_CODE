@@ -2,6 +2,8 @@
 
 {% block title %}添加年级—基本信息设置—系统管理{% endblock %}
 
+{% block loading %}正在加载添加表单{% endblock %}
+
 {% block right -%}
     <h1>
         添加年级
@@ -16,7 +18,7 @@
 
         {{ form_row(new_form.grade, {'attr': {'placeholder': '请输入年级代号', 'autocomplete': 'off'} }) }}
         {{ form_row(new_form.description, {'attr': {'placeholder': '请输入年级描述信息', 'autocomplete': 'off'} }) }}
-        {{ form_row(new_form.save, {'attr': {'class': 'btn' } }) }}
+        {{ form_row(new_form.save, {'attr': {'class': 'btn add-btn' } }) }}
 
     {{ form_end(new_form, {'render_rest': true}) }}
 
