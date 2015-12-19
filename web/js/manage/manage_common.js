@@ -1,6 +1,6 @@
 /****系统管理各页面通用js****/
 
-//列表页的tr多选初始化
+//列表页的tr多选初始化：单击表格tr 选中一行
 function multipleSelectTR( $selector ) {
 	$selector.click(function(e) {
 		var event_target = e.target;

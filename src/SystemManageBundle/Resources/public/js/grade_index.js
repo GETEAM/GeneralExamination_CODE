@@ -1,9 +1,8 @@
-
 $(function() {
-	
 	/*** 批量删除 ***/
-	// 单击表格tr 选中一行
+	// tr多选初始化：单击表格tr 选中一行
 	multipleSelectTR($('.grades tbody tr'));
+
 	/*** 单个删除 ***/
 	// 对话框 初始化
 	$( '.delete-dialog' ).dialog({ 
@@ -30,9 +29,8 @@ $(function() {
 	$('.delete-btn').click(function(){
 		var grade_id = $(this).closest('a').attr('grade-id');
 		//对应的对话框id
-		var dialog_id = '#grade_' + grade_id;
+		var dialog_id = '#delete-dialog_' + grade_id;
 		//打开对话框
 		$(dialog_id).dialog('open');
 	});
-	
 })

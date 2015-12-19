@@ -71,3 +71,8 @@
         </tfoot>
     </table>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/systemmanage/js/academy_index.js') }}"></script>
+{% endblock %}
