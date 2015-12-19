@@ -41,21 +41,22 @@ $(function() {
 		var examinationroom_id=$(this).attr('examinationroom-id');
 		var rows=$(this).attr('examinationroom-row');
 		var cols=$(this).attr('examinationroom-col');
-		var available_machine=$(this).attr('examinationroom-available-machine');
 		var fault_machines=$(this).text();
+		
+		var fault_machine_table_id='#examinationroom_' + examinationroom_id;
+		$(fault_machine_table_id).show();
+
 		//指定要加载的表格
-		var fault_machine_table=$('.fault-table');
+		var fault_machine_table=$(fault_machine_table_id +' .fault-table');
 		//alert(rows+"..."+cols+"..."+available_machine);
 		showFaultMachine(examinationroom_id,available_machine, fault_machines,fault_machine_table,rows, cols);
 
-		var fault_machine_td_id='#examinationroom_' + examinationroom_id;
-		$(fault_machine_td_id).show();
 	});
 	$('.fault-machine-td').mouseout(function(){
 		$('.show-fault-machine').hide();
 	});
 
-	function showFaultMachine($examinationroom_id,$available_machine,$fault_machines, $fault_machine_table, rows, cols){
+	function showFaultMachine($examinationroom_id, $fault_machines, $fault_machine_table, rows, cols){
 		//动态生成故障机器列表
 		$fault_machine_table.html('');
 		for(var row = 0; row < rows; row++){
