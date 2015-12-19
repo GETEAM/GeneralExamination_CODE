@@ -1,7 +1,8 @@
 /*考场列表页故障机器显示*/
 .right .common-table tr .show-fault-machine{
     height: 280px;
-    /*display: none;*/
+    display: none;
+    margin-top: 5px;
     background-color: #EBEBEB;
     border: 1px solid inherit;
     padding-top: 10px;
