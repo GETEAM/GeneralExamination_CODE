@@ -1,10 +1,13 @@
 /*考场列表页故障机器显示*/
 .right .common-table tr .show-fault-machine{
     height: 280px;
-    display: none;
+    /*display: none;*/
     background-color: #EBEBEB;
     border: 1px solid inherit;
     padding-top: 10px;
+    position: absolute;
+    left: 0;
+    right: 0;
 }
 /*机器行列数样式*/
 .er-rows-cols {

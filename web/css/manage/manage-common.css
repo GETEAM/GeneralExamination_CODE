@@ -126,9 +126,10 @@
 
 /*管理端右侧标签样式*/
 .manage .right {
+    width: 940px;
+    float: right;
     height: auto;
     box-sizing: content-box;
-    overflow: hidden;
     position: relative;
 }
 /*管理端右侧查询样式*/
