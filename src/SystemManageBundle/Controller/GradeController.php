@@ -3,6 +3,7 @@
 namespace SystemManageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -133,18 +134,49 @@ class GradeController extends Controller
      *
      * @Route("/delete/{id}", name="grade_delete")
      * @Method("GET")
-     * @Template()
      */
     public function deleteAction(Request $request, $id)
     {   
         try{
             $em = $this->getDoctrine()->getManager();
             $success = $em->getRepository('SystemManageBundle:Grade')->delete($id);
-            $this->addFlash('success', '删除成功!');
+            if($success){
+                $this->addFlash('success', '删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，删除失败');
+            }
         } catch(\Exception $e){
             $this->addFlash('error', '网络原因或数据库故障，删除失败');
         }
 
         return $this->redirect($this->generateUrl('grade_index'));
+    }
+
+    /**
+     * 批量删除年级信息.
+     *
+     * @Route("/multi-delete", name="grade_multi_delete")
+     * @Method("POST")
+     */
+    public function multiDeleteAction(Request $request)
+    {   
+        $ids = $request->request->get('ids');
+        
+        $em = $this->getDoctrine()->getManager();
+        $success = $em->getRepository('SystemManageBundle:Grade')->multiDelete($ids);
+
+        if($success){
+            $this->addFlash('success', '批量删除成功!');
+        }else{
+            $this->addFlash('error', '批量删除失败!');
+        }
+
+        $result = array(
+            'success' => $success
+        );
+        
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

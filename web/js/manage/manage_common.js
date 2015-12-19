@@ -1,6 +1,6 @@
 /****系统管理各页面通用js****/
 
-//列表页的tr多选初始化：单击表格tr 选中一行
+//列表页的tr多选初始化
 function multipleSelectTR( $selector ) {
 	$selector.click(function(e) {
 		var event_target = e.target;
@@ -20,10 +20,11 @@ function multipleSelectTR( $selector ) {
 	})
 }
 /*获取所有选中的tr的值*/
-function getSelectedTRs($name) {
+function getSelectedTRs(name) {
 	var trs = [];
-	$('input:checkbox[name="'+$name+'"]:checked').each(function(){
-		trs.push($(this).val());
+	$('input:checkbox[name="'+name+'"]:checked').each(function(){
+		parseInt($(this).val())
+		trs.push( parseInt($(this).val()) );
 	});
 	return trs;
 }

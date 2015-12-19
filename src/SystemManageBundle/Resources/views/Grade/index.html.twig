@@ -14,7 +14,7 @@
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
             添加年级信息
         </a>
-        <a href="#" class="btn btn-common-action">
+        <a href="#" class="btn btn-common-action btn-multi-delete">
             <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
             批量删除
         </a>
@@ -55,7 +55,7 @@
                             <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除年级信息" title="删除年级信息">
                         </a>
                         <div id="delete-dialog_{{ grade.id }}" class="delete-dialog" title="删除确认" grade-id={{ grade.id }} hidden>
-                            <p>你确定要删除   <span class="dialog-item-key">{{grade.description}}</span>   的年级信息吗？</p>
+                            <p>确定要删除   <span class="dialog-item-key">{{grade.description}}</span>   年级信息吗？</p>
                         </div>
                     </td>
                 </tr>
@@ -70,6 +70,11 @@
             </tr>
         </tfoot>
     </table> 
+
+    <!-- 批量删除对话框 -->
+    <div class="multi-delete-dialog" title="批量删除确认" hidden>
+        <p>确定要删除选中的年级信息吗？</p>
+    </div>
 {% endblock %}
 
 {% block javascripts %}
