@@ -38,6 +38,7 @@ $(function() {
 	//index页面，鼠标悬浮在故障列表时显示表格
 	$('.fault-machine-td').mouseover(function(){
 		//获取该考场的相关信息
+		var examinationroom_id=$(this).attr('examinationroom-id');
 		var rows=$(this).attr('examinationroom-row');
 		var cols=$(this).attr('examinationroom-col');
 		var available_machine=$(this).attr('examinationroom-available-machine');
@@ -45,9 +46,8 @@ $(function() {
 		//指定要加载的表格
 		var fault_machine_table=$('.fault-table');
 		//alert(rows+"..."+cols+"..."+available_machine);
-		showFaultMachine(available_machine, fault_machines,fault_machine_table,rows, cols);
+		showFaultMachine(examinationroom_id,available_machine, fault_machines,fault_machine_table,rows, cols);
 
-		var examinationroom_id=$(this).attr('examinationroom-id');
 		var fault_machine_td_id='#examinationroom_' + examinationroom_id;
 		$(fault_machine_td_id).show();
 	});
@@ -55,7 +55,7 @@ $(function() {
 		$('.show-fault-machine').hide();
 	});
 
-	function showFaultMachine($available_machine,$fault_machines, $fault_machine_table, rows, cols){
+	function showFaultMachine($examinationroom_id,$available_machine,$fault_machines, $fault_machine_table, rows, cols){
 		//动态生成故障机器列表
 		$fault_machine_table.html('');
 		for(var row = 0; row < rows; row++){
@@ -64,7 +64,7 @@ $(function() {
 				var $col_temp = $('<td>');
 				var $col_checkbox = $('<input/>', {
 					'type': 'checkbox',
-					'name': 'fault-machine-checkbox',
+					'name': $examinationroom_id,
 					'value': row * cols + col,
 					'css': {'display': 'none', 'width': '20px'}
 				})
@@ -75,9 +75,9 @@ $(function() {
 			$fault_machine_table.append($row_temp);
 		}	
 		//设置默认故障机器
-		$('input:checkbox[name="fault-machine-checkbox"]', $fault_machine_table).val($fault_machines.split(','));
+		$('input:checkbox[name="'+$examinationroom_id+'"]', $fault_machine_table).val($fault_machines.split(','));
 		//标示故障机器
-		$('input:checkbox[name="fault-machine-checkbox"]:checked', $fault_machine_table).each(function(){
+		$('input:checkbox[name="'+$examinationroom_id+'"]:checked', $fault_machine_table).each(function(){
 			//上一步设置故障机器默认选中时，checkbox存在checked属性，但是不为true，此处手动添加
 			$(this).attr('checked', true);
 			$(this).parent().addClass('fault-machine');
