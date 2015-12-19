@@ -92,3 +92,7 @@
     
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/systemmanage/js/examination-room_index.js') }}"></script>
+{% endblock %}
