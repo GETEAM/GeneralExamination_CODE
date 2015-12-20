@@ -1,14 +1,15 @@
 /*考场列表页故障机器显示*/
 .right .common-table tr .show-fault-machine{
-    height: 280px;
     display: none;
     margin-top: 5px;
     background-color: #EBEBEB;
     border: 1px solid inherit;
-    padding-top: 10px;
+    padding-top: 60px;
+    padding-bottom: 20px;
     position: absolute;
     left: 0;
     right: 0;
+    opacity: 0.8;
 }
 /*机器行列数样式*/
 .er-rows-cols {
@@ -64,7 +65,7 @@
 	max-width: 600px;
 }
 .fault-machine-table .tips {
-	margin-top: 5px;
+	margin: 5px auto;
 	padding-bottom: 10px;
 }
 .fault-machine-table .tips span {
@@ -105,4 +106,9 @@
 
 .fault-table tr td{
 	font-size: 14px;
+}
+
+.fault-machine-table .fault-table{
+	position: relative;
+	margin: 0 auto;
 }
