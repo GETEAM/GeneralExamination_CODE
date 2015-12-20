@@ -143,10 +143,10 @@ class GradeController extends Controller
             if($success){
                 $this->addFlash('success', '删除成功!');
             }else{
-                $this->addFlash('error', '网络原因或数据库故障，删除失败');
+                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
             }
         } catch(\Exception $e){
-            $this->addFlash('error', '网络原因或数据库故障，删除失败');
+            $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
         }
 
         return $this->redirect($this->generateUrl('grade_index'));
@@ -168,7 +168,7 @@ class GradeController extends Controller
         if($success){
             $this->addFlash('success', '批量删除成功!');
         }else{
-            $this->addFlash('error', '批量删除失败!');
+            $this->addFlash('error', '批量删除失败!请重新删除！');
         }
 
         $result = array(

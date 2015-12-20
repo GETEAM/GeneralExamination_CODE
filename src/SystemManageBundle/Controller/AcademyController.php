@@ -1,7 +1,7 @@
 <?php
 
 namespace SystemManageBundle\Controller;
-
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
@@ -130,6 +130,7 @@ class AcademyController extends Controller
             'edit_form' => $edit_form->createView(),
         );
     }
+
     /**
      * 删除学院信息.
      *
@@ -142,12 +143,43 @@ class AcademyController extends Controller
         try{
             $em = $this->getDoctrine()->getManager();
             $success = $em->getRepository('SystemManageBundle:Academy')->delete($id);
-            $this->addFlash('success','删除成功');
+            if($success){
+                $this->addFlash('success', '删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+            }
         }catch(\Exception $e){
-            $this->addFlash('error','网络原因或数据库故障，删除失败');
+            $this->addFlash('error','网络原因或数据库故障，删除失败. 请重新删除！');
         }
         
 
         return $this->redirect($this->generateUrl('academy_index'));
+    }
+
+    /**
+     * 批量删除学院信息.
+     *
+     * @Route("/multi-delete", name="academy_multi_delete")
+     * @Method("POST")
+     */
+    public function multiDeleteAction(Request $request)
+    {   
+        $ids = $request->request->get('ids');
+        $em = $this->getDoctrine()->getManager();
+        $success = $em->getRepository('SystemManageBundle:Academy')->multiDelete($ids);
+
+        if($success){
+            $this->addFlash('success', '批量删除成功!');
+        }else{
+            $this->addFlash('error', '批量删除失败!请重新删除！');
+        }
+
+        $result = array(
+            'success' => $success
+        );
+        
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }

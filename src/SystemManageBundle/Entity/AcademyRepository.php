@@ -24,6 +24,7 @@ class AcademyRepository extends \Doctrine\ORM\EntityRepository
         $academy=$this->findOneById($id);
         $em->remove($academy);
         $em->flush();
+        return true;
     }
 
     //批量删除学院信息
@@ -31,6 +32,6 @@ class AcademyRepository extends \Doctrine\ORM\EntityRepository
     	foreach( $ids as $id ) {
     		$this->delete($id);
     	}
-    	return 1;
+    	return true;
     }
 }

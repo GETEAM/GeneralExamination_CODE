@@ -24,7 +24,7 @@ class GradeRepository extends \Doctrine\ORM\EntityRepository
         $grade=$this->findOneById($id);
         $em->remove($grade);
         $em->flush();
-        return 1;
+        return true;
     }
 
     //批量删除管理者
@@ -32,7 +32,7 @@ class GradeRepository extends \Doctrine\ORM\EntityRepository
     	foreach( $ids as $id ) {
     		$this->delete($id);
     	}
-    	return 1;
+    	return true;
     }
 }
 

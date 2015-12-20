@@ -17,9 +17,9 @@
         </a>
         <a href="{{ path('academy_new') }}" class="btn btn-common-action">
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加学院信息" title="添加学院信息">
-            添加年级信息
+            添加学院信息
         </a>
-        <a href="#" class="btn btn-common-action">
+        <a href="#" class="btn btn-common-action btn-multi-delete">
             <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
             批量删除
         </a>
@@ -44,7 +44,7 @@
             {% for academy in academies %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="academies" hidden />
+                        <input type="checkbox" name="academies" value="{{ academy.id }}" hidden />
                         <a href="{{ path('academy_show', { 'id': academy.id }) }}">{{ academy.id }}</a>
                     </td>
                     <td>{{ academy.academyID }}</td>
@@ -75,6 +75,11 @@
             </tr>
         </tfoot>
     </table>
+
+    <!-- 批量删除对话框 -->
+    <div class="multi-delete-dialog" title="批量删除确认" hidden>
+        <p>确定要删除选中的学院信息吗？</p>
+    </div>
 {% endblock %}
 
 {% block javascripts %}

@@ -33,7 +33,6 @@ $(function() {
 		$(dialog_id).dialog('open');
 	});
 
-
 	/*** 批量删除 ***/	
 	//批量删除对话框初始化
 	$( '.multi-delete-dialog' ).dialog({ 
