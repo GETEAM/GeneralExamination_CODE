@@ -195,11 +195,31 @@
     line-height: 20px;
     margin-bottom: 10px;
 }
-.right .common-action a {
+.right .common-action a, .right .common-action .select-all {
     display: inline-block;
     padding: 5px 8px;
 }
+
+.right .common-action .select-all .show-checked {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    background-color: #12cd6f;
+    border-radius: 3px;
+    padding: 3px; 
+}
+.right .common-action .select-all .show-checked:after {
+    content: "";
+    height: 5px;
+    display: block;
+    border-radius: 3px;
+    border: 3px solid transparent;
+    border-left: 3px solid #fff;
+    border-bottom: 3px solid #fff;
+    transform: rotate(-45deg);
+}
 .right .common-action a img {
+    margin-top: -2px;
     vertical-align: middle;
 }
 
