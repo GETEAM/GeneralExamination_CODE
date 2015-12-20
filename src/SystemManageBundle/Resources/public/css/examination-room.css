@@ -1,15 +1,23 @@
-/*考场列表页故障机器显示*/
+/***考场列表页  故障机器显示***/
 .right .common-table tr .show-fault-machine{
     display: none;
-    margin-top: 5px;
-    background-color: #EBEBEB;
-    border: 1px solid inherit;
+    margin-top: 8px;
+    background-color: #eee;
+    border: 2px solid #dedede;
     padding-top: 60px;
     padding-bottom: 20px;
     position: absolute;
     left: 0;
     right: 0;
-    opacity: 0.8;
+}
+.fault-machine-td:hover:after {
+	width: 0px;
+	content: "";
+	display: block;
+	border: 8px solid transparent;
+	border-bottom: 8px solid #dedede;
+	margin: 0 auto;
+	margin-top: -8px;
 }
 /*机器行列数样式*/
 .er-rows-cols {
@@ -53,6 +61,7 @@
 .selected-rows-cols{
 	background-color: #B8F3B8;
 }
+
 /*故障机器列表样式*/
 .fault-machines {
 	display: none;

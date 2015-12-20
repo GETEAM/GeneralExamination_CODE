@@ -1,3 +1,3 @@
 $(function(){
-	    $('.loading').hide();
+	$('.loading').hide();
 })
