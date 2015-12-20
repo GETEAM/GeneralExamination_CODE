@@ -1,4 +1,7 @@
-$(function() {
+$(function() {	
+	/*tr单选多选初始化*/
+	trSelectInitial($('.grades tbody tr'), 'grades');
+
 	/*** 单个删除 ***/
 	// 对话框 初始化
 	$( '.delete-dialog' ).dialog({ 
@@ -31,10 +34,7 @@ $(function() {
 	});
 
 
-	/*** 批量删除 ***/
-	// tr多选初始化：单击表格tr 选中一行
-	multipleSelectTR($('.grades tbody tr'));
-	
+	/*** 批量删除 ***/	
 	//批量删除对话框初始化
 	$( '.multi-delete-dialog' ).dialog({ 
 		closeOnEscape: true,//按下ESC后是否退出
@@ -49,7 +49,6 @@ $(function() {
 				$('.loading').show();
 				
 				var grades_ids = getSelectedTRs('grades');
-				console.log(grades_ids);
 
 				//post操作 用ajax实现
 				$.ajax({
@@ -84,8 +83,16 @@ $(function() {
 	});
 	// 点击批量删除按钮时，打开删除对话框
 	$('.btn-multi-delete').click(function(){
-		//打开对话框
-		$('.multi-delete-dialog').dialog('open');
+		var grades_ids = getSelectedTRs('grades');
+		
+		if(grades_ids.length > 0){
+			//打开对话框
+			$('.multi-delete-dialog').dialog('open');
+		}else{
+			//没有选中内容时，给予提示
+			var $warning_message = $('<div>').html('没有可删除的选中项！').addClass('notice warning');
+			$('.flash-message').append($warning_message);
+		}
 	});
 	
 })

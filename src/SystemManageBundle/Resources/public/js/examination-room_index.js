@@ -1,6 +1,7 @@
 $(function() {
-	//单击表格tr 选中一行
-	multipleSelectTR($('.examination-rooms tbody tr'));
+	/*tr单选多选初始化*/
+	trSelectInitial($('.examination-rooms tbody tr'), 'examination-rooms');
+	
 	/*** 单个删除 ***/
 	// 对话框 初始化
 	$( '.delete-dialog' ).dialog({ 

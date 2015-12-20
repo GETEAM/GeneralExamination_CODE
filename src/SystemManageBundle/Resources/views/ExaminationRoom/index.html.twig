@@ -10,6 +10,11 @@
     </h1>
     
     <div class="common-action">
+        <a href="#" class="btn btn-common-action select-all">
+            <input type="checkbox" hidden/>
+            <i></i>
+            全选
+        </a>
         <a href="{{ path('examinationroom_new') }}" class="btn btn-common-action">
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加考场信息" title="添加考场信息">
             添加考场信息
@@ -40,7 +45,7 @@
             {% for examinationroom in examinationrooms %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="examination-romms" hidden />
+                        <input type="checkbox" name="examination-rooms" hidden />
                         <a href="{{ path('examinationroom_show', { 'id': examinationroom.id }) }}">{{ examinationroom.id }}</a>
                     </td>
                     <td>{{ examinationroom.roomName }}</td>

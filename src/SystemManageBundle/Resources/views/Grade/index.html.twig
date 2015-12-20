@@ -10,9 +10,11 @@
     </h1>
   
     <div class="common-action">
-        <div class="btn btn-common-action select-all">
-            <div class="show-checked"></div>全选
-        </div> 
+        <a href="#" class="btn btn-common-action select-all">
+            <input type="checkbox" hidden/>
+            <i></i>
+            全选
+        </a>
         <a href="{{ path('grade_new') }}" class="btn btn-common-action">
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加年级信息" title="添加年级信息">
             添加年级信息

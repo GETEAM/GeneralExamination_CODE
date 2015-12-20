@@ -1,6 +1,6 @@
 $(function() {
-	//单击表格tr 选中一行
-	multipleSelectTR($('.academies tbody tr'));
+	///*tr单选多选初始化*/
+	trSelectInitial($('.academies tbody tr'), 'academies');
 
 	$('.delete-dialog').dialog({
 		closeOnEscape: true,//按下ESC后是否退出
