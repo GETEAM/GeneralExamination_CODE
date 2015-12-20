@@ -37,8 +37,8 @@
 	width: 40px;
 	margin-right: 5px;
 } 
-.er-rows-cols label[for='systemmanagebundle_examinationroom_col'] {
-	width: 20px;
+.er-rows-cols label[for='systemmanage_examinationroom_edit_col'], .er-rows-cols label[for='systemmanage_examinationroom_new_col'] {
+	width: 25px;
 }
 .er-rows-cols-table {
 	display: none;

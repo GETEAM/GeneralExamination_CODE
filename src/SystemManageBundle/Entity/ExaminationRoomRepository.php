@@ -24,6 +24,7 @@ class ExaminationRoomRepository extends \Doctrine\ORM\EntityRepository
         $examinationroom=$this->findOneById($id);
         $em->remove($examinationroom);
         $em->flush();
+        return true;
     }
 
     //批量删除考场信息
@@ -31,6 +32,6 @@ class ExaminationRoomRepository extends \Doctrine\ORM\EntityRepository
         foreach( $ids as $id ) {
             $this->delete($id);
         }
-        return 1;
+        return true;
     }
 }

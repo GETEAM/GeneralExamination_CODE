@@ -33,9 +33,10 @@ class GradeController extends Controller
         $grade = $em->getRepository('SystemManageBundle:Grade')->findAll();
         $paginator = $this->get('knp_paginator');
         $grades = $paginator->paginate($grade, $request->query->getInt('page', 1));
-        return $this->render('SystemManageBundle:Grade:index.html.twig', [
-        'grades' => $grades,
-    ]);
+        
+        return array(
+            'grades' => $grades,
+        );
     }
 
     /**

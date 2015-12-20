@@ -12,8 +12,8 @@ $(function() {
 		buttons: {
 			'确认': function() {
 				$(this).dialog('close');
-				$('.load-describe').text("正在删除,请稍等！");
-				$('.wait-load').show();
+				$('.loading-description').text("正在删除,请稍等……");
+				$('.loading').show();
 				//跳转到删除页面
 				var examinationroom_id = $(this).attr('examinationroom-id');
 				location.href = '/manage/examinationroom/delete/' + examinationroom_id;
@@ -25,14 +25,73 @@ $(function() {
 		}
 	});
 	// 点击删除按钮时，打开删除对话框
-	$('.delete-btn').click(function(){
-		
+	$('.delete-btn').click(function(){	
 		var examinationroom_id = $(this).closest('a').attr('examinationroom-id');
 		//对应的对话框id
 		var dialog_id = '#delete_examinationroom_' + examinationroom_id;
-
 		//打开对话框
 		$(dialog_id).dialog('open');
+	});
+
+	/*** 批量删除 ***/	
+	//批量删除对话框初始化
+	$( '.multi-delete-dialog' ).dialog({ 
+		closeOnEscape: true,//按下ESC后是否退出
+		modal: true,//出现模态弹出框
+		resized: false,
+		autoOpen: false,
+		buttons: {
+			'确认': function() {
+				
+				$(this).dialog('close');
+				$('.loading-description').text("正在删除,请稍等……");
+				$('.loading').show();
+				
+				var examinationrooms_ids = getSelectedTRs('examination-rooms');
+
+				//post操作 用ajax实现
+				$.ajax({
+				    type: 'POST',
+				    url: '/manage/examinationroom/multi-delete',
+				    data: {
+				        ids: examinationrooms_ids
+				    },
+				    dataType: 'json',
+				    async: true,
+				    success: function (data) {
+				        if (data.success) {
+				            console.log("选中项删除成功！正在更新显示...", 2000, 'TIP');
+				            window.location.reload(true);
+				        } else {
+				            console.log("选中项删除失败!");
+				            window.location.reload(true);
+				        }
+				    },
+				    error: function (XMLHttpRequest, textStatus, errorThrown) {
+				        console.log("error " + textStatus);
+				        console.log("网络或服务器异常！" + 'ERROR');
+				    }
+				});
+
+			},
+			'取消': function() {
+				//此处的this为$( '.multi-delete-dialog' )
+				$(this).dialog('close');
+			}
+		}
+	});
+	// 点击批量删除按钮时，打开删除对话框
+	$('.btn-multi-delete').click(function(){
+		var examinationrooms_ids = getSelectedTRs('examination-rooms');
+		
+		if(examinationrooms_ids.length > 0){
+			//打开对话框
+			$('.multi-delete-dialog').dialog('open');
+		}else{
+			//没有选中内容时，给予提示
+			var $warning_message = $('<div>').html('没有可删除的选中项！').addClass('notice warning');
+			$('.flash-message').append($warning_message);
+		}
 	});
 
 	//index页面，鼠标悬浮在故障列表时显示表格
@@ -58,7 +117,6 @@ $(function() {
 	});
 
 	function showFaultMachine(examinationroom_id, fault_machines, $fault_machine_table, rows, cols){
-		console.log(fault_machines);
 		//动态生成故障机器列表
 		$fault_machine_table.html('');
 		for(var row = 0; row < rows; row++){

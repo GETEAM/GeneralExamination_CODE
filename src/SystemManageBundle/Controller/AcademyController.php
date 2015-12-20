@@ -33,10 +33,6 @@ class AcademyController extends Controller
         $academy = $em->getRepository('SystemManageBundle:Academy')->findAll();
         $paginator = $this->get('knp_paginator');
         $academies = $paginator->paginate($academy, $request->query->getInt('page', 1));
-        return $this->render('SystemManageBundle:Academy:index.html.twig', [
-        'academies' => $academies,
-        ]);
-        $academies = $em->getRepository('SystemManageBundle:Academy')->findAll();
 
         return array(
             'academies' => $academies
@@ -104,7 +100,7 @@ class AcademyController extends Controller
      * @Method("GET")
      * @Template("SystemManageBundle:Academy:edit.html.twig")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $academy = $em->getRepository('SystemManageBundle:Academy')->find($id);

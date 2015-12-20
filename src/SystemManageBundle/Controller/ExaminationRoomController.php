@@ -3,6 +3,7 @@
 namespace SystemManageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -32,10 +33,6 @@ class ExaminationRoomController extends Controller
         $examinationroom = $em->getRepository('SystemManageBundle:ExaminationRoom')->findAll();
         $paginator = $this->get('knp_paginator');
         $examinationrooms = $paginator->paginate($examinationroom, $request->query->getInt('page', 1));
-        return $this->render('SystemManageBundle:ExaminationRoom:index.html.twig', [
-        'examinationrooms' => $examinationrooms,
-    ]);
-        $examinationrooms = $em->getRepository('SystemManageBundle:ExaminationRoom')->findAll();
 
         return array(
             'examinationrooms' => $examinationrooms,
@@ -62,6 +59,11 @@ class ExaminationRoomController extends Controller
         if ($new_form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('SystemManageBundle:ExaminationRoom')->add($examinationroom);
+
+            $this->addFlash(
+                'success',
+                $examinationroom->getRoomName().'添加完成'
+            );
 
             return $this->redirect($this->generateUrl('examinationroom_index'));
         }
@@ -116,6 +118,8 @@ class ExaminationRoomController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('SystemManageBundle:ExaminationRoom')->add($examinationroom);
 
+            $this->addFlash('success','考场信息信息修改成功');
+
             return $this->redirect($this->generateUrl('examinationroom_index'));
         }
 
@@ -123,6 +127,7 @@ class ExaminationRoomController extends Controller
             'edit_form' => $edit_form->createView(),
         );
     }  
+
     /**
      * 删除考场信息.
      *
@@ -131,9 +136,46 @@ class ExaminationRoomController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('SystemManageBundle:ExaminationRoom')->delete($id);
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('SystemManageBundle:ExaminationRoom')->delete($id);
+            if($success){
+                $this->addFlash('success', '删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+        }
 
         return $this->redirect($this->generateUrl('examinationroom_index'));
+    }
+
+    /**
+     * 批量删除年级信息.
+     *
+     * @Route("/multi-delete", name="examinationroom_multi_delete")
+     * @Method("POST")
+     */
+    public function multiDeleteAction(Request $request)
+    {   
+        $ids = $request->request->get('ids');
+        
+        $em = $this->getDoctrine()->getManager();
+        $success = $em->getRepository('SystemManageBundle:ExaminationRoom')->multiDelete($ids);
+
+        if($success){
+            $this->addFlash('success', '批量删除成功!');
+        }else{
+            $this->addFlash('error', '批量删除失败!请重新删除！');
+        }
+
+        $result = array(
+            'success' => $success
+        );
+        
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 }
