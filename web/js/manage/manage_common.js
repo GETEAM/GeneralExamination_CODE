@@ -1,4 +1,4 @@
-/****系统管理各页面通用js****/
+/****管理端各页面通用js****/
 
 //列表页的tr 选择初始化(单选、全选)
 function trSelectInitial( $tr_selector, name ) {
