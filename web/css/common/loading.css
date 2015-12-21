@@ -1,0 +1,28 @@
+.loading{
+	margin: 0;
+	padding: 0;
+	background-color: #EEE9E9;
+	opacity: 0.8;
+	position:fixed; 
+    top:0; 
+    left:0; 
+    right: 0;
+    bottom: 0;
+    z-index:200;
+}
+.loading-content{
+	width: 350px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	margin-left: -125px;
+	margin-top: -100px;
+	text-align: center;
+}
+.loading .loading-content img{
+	vertical-align: middle;
+}
+.loading .loading-content span{
+	margin-left: 5px;
+	text-align: center;
+}

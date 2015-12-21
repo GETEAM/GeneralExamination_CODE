@@ -66,7 +66,12 @@
 /*管理界面侧边栏导航样式*/
 .manage {
     margin-top: 50px;
-    overflow: hidden;
+    /*overflow: hidden;*/
+}
+.manage:after {
+    content: '';
+    display: block;
+    clear: both;
 }
 .manage .left {
     float: left;
@@ -195,7 +200,24 @@
     padding: 5px 8px;
 }
 .right .common-action a img {
+    margin-top: -2px;
     vertical-align: middle;
+}
+.right .common-action .select-all i {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    margin-bottom: -6px;
+    background-image: url(/images/manage/checkbox-unchecked.png);
+    background-repeat: no-repeat;
+}
+.right .common-action .select-all.checked {
+    background-color: #f8f8f8;
+}
+.right .common-action .select-all.checked i {
+    background-image: url(/images/manage/checkbox-checked.png);
 }
 
 /*右侧表格样式*/
@@ -222,6 +244,12 @@
 }
 .right .common-table tr th, .right .common-table tr td {
     padding: 5px;
+}
+.right .common-table tr td:first-child a:hover {
+    color: #f70;
+}
+.right .common-table tr td img{
+    margin-top: 3px;
 }
 .right .common-table thead tr {
     background-color: #999;
@@ -324,5 +352,22 @@
 /*管理端删除确认框样式*/
 /*删除确认框中的确认字段样式*/
 .dialog-item-key {
-    text-decoration: underline;
+    background-color: #eee;
+    padding: 5px;
+}
+
+/*分页页码样式*/
+.pagination {
+    margin: 10px auto;
+}
+.pagination span a, .pagination .current{
+    display: inline-block;
+    width: 33px;
+    padding: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+.pagination span:hover a, .pagination .current {
+    color: inherit !important;
+    background-color: #ddd;
 }

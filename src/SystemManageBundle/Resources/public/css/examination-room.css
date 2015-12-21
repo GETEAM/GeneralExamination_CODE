@@ -1,14 +1,23 @@
-/*考场列表页故障机器显示*/
+/***考场列表页  故障机器显示***/
 .right .common-table tr .show-fault-machine{
-    height: 280px;
     display: none;
-    margin-top: 5px;
-    background-color: #EBEBEB;
-    border: 1px solid inherit;
-    padding-top: 10px;
+    margin-top: 8px;
+    background-color: #eee;
+    border: 2px solid #dedede;
+    padding-top: 60px;
+    padding-bottom: 20px;
     position: absolute;
     left: 0;
     right: 0;
+}
+.fault-machine-td:hover:after {
+	width: 0px;
+	content: "";
+	display: block;
+	border: 8px solid transparent;
+	border-bottom: 8px solid #dedede;
+	margin: 0 auto;
+	margin-top: -8px;
 }
 /*机器行列数样式*/
 .er-rows-cols {
@@ -28,8 +37,8 @@
 	width: 40px;
 	margin-right: 5px;
 } 
-.er-rows-cols label[for='systemmanagebundle_examinationroom_col'] {
-	width: 20px;
+.er-rows-cols label[for='systemmanage_examinationroom_edit_col'], .er-rows-cols label[for='systemmanage_examinationroom_new_col'] {
+	width: 25px;
 }
 .er-rows-cols-table {
 	display: none;
@@ -52,6 +61,7 @@
 .selected-rows-cols{
 	background-color: #B8F3B8;
 }
+
 /*故障机器列表样式*/
 .fault-machines {
 	display: none;
@@ -64,7 +74,7 @@
 	max-width: 600px;
 }
 .fault-machine-table .tips {
-	margin-top: 5px;
+	margin: 5px auto;
 	padding-bottom: 10px;
 }
 .fault-machine-table .tips span {
@@ -105,4 +115,9 @@
 
 .fault-table tr td{
 	font-size: 14px;
+}
+
+.fault-machine-table .fault-table{
+	position: relative;
+	margin: 0 auto;
 }
