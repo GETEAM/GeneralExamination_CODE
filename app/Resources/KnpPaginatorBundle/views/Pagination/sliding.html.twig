@@ -36,7 +36,8 @@
             <a href="{{ path(route, query|merge({(pageParameterName): last})) }}">&gt;&gt;</a>
         </span>
     {% endif %}
+    <span class="total">共计<span class="total-page">{{ pageCount }}</span>页&nbsp;&nbsp;<span class="total-count">{{ totalCount }}</span>条记录</span>
 </div>
 {% endif %}
 
-共{{ pageCount }}页     共{{ totalCount }}条记录
+
