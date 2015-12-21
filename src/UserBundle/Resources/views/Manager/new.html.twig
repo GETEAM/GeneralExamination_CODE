@@ -15,8 +15,8 @@
 
 {% block right -%}
     <div class="user-add">
-        <a href="#" class="add-selected">单个添加教师信息</a>   
-        <a href="#" class="no-selected">批量导入教师信息</a>
+        <a href="#" class="btn btn-common-action add-selected">单个添加教师信息</a>   
+        <a href="#" class="btn btn-common-action no-selected">批量导入教师信息</a>
         <a href="{{ path('manager_index') }}">
             <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回教师信息列表" title="返回教师信息列表">
             <span>返回教师信息列表</span>
@@ -36,6 +36,11 @@
 
     {{ form_end(new_form, {'render_rest': true}) }}
 
+    <form class="import-form" action="#" method="post" hidden>
+        <label for="teacher-information">选择文件</label>
+        <input type="file" id="teacher-information" placeholder="请选择导入文件" />
+        <button class="btn">确定导入</button>
+    </form>
 {% endblock %}
 
 {% block javascripts %}
