@@ -14,7 +14,7 @@ use SystemManageBundle\Form\GradeEditType;
 use Ddeboer\DataImport\Workflow;
 use Ddeboer\DataImport\Reader\ExcelReader;
 use Ddeboer\DataImport\Writer\DoctrineWriter;
-use Ddeboer\DataImport\ValueConverter\MappingValueConverter;
+use Ddeboer\DataImport\ItemConverter\MappingItemConverter;
 
 /**
  * 年级信息管理Controller.
@@ -174,12 +174,30 @@ class GradeController extends Controller
         $entityManager = $this->getDoctrine()->getManager();
         $doctrineWriter = new DoctrineWriter($entityManager, 'SystemManageBundle:Grade');
         $workflow->addWriter($doctrineWriter);
-        
         $repository = $entityManager->getRepository('SystemManageBundle:Grade');
-    
-        $workflow->process();
-    }
+        $converter = new MappingItemConverter();
+        $converter
+                ->addMapping('grade',$converter)
+                ->addMapping('description',$converter);
+         $workflow->addItemConverter($converter)
+                  ->process();
 
+
+        // $numarray = $repository->findAllAccounts();
+        // $import = true;
+        // foreach ($reader as $readerobjectkey => $readervalue) {
+        //     if($import){
+        //       $doctrineWriter ->disableTruncate()
+        //                       ->prepare()
+        //                       ->writeItem(
+        //        array(
+        //          'grade' => $readervalue['number'],
+        //          'description'  => $readervalue['name'],
+        //          )
+        //        )
+        //       ->finish();
+        //     }
+    }
 
     /**
      * 批量删除年级信息.
