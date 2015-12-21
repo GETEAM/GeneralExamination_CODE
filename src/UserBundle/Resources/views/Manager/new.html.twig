@@ -1,11 +1,11 @@
-{% extends 'GEExaminationManageBundle::examination-manage.html.twig' %}
+{% extends 'UserBundle:Manager:layout.html.twig' %}
 
 {% block title %}添加教师—基本信息设置—考务管理{% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     {%  stylesheets                
-        '@GEUserBundle/Resources/public/css/manager_new.css'    
+        '@UserBundle/Resources/public/css/manager_new.css'    
         filter='cssrewrite'  
     %}
         <link rel="stylesheet" href="{{asset_url}}"/>
@@ -18,9 +18,7 @@
         <a href="#" class="add-selected">单个添加教师信息</a>   
         <a href="#" class="no-selected">批量导入教师信息</a>
         <a href="{{ path('manager_index') }}">
-            {% image '@AppBundle/Resources/public/images/back.png' %}
-                <img src="{{ asset_url }}" width="12" height="12" alt="返回教师信息列表" title="返回教师信息列表">
-            {% endimage %}
+            <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回教师信息列表" title="返回教师信息列表">
             <span>返回教师信息列表</span>
         </a>
     </div>
@@ -43,7 +41,7 @@
 {% block javascripts %}
     {{ parent() }}
     {% javascripts 
-        '@GEUserBundle/Resources/public/js/manager_new.js'
+        '@UserBundle/Resources/public/js/manager_new.js'
     %} 
     <script type="text/javascript" src="{{ asset_url }}"></script>   
     {% endjavascripts %}

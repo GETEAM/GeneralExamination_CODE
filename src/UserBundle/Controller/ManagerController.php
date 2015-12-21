@@ -3,6 +3,7 @@
 namespace UserBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -57,7 +58,7 @@ class ManagerController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->getRepository('UserBundle:Manager')->add($manager);
 
-            return $this->redirect($this->generateUrl('manager_show', array(
+            return $this->redirect($this->generateUrl('manager_index', array(
                 'id' => $manager->getId()
             )));
         }
@@ -140,7 +141,7 @@ class ManagerController extends Controller
      * 批量删除管理者信息.
      *
      * @Route("/multi-delete", name="manager_multi_delete")
-     * @Method("GET")
+     * @Method("POST")
      * @Template()
      */
     public function multiDeleteAction(Request $request, $ids)
