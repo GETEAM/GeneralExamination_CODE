@@ -358,7 +358,7 @@
 
 /*分页页码样式*/
 .pagination {
-    margin: 10px auto;
+    margin: 5px auto;
 }
 .pagination span a, .pagination .current{
     display: inline-block;
