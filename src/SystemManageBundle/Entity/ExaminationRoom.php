@@ -52,7 +52,7 @@ class ExaminationRoom
     /**
      * @var string
      *
-     * @ORM\Column(name="FaultMachine", type="string", length=255)
+     * @ORM\Column(name="FaultMachine", type="string", nullable=true, length=255)
      */
     private $faultMachine;
 

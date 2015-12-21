@@ -35,7 +35,7 @@
             </table>
         </div>
         
-        {{ form_row(new_form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off',  'class': 'available-machine'} }) }}
+        {{ form_row(new_form.availableMachineNumber, {'attr': {'placeholder': '请输入可用机器数', 'autocomplete': 'off',  'class': 'available-machine', 'readonly': 'readonly'} }) }}
         {{ form_row(new_form.faultMachine, {'attr': {'placeholder': '请从下列机器列表中选择故障机器', 'autocomplete': 'off', 'class': 'fault-machines'} }) }}
 
         <div class="fault-machine-table">

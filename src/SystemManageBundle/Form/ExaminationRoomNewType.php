@@ -19,7 +19,7 @@ class ExaminationRoomNewType extends AbstractType
             ->add('row', 'number', array('label' => '机器行列数'))
             ->add('col', 'number', array('label' => ' x '))
             ->add('availableMachineNumber', 'text', array('label' => '可用机器数'))
-            ->add('faultMachine', 'text', array('label' => '故障机器'))
+            ->add('faultMachine', 'text', array('label' => '故障机器', 'required' => false))
             ->add('save', 'submit', array('label' => '添加'));
     }
     

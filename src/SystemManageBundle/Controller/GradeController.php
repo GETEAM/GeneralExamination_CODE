@@ -156,7 +156,6 @@ class GradeController extends Controller
 
         return $this->redirect($this->generateUrl('grade_index'));
     }
-<<<<<<< HEAD
     /**
      * 批量导入年级信息.
      *
@@ -179,7 +178,8 @@ class GradeController extends Controller
         $repository = $entityManager->getRepository('SystemManageBundle:Grade');
     
         $workflow->process();
-=======
+    }
+
 
     /**
      * 批量删除年级信息.
@@ -207,6 +207,5 @@ class GradeController extends Controller
         $response = new Response(json_encode($result));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
->>>>>>> ad8bada5437b20a57249d65707c56137f25523a5
     }
 }
