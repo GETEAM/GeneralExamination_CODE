@@ -214,7 +214,7 @@
     background-repeat: no-repeat;
 }
 .right .common-action .select-all.checked {
-    background-color: #eee;
+    background-color: #f8f8f8;
 }
 .right .common-action .select-all.checked i {
     background-image: url(/images/manage/checkbox-checked.png);
@@ -354,4 +354,20 @@
 .dialog-item-key {
     background-color: #eee;
     padding: 5px;
+}
+
+/*分页页码样式*/
+.pagination {
+    margin: 10px auto;
+}
+.pagination span a, .pagination .current{
+    display: inline-block;
+    width: 33px;
+    padding: 5px 0;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+}
+.pagination span:hover a, .pagination .current {
+    color: inherit !important;
+    background-color: #ddd;
 }
