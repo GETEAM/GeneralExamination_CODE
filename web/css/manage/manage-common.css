@@ -148,27 +148,26 @@
 .right .common-find ul li{
     list-style: none;
     float: left;
-    line-height: 20px;
+    line-height: 28px;
     margin-right: 30px; 
 }
 .right .common-find ul li input[type="text"]{
-    height: 26px;
+    height: 21px;
     width: 100px;
 }
 .right .common-find ul li:last-child{
     line-height: 6px;
     border: 1px solid #EAEAEA;
-    padding: 0px;
+    background-color: #EBEBEB;
+    padding: 2px 10px;
+    border-radius: 2px;
+    margin-left: 10px;
 }
 .right .common-find ul li a{
     text-decoration: none;
-    border: 1px solid #F4F4F4;
     color: #2E2E2E;
-    border-radius: 2px;
     height: 30px;
-    background-color: #EBEBEB;
     line-height: 20px;
-    margin-top: 0px;
 }
 .right .common-find ul li a img{
     vertical-align: bottom;
@@ -306,6 +305,11 @@
 }
 .right form .btn:hover {
     background-color: #f80;
+}
+
+.right form .help-block{
+    color: #B8B8B8;
+    margin-left: 130px;
 }
 
 /*管理端提示信息样式*/
