@@ -74,9 +74,12 @@
                         <a href="{{ path('manager_edit', { 'id': manager.id }) }}">
                             <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑" title="编辑">
                         </a>
-                        <a href="{{ path('manager_delete', { 'id': manager.id }) }}">
+                        <a href="javascript:void(0)" class="delete-btn" manager-id="{{ manager.id }}" >
                             <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除" title="删除">
                         </a>
+                        <div id="manager-delete-dialog_{{ manager.id }}" class="delete-dialog" title="删除确认" manager-id={{ manager.id }} hidden>
+                            <p>确定要删除   <span class="dialog-item-key">{{manager.name}}</span>   的信息吗？</p>
+                        </div>
                     </td>
                 </tr>
             {% endfor %}
@@ -87,5 +90,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="  "></script>
+    <script src="{{ asset('bundles/user/js/manager_index.js') }}"></script>
+    
 {% endblock %}

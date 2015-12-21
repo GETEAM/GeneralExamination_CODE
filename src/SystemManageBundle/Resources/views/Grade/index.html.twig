@@ -59,7 +59,7 @@
                         <a href="javascript:void(0)" class="delete-btn" grade-id="{{ grade.id }}">
                             <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除年级信息" title="删除年级信息">
                         </a>
-                        <div id="delete-dialog_{{ grade.id }}" class="delete-dialog" title="删除确认" grade-id={{ grade.id }} hidden>
+                        <div id="grade_delete_dialog_{{ grade.id }}" class="delete-dialog" title="删除确认" grade-id={{ grade.id }} hidden>
                             <p>确定要删除   <span class="dialog-item-key">{{grade.description}}</span>   年级信息吗？</p>
                         </div>
                     </td>
