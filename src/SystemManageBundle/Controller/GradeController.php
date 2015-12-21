@@ -10,6 +10,10 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SystemManageBundle\Entity\Grade;
 use SystemManageBundle\Form\GradeNewType;
 use SystemManageBundle\Form\GradeEditType;
+use Ddeboer\DataImport\Workflow;
+use Ddeboer\DataImport\Reader\ExcelReader;
+use Ddeboer\DataImport\Writer\DoctrineWriter;
+use Ddeboer\DataImport\ValueConverter\MappingValueConverter;
 
 /**
  * 年级信息管理Controller.
@@ -146,5 +150,28 @@ class GradeController extends Controller
         }
 
         return $this->redirect($this->generateUrl('grade_index'));
+    }
+    /**
+     * 批量导入年级信息.
+     *
+     * @Route("/import", name="grade_import")
+     * @Method("GET")
+     * @Template()
+     */
+    public function importdateAction()
+    {
+        $file = new \SplFileObject('D:/test.xlsx');
+        
+        $reader = new ExcelReader($file, 2);
+       
+        $workflow = new Workflow($reader);
+       
+        $entityManager = $this->getDoctrine()->getManager();
+        $doctrineWriter = new DoctrineWriter($entityManager, 'SystemManageBundle:Grade');
+        $workflow->addWriter($doctrineWriter);
+        
+        $repository = $entityManager->getRepository('SystemManageBundle:Grade');
+    
+        $workflow->process();
     }
 }
