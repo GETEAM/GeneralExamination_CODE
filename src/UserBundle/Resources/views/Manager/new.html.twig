@@ -4,13 +4,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    {%  stylesheets                
-        '@UserBundle/Resources/public/css/manager_new.css'    
-        filter='cssrewrite'  
-    %}
-        <link rel="stylesheet" href="{{asset_url}}"/>
-    {% endstylesheets %}
-    
+    <link rel="stylesheet" href="{{ asset('bundles/user/css/manager_new.css') }}"/>
 {% endblock %}
 
 {% block right -%}
@@ -45,9 +39,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    {% javascripts 
-        '@UserBundle/Resources/public/js/manager_new.js'
-    %} 
-    <script type="text/javascript" src="{{ asset_url }}"></script>   
-    {% endjavascripts %}
+    <script src="{{ asset('bundles/user/js/manager_new.js') }}"></script>
 {% endblock %}

@@ -1,19 +1,19 @@
 /* 单个添加和批量导入的标签样式 */
 .right .user-add{
-	margin-bottom: 15px;
 	margin-left: 12px;
 }
  .right .user-add a{
 	display: inline-block;
 	margin-right: 30px;
 	text-align: center;
-	font-size: 14px;
+	font-size: 15px;
 	text-decoration: none;
 	padding: 5px 10px;
 }
 
 .right .user-add a span{
  	font-size: 14px;
+ 	color: #858585;
 }
 .add-selected{
  	font-weight: bold;
