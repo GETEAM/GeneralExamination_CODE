@@ -21,7 +21,7 @@
             <img src="{{ asset('images/manage/delete.png') }}" width="20" height="20" alt="删除" title="删除">
             删除
         </a>
-        <div id="examinationroom_{{ examinationroom.id }}" class="delete-dialog" title="删除确认" examinationroom-id={{ examinationroom.id }} hidden>
+        <div id="examinationroom_delete_dialog_{{ examinationroom.id }}" class="delete-dialog" title="删除确认" examinationroom-id={{ examinationroom.id }} hidden>
             <p>你确定要删除   <span class="dialog-item-key">{{examinationroom.roomName}}</span>   的考场信息吗？</p>
         </div>
     </div>
@@ -55,3 +55,7 @@
     </table>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('bundles/systemmanage/js/examination-room_index.js') }}"></script>
+{% endblock %}
