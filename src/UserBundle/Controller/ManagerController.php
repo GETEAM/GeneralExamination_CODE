@@ -131,8 +131,17 @@ class ManagerController extends Controller
      */
     public function deleteAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getManager();
-        $em->getRepository('UserBundle:Manager')->delete($id);
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('UserBundle:Manager')->delete($id);
+            if($success){
+                $this->addFlash('success', '删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+        }
 
         return $this->redirect($this->generateUrl('manager_index'));
     }
@@ -142,20 +151,24 @@ class ManagerController extends Controller
      *
      * @Route("/multi-delete", name="manager_multi_delete")
      * @Method("POST")
-     * @Template()
      */
-    public function multiDeleteAction(Request $request, $ids)
+    public function multiDeleteAction(Request $request)
     {
         $ids = $request->request->get('ids');
+        
+        $em = $this->getDoctrine()->getManager();
+        $success = $em->getRepository('UserBundle:Manager')->multiDelete($ids);
 
-        $success = $em->getRepository('UserBundle:Manager')->multiDelete($ids);        
+        if($success){
+            $this->addFlash('success', '批量删除成功!');
+        }else{
+            $this->addFlash('error', '批量删除失败!请重新删除！');
+        }
+
         $result = array(
-                'success' => $success
-                );
-        $this->get('session')->getFlashBag()->add(
-            'notice',
-            '选中项删除成功!'
-        ); 
+            'success' => $success
+        );
+        
         $response = new Response(json_encode($result));
         $response->headers->set('Content-Type', 'application/json');
         return $response;
