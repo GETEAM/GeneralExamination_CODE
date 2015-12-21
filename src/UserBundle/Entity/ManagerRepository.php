@@ -23,6 +23,7 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
         $manager=$this->findOneById($id);
         $em->remove($manager);
         $em->flush();
+        return 1;
     }
 
     //批量删除管理者

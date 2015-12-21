@@ -358,7 +358,7 @@
 
 /*分页页码样式*/
 .pagination {
-    margin: 10px auto;
+    margin: 5px auto;
 }
 .pagination span a, .pagination .current{
     display: inline-block;
@@ -370,4 +370,14 @@
 .pagination span:hover a, .pagination .current {
     color: inherit !important;
     background-color: #ddd;
+}
+.pagination .total {
+    display: inline-block;
+    float: right;
+    line-height: 33px;
+    margin-right: 15px;
+}
+.pagination .total .total-page, .pagination .total .total-count {
+    padding: 0 3px;
+    font-weight: bold;
 }

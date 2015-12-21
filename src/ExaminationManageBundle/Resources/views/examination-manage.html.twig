@@ -1,14 +1,14 @@
-{% extends 'AppBundle::manage.html.twig' %}
+{% extends ':manage:manage_base.html.twig' %}
 
 {% block content -%}
 	<div class="common-block manage">
 		<div class="left">
 			<div class="left-title">考务管理</div>
 			<aside class="manage-nav">
-				<label>基本信息设置</label>
+				<label>用户信息管理</label>
 				<ul>
-					<li><a href="{{ path('teacher') }}" class="selected">教师信息管理</a></li>
-					<li><a href="{{ path('student') }}">学生信息管理</a></li>
+					<li><a href="{{ path('teacher') }}" class="{% if nav_title == 'manager' %}selected{% endif %}">教师信息管理</a></li>
+					<li><a href="{{ path('student') }}" class="{% if nav_title == 'student' %}selected{% endif %}">学生信息管理</a></li>
 				</ul>
 				<ul>
 					<li><a href="#">考试管理</a></li>

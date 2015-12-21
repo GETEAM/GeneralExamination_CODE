@@ -1,6 +1,6 @@
 <?php
 
-namespace GE\UserBundle\Form;
+namespace UserBundle\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -48,7 +48,7 @@ class ManagerNewType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'GE\UserBundle\Entity\Manager'
+            'data_class' => 'UserBundle\Entity\Manager'
         ));
     }
 
@@ -57,6 +57,6 @@ class ManagerNewType extends AbstractType
      */
     public function getName()
     {
-        return 'ge_userbundle_manager_new';
+        return 'userbundle_manager_new';
     }
 }

@@ -3,35 +3,7 @@ $(function() {
 	trSelectInitial($('.examination-rooms tbody tr'), 'examination-rooms');
 	
 	/*** 单个删除 ***/
-	// 对话框 初始化
-	$( '.delete-dialog' ).dialog({ 
-		closeOnEscape: true,//按下ESC后是否退出
-		modal: true,//出现模态弹出框
-		resized: false,
-		autoOpen: false,
-		buttons: {
-			'确认': function() {
-				$(this).dialog('close');
-				$('.loading-description').text("正在删除,请稍等……");
-				$('.loading').show();
-				//跳转到删除页面
-				var examinationroom_id = $(this).attr('examinationroom-id');
-				location.href = '/manage/examinationroom/delete/' + examinationroom_id;
-			},
-			'取消': function() {
-				//此处的this为$( '.delete-dialog' )
-				$(this).dialog('close');
-			}
-		}
-	});
-	// 点击删除按钮时，打开删除对话框
-	$('.delete-btn').click(function(){	
-		var examinationroom_id = $(this).closest('a').attr('examinationroom-id');
-		//对应的对话框id
-		var dialog_id = '#delete_examinationroom_' + examinationroom_id;
-		//打开对话框
-		$(dialog_id).dialog('open');
-	});
+	singleDelete('examinationroom');
 
 	/*** 批量删除 ***/	
 	//批量删除对话框初始化

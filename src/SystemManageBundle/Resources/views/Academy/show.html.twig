@@ -21,7 +21,7 @@
             <img src="{{ asset('images/manage/delete.png') }}" width="20" height="20" alt="删除" title="删除">
             删除
         </a>
-        <div id="academy_{{ academy.id }}" class="delete-dialog" title="删除确认" academy-id={{ academy.id }} hidden>
+        <div id="academy_delete_dialog_{{ academy.id }}" class="delete-dialog" title="删除确认" academy-id={{ academy.id }} hidden>
             <p>你确定要删除  <span class="dialog-item-key">{{academy.academyName}}</span>的学院信息</p>
         </div>
 
@@ -46,5 +46,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/systemmanage/js/academy_index.js') }}"></script>
+    <script src="{{ asset('bundles/systemmanage/js/academy_show.js') }}"></script>
 {% endblock %}
