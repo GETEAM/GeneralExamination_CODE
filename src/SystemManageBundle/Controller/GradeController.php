@@ -160,7 +160,7 @@ class GradeController extends Controller
 
         //下面的处理得重新处理
         $result = array(
-            'success' => 111
+            'success' => 1
         );
         
         $response = new Response(json_encode($result));
