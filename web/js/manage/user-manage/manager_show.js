@@ -1,0 +1,3 @@
+$(function(){
+	singleDelete('manager');
+})

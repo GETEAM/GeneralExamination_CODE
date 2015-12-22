@@ -114,7 +114,7 @@ function singleDelete(name){
 	$('.delete-btn').click(function(){
 		var name_id = $(this).closest('a').attr(name + '-id');
 		//对应的对话框id
-		var dialog_id = '#'+ name +'_delete_dialog_' + name_id;
+		var dialog_id = '#delete-dialog_' + name_id;
 		//打开对话框
 		$(dialog_id).dialog('open');
 	});

@@ -1,4 +1,4 @@
-{% extends 'ExaminationManageBundle::examination-manage.html.twig' %}
+{% extends 'UserBundle:Manager:layout.html.twig' %}
 
 {% block title %}查看管理员信息—基本信息设置—考试管理{% endblock %}
 
@@ -15,10 +15,13 @@
             <img src="{{ asset('images/manage/edit.png') }}" width="20" height="20" alt="编辑" title="编辑">
             编辑
         </a>
-        <a href="{{ path('manager_delete', { 'id': manager.id }) }}" class="btn btn-common-action">
+        <a href="javascript:void(0)" class="delete-btn btn btn-common-action" manager-id="{{ manager.id }}">
             <img src="{{ asset('images/manage/delete.png') }}" width="20" height="20" alt="删除" title="删除">
             删除
         </a>
+        <div id="delete-dialog_{{ manager.id }}" class="delete-dialog" title="删除确认" manager-id={{ manager.id }} hidden>
+            <p>你确定要删除   <span class="dialog-item-key">{{manager.name}}</span>   的年级信息吗？</p>
+        </div>
     </div>
     <table class="common-table">
         <tbody>
@@ -58,5 +61,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('bundles/user/js/manager.js') }}"></script>
+    <script src="{{ asset('js/manage/user-manage/manager_show.js') }}"></script>
 {% endblock %}

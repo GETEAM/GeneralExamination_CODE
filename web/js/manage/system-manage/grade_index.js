@@ -5,7 +5,6 @@ $(function() {
 	/*** 单个删除 ***/
 	singleDelete('grade');
 
-	
 	/*** 批量删除 ***/	
 	//批量删除对话框初始化
 	$( '.multi-delete-dialog' ).dialog({ 
@@ -15,7 +14,6 @@ $(function() {
 		autoOpen: false,
 		buttons: {
 			'确认': function() {
-				
 				$(this).dialog('close');
 				$('.loading-description').text("正在删除,请稍等……");
 				$('.loading').show();
