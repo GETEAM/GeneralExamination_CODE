@@ -12,9 +12,9 @@ use SystemManageBundle\Entity\Grade;
 use SystemManageBundle\Form\GradeNewType;
 use SystemManageBundle\Form\GradeEditType;
 use Ddeboer\DataImport\Workflow;
-use Ddeboer\DataImport\Reader\ExcelReader;
 use Ddeboer\DataImport\Writer\DoctrineWriter;
-use Ddeboer\DataImport\ValueConverter\MappingValueConverter;
+use Ddeboer\DataImport\Filter;
+use Ddeboer\DataImport\Reader\CsvReader;
 
 /**
  * 年级信息管理Controller.
@@ -143,19 +143,29 @@ class GradeController extends Controller
      */
     public function importdateAction()
     {
-        $file = new \SplFileObject('D:/test.xlsx');
+        $file = new \SplFileObject('test.csv');
+        $csvReader = new CsvReader($file);
+
+        $csvReader->setStrict(false)
+               ->setHeaderRowNumber(0)
+               ->setColumnHeaders(['grade', 'description']);
+
+        $em = $this->getDoctrine()->getManager();
+        $doctrineWriter = new DoctrineWriter($em, 'SystemManageBundle:Grade');
+        $doctrineWriter->disableTruncate();
+
+        $workflow = new Workflow($csvReader);
+        $workflow->addWriter($doctrineWriter)
+                 ->process();
+
+        //下面的处理得重新处理
+        $result = array(
+            'success' => 1
+        );
         
-        $reader = new ExcelReader($file, 2);
-       
-        $workflow = new Workflow($reader);
-       
-        $entityManager = $this->getDoctrine()->getManager();
-        $doctrineWriter = new DoctrineWriter($entityManager, 'SystemManageBundle:Grade');
-        $workflow->addWriter($doctrineWriter);
-        
-        $repository = $entityManager->getRepository('SystemManageBundle:Grade');
-    
-        $workflow->process();
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
