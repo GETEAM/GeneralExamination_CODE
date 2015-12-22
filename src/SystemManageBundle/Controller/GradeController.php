@@ -133,30 +133,7 @@ class GradeController extends Controller
             'edit_form' => $edit_form->createView()
         );
     }
-
-    /**
-     * 删除年级信息.
-     *
-     * @Route("/delete/{id}", name="grade_delete")
-     * @Method("GET")
-     */
-    public function deleteAction(Request $request, $id)
-    {   
-        try{
-            $em = $this->getDoctrine()->getManager();
-            $success = $em->getRepository('SystemManageBundle:Grade')->delete($id);
-            if($success){
-                $this->addFlash('success', '删除成功!');
-            }else{
-                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
-            }
-        } catch(\Exception $e){
-            $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
-        }
-
-        return $this->redirect($this->generateUrl('grade_index'));
-    }
-    
+     
     /**
      * 批量导入年级信息.
      *
@@ -181,6 +158,28 @@ class GradeController extends Controller
         $workflow->process();
     }
 
+    /**
+     * 删除年级信息.
+     *
+     * @Route("/delete/{id}", name="grade_delete")
+     * @Method("GET")
+     */
+    public function deleteAction(Request $request, $id)
+    {
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('SystemManageBundle:Grade')->delete($id);
+            if($success){
+                $this->addFlash('success', '删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
+        }
+
+        return $this->redirect($this->generateUrl('grade_index'));
+    }
 
     /**
      * 批量删除年级信息.
