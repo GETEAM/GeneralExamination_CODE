@@ -103,38 +103,4 @@ class Grade
         return $this->description;
     }
 
-
-    /**
-     * Add student
-     *
-     * @param \UserBundle\Entity\Student $student
-     *
-     * @return Grade
-     */
-    public function addStudent(\UserBundle\Entity\Student $student)
-    {
-        $this->students[] = $student;
-
-        return $this;
-    }
-
-    /**
-     * Remove student
-     *
-     * @param \UserBundle\Entity\Student $student
-     */
-    public function removeStudent(\UserBundle\Entity\Student $student)
-    {
-        $this->students->removeElement($student);
-    }
-
-    /**
-     * Get students
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getStudents()
-    {
-        return $this->students;
-    }
 }

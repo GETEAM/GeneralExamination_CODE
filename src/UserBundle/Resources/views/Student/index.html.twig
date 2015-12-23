@@ -24,7 +24,7 @@
             <i></i>
             全选
         </a>
-        <a href="{{ path('Student_new') }}" class="btn btn-common-action">
+        <a href="{{ path('student_new') }}" class="btn btn-common-action">
                 <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加学生信息" title="添加学生信息">
             添加学生信息
         </a>
@@ -37,7 +37,7 @@
             批量删除
         </a>
     </div>
-    <table class="common-table Students">
+    <table class="common-table students">
         <thead>
             <tr>
                 <th>编号</th>
@@ -51,34 +51,34 @@
         </thead>
         <tbody>
 
-        {% if Students|length == 0 %}
+        {% if students|length == 0 %}
             <tr>
                 <td colspan=6>尚不存在学生信息，请您添加！</td>
             <tr>
         {% else %}
-            {% for Student in Students %}
+            {% for student in students %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="Students" value="{{ Student.id }}" hidden />
-                        <a href="{{ path('Student_show', { 'id': Student.id }) }}">{{ Student.id }}</a>
+                        <input type="checkbox" name="students" value="{{ student.id }}" hidden />
+                        <a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.id }}</a>
                     </td>
-                    <td>{{ Student.username }}</td>
-                    <td>{{ Student.name }}</td>
-                    <td>{{ Student.academicID }}</td>
-                    <td>{{ Student.gradeID }}</td>
-                    <td>{{ Student.email }}</td>
+                    <td>{{ student.username }}</td>
+                    <td>{{ student.name }}</td>
+                    <td>{{ student.academicID }}</td>
+                    <td>{{ student.gradeID }}</td>
+                    <td>{{ student.email }}</td>
                     <td>
-                        <a href="{{ path('Student_show', { 'id': Student.id }) }}">  
+                        <a href="{{ path('student_show', { 'id': student.id }) }}">  
                             <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="查看" title="查看">
                         </a>
-                        <a href="{{ path('Student_edit', { 'id': Student.id }) }}">
+                        <a href="{{ path('student_edit', { 'id': student.id }) }}">
                             <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑" title="编辑">
                         </a>
-                        <a href="javascript:void(0)" class="delete-btn" Student-id="{{ Student.id }}" >
+                        <a href="javascript:void(0)" class="delete-btn" student-id="{{ student.id }}" >
                             <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除" title="删除">
                         </a>
-                        <div id="delete-dialog_{{ Student.id }}" class="delete-dialog" title="删除确认" Student-id={{ Student.id }} hidden>
-                            <p>确定要删除   <span class="dialog-item-key">{{Student.name}}</span>   的信息吗？</p>
+                        <div id="delete-dialog_{{ student.id }}" class="delete-dialog" title="删除确认" student-id={{ student.id }} hidden>
+                            <p>确定要删除   <span class="dialog-item-key">{{student.name}}</span>   的信息吗？</p>
                         </div>
                     </td>
                 </tr>
@@ -95,5 +95,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/manage/user-manage/Student_index.js') }}"></script> 
+    <script src="{{ asset('js/manage/user-manage/student_index.js') }}"></script> 
 {% endblock %}

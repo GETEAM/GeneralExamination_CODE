@@ -224,28 +224,4 @@ class Student
         return $this->academy;
     }
 
-
-    /**
-     * Set grade
-     *
-     * @param \SystemManageBundle\Entity\Grade $grade
-     *
-     * @return Student
-     */
-    public function setGrade(\SystemManageBundle\Entity\Grade $grade = null)
-    {
-        $this->grade = $grade;
-
-        return $this;
-    }
-
-    /**
-     * Get grade
-     *
-     * @return \SystemManageBundle\Entity\Grade
-     */
-    public function getGrade()
-    {
-        return $this->grade;
-    }
 }

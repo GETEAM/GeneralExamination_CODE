@@ -15,51 +15,51 @@ use UserBundle\Form\StudentEditType;
 /**
  * Student controller.
  *
- * @Route("/manage/Student")
+ * @Route("/manage/student")
  */
 class StudentController extends Controller
 {
     /**
      * 显示所有学生.
      *
-     * @Route("/", name="Student_index")
+     * @Route("/", name="student_index")
      * @Method("GET")
      * @Template("UserBundle:Student:index.html.twig")
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getStudent();
-        $Students = $em->getRepository('UserBundle:Student')->findAll();
+        $em = $this->getDoctrine()->getManager();
+        $students = $em->getRepository('UserBundle:Student')->findAll();
 
         return array(
-            'Students' => $Students,
+            'students' => $students,
         );
     }
 
     /**
      * 添加学生信息.
      *
-     * @Route("/new", name="Student_new")
+     * @Route("/new", name="student_new")
      * @Method("GET")
      * @Template("UserBundle:Student:new.html.twig")
      */
     public function newAction(Request $request)
     {
-        $student = new Student();
+        $manager = new Manager();
 
-        $new_form = $this->createForm(new StudentNewType(), $Student, array(
-            'action' => $this->generateUrl('Student_new'),
+        $new_form = $this->createForm(new ManagerNewType(), $manager, array(
+            'action' => $this->generateUrl('student_new'),
             'method' => 'GET'
         ));
         
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
-            $em = $this->getDoctrine()->getStudent();
-            $em->getRepository('UserBundle:Student')->add($Student);
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository('UserBundle:Student')->add($manager);
 
-            return $this->redirect($this->generateUrl('Student_index', array(
-                'id' => $Student->getId()
+            return $this->redirect($this->generateUrl('student_index', array(
+                'id' => $manager->getId()
             )));
         }
 
@@ -71,39 +71,39 @@ class StudentController extends Controller
     /**
      * 显示学生信息.
      *
-     * @Route("/show/{id}", name="Student_show")
+     * @Route("/show/{id}", name="student_show")
      * @Method("GET")
      * @Template("UserBundle:Student:show.html.twig")
      */
     public function showAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getStudent();
+        $em = $this->getDoctrine()->getManager();
 
-        $Student = $em->getRepository('UserBundle:Student')->find($id);
+        $manager = $em->getRepository('UserBundle:Student')->find($id);
 
-        if (!$Student) {
-            throw $this->createNotFoundException('Unable to find Student entity.');
+        if (!$manager) {
+            throw $this->createNotFoundException('Unable to find manager entity.');
         }
         
         return array(
-            'Student' => $Student,
+            'manager' => $manager,
         );
     }
 
     /**
      * 编辑学生信息.
      *
-     * @Route("/edit/{id}", name="Student_edit")
+     * @Route("/edit/{id}", name="student_edit")
      * @Method("GET")
      * @Template("UserBundle:Student:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {
-        $em = $this->getDoctrine()->getStudent();
-        $Student = $em->getRepository('UserBundle:Student')->find($id);
+        $em = $this->getDoctrine()->getManager();
+        $manager = $em->getRepository('UserBundle:Student')->find($id);
 
-        $edit_form = $this->createForm(new StudentEditType(), $Student, array(
-            'action' => $this->generateUrl('Student_edit', array('id' => $id ) ),
+        $edit_form = $this->createForm(new ManagerEditType(), $manager, array(
+            'action' => $this->generateUrl('student_edit', array('id' => $id ) ),
             'method' => 'GET'
         ));
         
@@ -111,10 +111,10 @@ class StudentController extends Controller
 
         if ($edit_form->isValid()) {
 
-            $em = $this->getDoctrine()->getStudent();
-            $em->getRepository('UserBundle:Student')->add($Student);
+            $em = $this->getDoctrine()->getManager();
+            $em->getRepository('UserBundle:Student')->add($manager);
 
-            return $this->redirect($this->generateUrl('Student_index'));
+            return $this->redirect($this->generateUrl('student_index'));
         }
 
         return array(
@@ -125,14 +125,14 @@ class StudentController extends Controller
     /**
      * 删除学生信息.
      *
-     * @Route("/delete/{id}", name="Student_delete")
+     * @Route("/delete/{id}", name="student_delete")
      * @Method("GET")
      * @Template()
      */
     public function deleteAction(Request $request, $id)
     {
         try{
-            $em = $this->getDoctrine()->getStudent();
+            $em = $this->getDoctrine()->getManager();
             $success = $em->getRepository('UserBundle:Student')->delete($id);
             if($success){
                 $this->addFlash('success', '删除成功!');
@@ -143,20 +143,20 @@ class StudentController extends Controller
             $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
         }
 
-        return $this->redirect($this->generateUrl('Student_index'));
+        return $this->redirect($this->generateUrl('student_index'));
     }
 
     /**
      * 批量删除学生信息.
      *
-     * @Route("/multi-delete", name="Student_multi_delete")
+     * @Route("/multi-delete", name="student_multi_delete")
      * @Method("POST")
      */
     public function multiDeleteAction(Request $request)
     {
         $ids = $request->request->get('ids');
         
-        $em = $this->getDoctrine()->getStudent();
+        $em = $this->getDoctrine()->getManager();
         $success = $em->getRepository('UserBundle:Student')->multiDelete($ids);
 
         if($success){
