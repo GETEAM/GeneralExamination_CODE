@@ -66,10 +66,10 @@
                         <input type="checkbox" name="students" value="{{ student.id }}" hidden />
                         <a href="{{ path('student_show', { 'id': student.id }) }}">{{ student.id }}</a>
                     </td>
-                    <td>{{ student.username }}</td>
+                    <td>{{ student.studentId }}</td>
                     <td>{{ student.name }}</td>
-                    <td>{{ student.academicID }}</td>
-                    <td>{{ student.gradeID }}</td>
+                    <td>{{ student.academy }}</td>
+                    <td>{{ student.grade }}</td>
                     <td>{{ student.password }}</td>
                     <td>{{ student.telephone }}</td>
                     <td>{{ student.email }}</td>
