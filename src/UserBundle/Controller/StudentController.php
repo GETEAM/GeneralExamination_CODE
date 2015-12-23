@@ -61,7 +61,7 @@ class StudentController extends Controller
 
             $this->addFlash(
                 'success',
-                $grade->getDescription().'添加成功'
+                $student->getName().'添加成功'
             );
 
             return $this->redirect($this->generateUrl('student_index'));

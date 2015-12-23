@@ -10,4 +10,27 @@ namespace UserBundle\Entity;
  */
 class StudentRepository extends \Doctrine\ORM\EntityRepository
 {
+	//添加/编辑单个学生(编辑学生时的操作和添加学生相似)
+    public function add($student) {
+    	$em = $this->getEntityManager();
+        $em->persist($student);
+        $em->flush();
+    }
+
+	//删除单个学生
+    public function delete($id) {
+    	$em = $this->getEntityManager();
+        $student=$this->findOneById($id);
+        $em->remove($student);
+        $em->flush();
+        return 1;
+    }
+
+    //批量删除学生
+    public function multiDelete($ids) {
+    	foreach( $ids as $id ) {
+    		$this->delete($id);
+    	}
+    	return 1;
+    }
 }
