@@ -195,3 +195,20 @@ function multiDelete(name, names) {
 		}
 	});
 }
+
+/*tab的切换*/
+function tab($tab_id){
+	//默认显示第一个
+	var default_content_id=$tab_id.find('.tab-title li:first a').addClass('add-selected').attr('name');
+ 	$(default_content_id).show().siblings().hide();
+
+ 	//单击变换
+	$tab_id.find('.tab-title li a').click(function(){
+		//变换样式
+		$(this).removeClass('no-selected').addClass('add-selected');
+    	$(this).parent().siblings().find('a').removeClass('add-selected').addClass('no-selected');
+    	//内容改变
+    	var content_id=$(this).attr('name');
+    	$(content_id).show().siblings().hide();
+	});
+}
