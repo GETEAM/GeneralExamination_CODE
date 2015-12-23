@@ -31,14 +31,6 @@
     {{ form_start(new_form,{'attr': {'class': 'single-teacher-add'}} ) }}
         {{ form_errors(new_form) }}
 
-        {{ form_row(new_form.username, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
-        {{ form_row(new_form.name, {'attr': {'placeholder': '请输入姓名', 'autocomplete': 'off'} }) }}
-        {{ form_row(new_form.email, {'attr': {'placeholder': '请输入邮箱', 'autocomplete': 'off'} }) }}
-        {{ form_row(new_form.telephone, {'attr': {'placeholder': '请输入手机号码', 'autocomplete': 'off'} }) }}
-        {{ form_row(new_form.roles) }}
-        {{ form_row(new_form.plainPassword) }}
-        {{ form_row(new_form.save, {'attr': {'class': 'btn'} }) }}
-
     {{ form_end(new_form, {'render_rest': true}) }}
 
     <form class="import-form" action="#" method="post" hidden>

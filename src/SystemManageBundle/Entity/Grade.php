@@ -3,6 +3,7 @@
 namespace SystemManageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Grade
@@ -43,6 +44,11 @@ class Grade
     public function __construct()
     {
         $this->students = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getDescription();
     }
 
     /**

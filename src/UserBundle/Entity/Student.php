@@ -57,17 +57,16 @@ class Student
     private $password;
 
     /**
-     * @var integer
-     *
-     * @ORM\Column(name="academy", type="integer")
-     */
-    private $academy;
-
-    /**
      * @ORM\ManyToOne(targetEntity="\SystemManageBundle\Entity\Grade", inversedBy="students")
      * @ORM\JoinColumn(name="grade_id", referencedColumnName="id")
      */
     protected $grade;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="\SystemManageBundle\Entity\Academy", inversedBy="students")
+     * @ORM\JoinColumn(name="academy_id", referencedColumnName="id")
+     */
+    protected $academy;
 
 
     /**
@@ -201,31 +200,6 @@ class Student
     }
 
     /**
-     * Set academy
-     *
-     * @param integer $academy
-     *
-     * @return Student
-     */
-    public function setAcademy($academy)
-    {
-        $this->academy = $academy;
-
-        return $this;
-    }
-
-    /**
-     * Get academy
-     *
-     * @return integer
-     */
-    public function getAcademy()
-    {
-        return $this->academy;
-    }
-
-
-    /**
      * Set grade
      *
      * @param \SystemManageBundle\Entity\Grade $grade
@@ -247,5 +221,29 @@ class Student
     public function getGrade()
     {
         return $this->grade;
+    }
+
+    /**
+     * Set academy
+     *
+     * @param \SystemManageBundle\Entity\Academy $academy
+     *
+     * @return Student
+     */
+    public function setAcademy(\SystemManageBundle\Entity\Academy $academy = null)
+    {
+        $this->academy = $academy;
+
+        return $this;
+    }
+
+    /**
+     * Get academy
+     *
+     * @return \SystemManageBundle\Entity\Academy
+     */
+    public function getAcademy()
+    {
+        return $this->academy;
     }
 }

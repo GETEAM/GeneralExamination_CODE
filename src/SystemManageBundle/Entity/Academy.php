@@ -3,6 +3,7 @@
 namespace SystemManageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * Academy
@@ -35,6 +36,20 @@ class Academy
      */
     private $academyName;
 
+    /**
+     * @ORM\OneToMany(targetEntity="\UserBundle\Entity\Student", mappedBy="academy")
+     */
+    protected $students;
+
+    public function __construct()
+    {
+        $this->students = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return (string) $this->getAcademyName();
+    }
 
     /**
      * Get id
@@ -92,5 +107,39 @@ class Academy
     public function getAcademyName()
     {
         return $this->academyName;
+    }
+
+    /**
+     * Add student
+     *
+     * @param \UserBundle\Entity\Student $student
+     *
+     * @return Academy
+     */
+    public function addStudent(\UserBundle\Entity\Student $student)
+    {
+        $this->students[] = $student;
+
+        return $this;
+    }
+
+    /**
+     * Remove student
+     *
+     * @param \UserBundle\Entity\Student $student
+     */
+    public function removeStudent(\UserBundle\Entity\Student $student)
+    {
+        $this->students->removeElement($student);
+    }
+
+    /**
+     * Get students
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getStudents()
+    {
+        return $this->students;
     }
 }

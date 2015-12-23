@@ -9,8 +9,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use UserBundle\Entity\Student;
+use SystemManageBundle\Entity\Grade;
+use SystemManageBundle\Entity\Academy;
 use UserBundle\Form\StudentNewType;
-use UserBundle\Form\StudentEditType;
 
 /**
  * Student controller.
@@ -32,7 +33,7 @@ class StudentController extends Controller
         $students = $em->getRepository('UserBundle:Student')->findAll();
 
         return array(
-            'students' => $students,
+            'students' => $students
         );
     }
 
@@ -45,9 +46,9 @@ class StudentController extends Controller
      */
     public function newAction(Request $request)
     {
-        $manager = new Manager();
+        $student = new Student();
 
-        $new_form = $this->createForm(new ManagerNewType(), $manager, array(
+        $new_form = $this->createForm(new StudentNewType($this->getDoctrine()), $student, array(
             'action' => $this->generateUrl('student_new'),
             'method' => 'GET'
         ));
@@ -56,16 +57,49 @@ class StudentController extends Controller
 
         if ($new_form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $em->getRepository('UserBundle:Student')->add($manager);
+            $em->getRepository('UserBundle:Student')->add($student);
 
-            return $this->redirect($this->generateUrl('student_index', array(
-                'id' => $manager->getId()
-            )));
+            $this->addFlash(
+                'success',
+                $grade->getDescription().'添加成功'
+            );
+
+            return $this->redirect($this->generateUrl('student_index'));
         }
 
         return array(
-            'new_form' => $new_form->createView(),
+            'new_form' => $new_form->createView()
         );
+
+        // $grade = new Grade();
+        // $grade->setGrade('B2013');
+        // $grade->setDescription('本科2013级');
+
+        // $academy= new academy();
+        // $academy->setAcademyID('225');
+        // $academy->setAcademyName('软件学院');
+
+        // $student = new Student();
+        // $student->setStudentId('SA13225006');
+        // $student->setName('高峰');
+        // $student->setAcademy($academy);
+        // $student->setGrade($grade);
+        // $student->setEmail('dd@qq.com');
+        // $student->setTelephone('1111');
+        // $student->setPassword('23');
+
+        // $em = $this->getDoctrine()->getManager();
+        // $em->persist($grade);
+        // $em->persist($academy);
+        // $em->persist($student);
+        // $em->flush();
+
+        // return new Response(
+        //     'Created product id: '.$grade->getId()
+        //     .' and category id: '.$student->getId()
+        // );
+        // 
+        
     }
 
     /**
