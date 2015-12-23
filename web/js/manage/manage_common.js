@@ -1,6 +1,9 @@
 /****管理端各页面通用js****/
 
-//列表页的tr 选择初始化(单选、全选)
+/*列表页的tr 选择初始化(单选、全选)
+ *@param: $tr_selector -> 需要实现可选的tr的jquery对象
+ *@param: name -> 实现可选的checkbox的name值
+ */
 function trSelectInitial( $tr_selector, name ) {
 	var $select_all = $('.select-all');
 	var $select_all_checkbox = $('input[type="checkbox"]', $select_all);
@@ -9,14 +12,14 @@ function trSelectInitial( $tr_selector, name ) {
 	$select_all.click(function(){
 		var $select_all_checkbox = $('input[type="checkbox"]', $(this));
 		var checked = $select_all_checkbox.attr('checked');
-		var $grades_checkboxs = $('input:checkbox[name="'+name+'"]');
+		var $checkboxs = $('input:checkbox[name="'+name+'"]');
 		//根据checkbox的选中状态添加删除class
 		if(!checked) {
 			$select_all.addClass('checked');
-			checkedAll($grades_checkboxs);
+			checkedAll($checkboxs);
 		}else {
 			$select_all.removeClass('checked');
-			uncheckedAll($grades_checkboxs);
+			uncheckedAll($checkboxs);
 		}
 		//改变复选框的选中状态
 		$select_all_checkbox.attr('checked', !checked);
@@ -61,7 +64,9 @@ function trSelectInitial( $tr_selector, name ) {
 	})
 }
 
-/*获取所有选中的tr的值*/
+/*给定多选框的name名称 获取多选框的选中值
+ *@param: name -> 多选框的name名称
+*/
 function getSelectedTRs(name) {
 	var trs = [];
 	//$('input:checkbox[name="'+name+'"]:checked')兼容性有问题（点击选中，再点击取消之后，无法获取到），修改成该种方法
@@ -72,7 +77,9 @@ function getSelectedTRs(name) {
 	return trs;
 }
 
-/*选中全部指定checkbox*/
+/*选中全部指定checkbox
+ *@param: $checkboxs -> 指定的复选框jquery对象，从而实现给定单选框的全选取消
+*/
 function checkedAll($checkboxs) {
 	$checkboxs.each(function(){
 		$(this).attr('checked', true);
@@ -80,7 +87,9 @@ function checkedAll($checkboxs) {
 	});
 }
 
-/*取消选中全部指定checkbox*/
+/*取消选中全部指定checkbox
+ *@param: $checkboxs -> 指定的复选框jquery对象，从而实现给定单选框的全选取消
+*/
 function uncheckedAll($checkboxs) {
 	$checkboxs.each(function(){
 		$(this).attr('checked', false);
@@ -88,8 +97,10 @@ function uncheckedAll($checkboxs) {
 	});
 }
 
-//这是单个删除的方法，写到公用里面可以让任何删除都可以调用
-function singleDelete(name){
+/*单个删除通用方法
+ *@param: name -> 指定操作对象的名称（比如年级管理时为grade）
+ */
+function singleDelete(name) {
 	$( '.delete-dialog' ).dialog({ 
 		closeOnEscape: true,//按下ESC后是否退出
 		modal: true,//出现模态弹出框
@@ -117,5 +128,70 @@ function singleDelete(name){
 		var dialog_id = '#delete-dialog_' + name_id;
 		//打开对话框
 		$(dialog_id).dialog('open');
+	});
+}
+
+/*批量删除通用方法
+ *@param: name -> 指定操作对象的名称（比如年级管理时为grade）
+ *@param: names -> name的复数形式(多选框的name值)
+ */
+function multiDelete(name, names) {
+	//批量删除对话框初始化
+	$( '.multi-delete-dialog' ).dialog({ 
+		closeOnEscape: true,//按下ESC后是否退出
+		modal: true,//出现模态弹出框
+		resized: false,
+		autoOpen: false,
+		buttons: {
+			'确认': function() {
+				$(this).dialog('close');
+				$('.loading-description').text("正在删除,请稍等……");
+				$('.loading').show();
+				
+				var ids = getSelectedTRs(names);
+
+				//post操作 用ajax实现
+				$.ajax({
+				    type: 'POST',
+				    url: '/manage/' + name + '/multi-delete',
+				    data: {
+				        ids: ids
+				    },
+				    dataType: 'json',
+				    async: true,
+				    success: function (data) {
+				        if (data.success) {
+				            console.log("选中项删除成功！正在更新显示...", 2000, 'TIP');
+				            window.location.reload(true);
+				        } else {
+				            console.log("选中项删除失败!");
+				            window.location.reload(true);
+				        }
+				    },
+				    error: function (XMLHttpRequest, textStatus, errorThrown) {
+				        console.log("error " + textStatus);
+				        console.log("网络或服务器异常！" + 'ERROR');
+				    }
+				});
+
+			},
+			'取消': function() {
+				//此处的this为$( '.multi-delete-dialog' )
+				$(this).dialog('close');
+			}
+		}
+	});
+	// 点击批量删除按钮时，打开删除对话框
+	$('.btn-multi-delete').click(function(){
+		var ids = getSelectedTRs(names);
+		
+		if(ids.length > 0){
+			//打开对话框
+			$('.multi-delete-dialog').dialog('open');
+		}else{
+			//没有选中内容时，给予提示
+			var $warning_message = $('<div>').html('没有可删除的选中项！').addClass('notice warning');
+			$('.flash-message').append($warning_message);
+		}
 	});
 }

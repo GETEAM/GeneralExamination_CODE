@@ -24,7 +24,7 @@
             批量删除
         </a>
     </div>
-    <table class="common-table examination-rooms">
+    <table class="common-table examinationrooms">
         <thead>
             <tr>
                 <th>编号</th>
@@ -45,7 +45,7 @@
             {% for examinationroom in examinationrooms %}
                 <tr>
                     <td>
-                        <input type="checkbox" name="examination-rooms" value="{{ examinationroom.id }}" hidden />
+                        <input type="checkbox" name="examinationrooms" value="{{ examinationroom.id }}" hidden />
                         <a href="{{ path('examinationroom_show', { 'id': examinationroom.id }) }}">{{ examinationroom.id }}</a>
                     </td>
                     <td>{{ examinationroom.roomName }}</td>
