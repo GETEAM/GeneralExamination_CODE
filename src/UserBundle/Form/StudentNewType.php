@@ -35,6 +35,7 @@ class StudentNewType extends AbstractType
             ->add('name', 'text', array('label' => '姓名'))
             ->add('email', 'text', array('label' => '邮箱'))
             ->add('telephone', 'text', array('label' => '电话'))
+            ->add('password', 'text', array('label' => '密码'))
             ->add('grade', 'entity', array(
                 'label' => '年级',
                 'class' => 'SystemManageBundle:Grade',

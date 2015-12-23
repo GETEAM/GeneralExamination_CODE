@@ -196,7 +196,9 @@ function multiDelete(name, names) {
 	});
 }
 
-/*tab的切换*/
+/*tab标签切换通用方法
+ *@param: $tab_id -> 指定标签的id（比如管理员添加时为manager-add-tab）
+ */
 function tab($tab_id){
 	//默认显示第一个
 	var default_content_id=$tab_id.find('.tab-title li:first a').addClass('add-selected').attr('name');

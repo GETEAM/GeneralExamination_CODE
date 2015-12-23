@@ -10,8 +10,10 @@
     </h1>
     <div class="common-find">
         <ul>
-            <li>学生账号：<input type="text" name="StudentName" class="common-findByText"></li>
-            <li>学生姓名：<input type="text" name="StudentId " class="common-findByText"></li>
+            <li>学号：<input type="text" name="StudentName" class="common-findByText"></li>
+            <li>姓名：<input type="text" name="StudentId " class="common-findByText"></li>
+            <li>学院：<input type="text" name="gradeID " class="common-findByText"></li>
+            <li>年级：<input type="text" name="academicID " class="common-findByText"></li>
             <li><a href="#">
                 <img src="{{  asset('images/manage/view.png')  }}"  alt="查找" title="查找" />
                 查找</a></li>
@@ -45,7 +47,9 @@
                 <th>姓名</th>
                 <th>学院</th>
                 <th>年级</th>
+                <th>密码</th>
                 <th>邮箱</th>
+                <th>电话</th>
                 <th>操作</th>
             </tr>
         </thead>
@@ -53,7 +57,7 @@
 
         {% if students|length == 0 %}
             <tr>
-                <td colspan=6>尚不存在学生信息，请您添加！</td>
+                <td colspan=9>尚不存在学生信息，请您添加！</td>
             <tr>
         {% else %}
             {% for student in students %}
@@ -66,6 +70,8 @@
                     <td>{{ student.name }}</td>
                     <td>{{ student.academicID }}</td>
                     <td>{{ student.gradeID }}</td>
+                    <td>{{ student.password }}</td>
+                    <td>{{ student.telephone }}</td>
                     <td>{{ student.email }}</td>
                     <td>
                         <a href="{{ path('student_show', { 'id': student.id }) }}">  
