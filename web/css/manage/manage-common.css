@@ -317,12 +317,11 @@
 .right .tab{
     border: 1px solid #eee;
     padding-top: 10px;
-    padding-left: 10px;
 }
 .right .tab .tab-title{
-    /* margin-bottom: 20px; */
     overflow: hidden;
     background-color: #F4F4F4;
+    padding-left: 30px;
 }
 .right .tab .tab-title li{
     display: block;

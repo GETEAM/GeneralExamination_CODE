@@ -2,11 +2,6 @@
 
 {% block title %}添加教师—基本信息设置—考务管理{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/manage/user-manage/manager_new.css') }}"/>
-{% endblock %}
-
 {% block right -%}
 
 
@@ -37,7 +32,7 @@
 
         <div class="tab-content">
             <div id="single-add">
-                {{ form_start(new_form,{'attr': {'class': 'add-user-form single-teacher-add'}} ) }}
+                {{ form_start(new_form) }}
                     {{ form_errors(new_form) }}
 
                     {{ form_row(new_form.username, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
@@ -53,7 +48,7 @@
             </div>
 
             <div id="import">
-                <form class="add-user-form import-form" action="#" method="post">
+                <form class="import-form" action="#" method="post">
                     <label for="teacher-information">选择文件</label>
                     <input type="file" id="teacher-information" placeholder="请选择导入文件" />
                     <p class="help-block">上传的文件类型只能是：.xls、.doc</p>

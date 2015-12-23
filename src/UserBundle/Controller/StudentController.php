@@ -113,14 +113,14 @@ class StudentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $manager = $em->getRepository('UserBundle:Student')->find($id);
+        $student = $em->getRepository('UserBundle:Student')->find($id);
 
-        if (!$manager) {
-            throw $this->createNotFoundException('Unable to find manager entity.');
+        if (!$student) {
+            throw $this->createNotFoundException('Unable to find Student entity.');
         }
         
         return array(
-            'manager' => $manager,
+            'student' => $student,
         );
     }
 

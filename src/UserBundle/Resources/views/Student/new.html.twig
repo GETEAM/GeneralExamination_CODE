@@ -31,7 +31,7 @@
         </div>
         <div class="tab-content">
             <div id="single-student-add">
-                {{ form_start(new_form,{'attr': {'class': 'single-add-form'}} ) }}
+                {{ form_start(new_form) }}
                     {{ form_errors(new_form) }}
 
                     {{ form_row(new_form.student_id, {'attr': {'placeholder': '请输入学号', 'autocomplete': 'off'} }) }}

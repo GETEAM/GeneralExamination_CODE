@@ -184,7 +184,6 @@ function multiDelete(name, names) {
 	// 点击批量删除按钮时，打开删除对话框
 	$('.btn-multi-delete').click(function(){
 		var ids = getSelectedTRs(names);
-		
 		if(ids.length > 0){
 			//打开对话框
 			$('.multi-delete-dialog').dialog('open');
