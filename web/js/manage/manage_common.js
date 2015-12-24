@@ -213,3 +213,37 @@ function tab($tab_id){
     	$(content_id).show().siblings().hide();
 	});
 }
+
+/*更新选择框
+ *@param: $selectId -> 指定要选择的select的id
+ */
+function optionContent($selectId){
+	var optionArr=[];
+	var selectText="";
+	var options=$selectId.children();
+	for (var i = 0; i < options.length; i++) {
+		optionArr.push(options[i].text);
+	};
+	var afterDeleteReapeat=deleteRepeatElement(optionArr);
+	
+	for (var i = 0; i < afterDeleteReapeat.length; i++) {
+		selectText+='<option>'+afterDeleteReapeat[i]+'</option>';
+	};
+	$selectId.html(selectText);
+}
+/*数组去掉重复
+ *@param: arr -> 指定需要去掉重复的数组
+ */
+function deleteRepeatElement(arr){
+    var obj={};var newarr=[];
+
+    for (var i = 0; i < arr.length; i++) {
+      if(typeof(obj[arr[i]])=='undefined'){
+          obj[arr[i]]=" ";
+      }  
+    }
+    for(var j in obj){
+      newarr.push(j)
+    }
+    return newarr;
+}

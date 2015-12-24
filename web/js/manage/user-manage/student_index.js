@@ -6,6 +6,14 @@ $(function() {
 	singleDelete('student');
 
 	/*** 批量删除 ***/
-	multiDelete('student', 'students')	;
+	multiDelete('student', 'students');
+
+	/*去除重复获取可以选取的学院和年级*/
+	var $academySelectId=$('#academyName');
+	optionContent($academySelectId);
+
+	var $gradeSelectId=$('#gradeName');
+	optionContent($gradeSelectId);
+
 	
 })

@@ -13,15 +13,27 @@
             <li>学号：<input type="text" name="StudentName" class="common-findByText"></li>
             <li>姓名：<input type="text" name="StudentId " class="common-findByText"></li>
             <li>学院：
-                <select>
+                <select id="academyName">
                     {% if students|length ==0 %}
                         <option>无<option>
                     {% else %}
-                        <option>有<option>
+                        {% for student in students %}
+                            <option>{{ student.academy }}</option>
+                        {% endfor %}
                     {% endif %}
                 </select>
             </li>
-            <li>年级：<input type="text" name="academicID " class="common-findByText"></li>
+            <li>年级：
+                <select id="gradeName">
+                    {% if students|length ==0 %}
+                        <option>无<option>
+                    {% else %}
+                        {% for student in students %}
+                            <option>{{ student.grade }}</option>
+                        {% endfor %}
+                    {% endif %}
+                </select>
+            </li>
             <li><a href="#">
                 <img src="{{  asset('images/manage/view.png')  }}"  alt="查找" title="查找" />
                 查找</a></li>
