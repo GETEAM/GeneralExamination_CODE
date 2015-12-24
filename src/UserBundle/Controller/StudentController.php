@@ -8,9 +8,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use UserBundle\Entity\Student;
 use SystemManageBundle\Entity\Grade;
 use SystemManageBundle\Entity\Academy;
+use UserBundle\Entity\Student;
 use UserBundle\Form\StudentNewType;
 use UserBundle\Form\StudentEditType;
 
@@ -57,15 +57,23 @@ class StudentController extends Controller
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('UserBundle:Student')->add($student);
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('UserBundle:Student')->add($student);
+                if($success){
+                    $this->addFlash('success', $student->getName().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                    return $this->redirect($this->generateUrl('student_new'));
+                }
 
-            $this->addFlash(
-                'success',
-                $student->getName().'添加成功'
-            );
+                return $this->redirect($this->generateUrl('student_index'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
 
-            return $this->redirect($this->generateUrl('student_index'));
+                return $this->redirect($this->generateUrl('student_new'));
+            } 
         }
 
         return array(
@@ -86,12 +94,12 @@ class StudentController extends Controller
 
         $student = $em->getRepository('UserBundle:Student')->find($id);
 
-        if (!$student) {
-            throw $this->createNotFoundException('Unable to find Student entity.');
-        }
+        // if (!$student) {
+        //     // throw $this->createNotFoundException('Unable to find Student entity.');
+        // }
         
         return array(
-            'student' => $student,
+            'student' => $student
         );
     }
 
@@ -115,11 +123,21 @@ class StudentController extends Controller
         $edit_form->handleRequest($request);
 
         if ($edit_form->isValid()) {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('UserBundle:Student')->add($student);
+                if($success){
+                    $this->addFlash('success', $student->getName().'修改成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+            }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('UserBundle:Student')->add($student);
-
-            return $this->redirect($this->generateUrl('student_index'));
+            return $this->redirect($this->generateUrl('student_edit', array(
+                'id' => $id
+            )));
         }
 
         return array(

@@ -16,6 +16,7 @@ class GradeRepository extends \Doctrine\ORM\EntityRepository
     	$em = $this->getEntityManager();
         $em->persist($grade);
         $em->flush();
+        return true;
     }
 
 	//删除单个管理者

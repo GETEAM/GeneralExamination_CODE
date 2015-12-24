@@ -63,13 +63,17 @@ class GradeController extends Controller
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('SystemManageBundle:Grade')->add($grade);
-
-            $this->addFlash(
-                'success',
-                $grade->getDescription().'添加成功'
-            );
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('SystemManageBundle:Grade')->add($grade);
+                if($success){
+                    $this->addFlash('success', $grade->getDescription().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新添加！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新添加！');
+            }
 
             return $this->redirect($this->generateUrl('grade_index'));
         }
@@ -93,7 +97,7 @@ class GradeController extends Controller
         $grade = $em->getRepository('SystemManageBundle:Grade')->find($id);
 
         if (!$grade) {
-            throw $this->createNotFoundException('Unable to find grade entity.');
+            throw $this->createNotFoundException('没有找到指定年级信息.');
         }
         
         return array(
@@ -121,11 +125,17 @@ class GradeController extends Controller
         $edit_form->handleRequest($request);
 
         if ($edit_form->isValid()) {
-
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('SystemManageBundle:Grade')->add($grade);
-
-            $this->addFlash('success','年级信息修改成功');
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('SystemManageBundle:Grade')->add($grade);
+                if($success){
+                    $this->addFlash('success', '年级信息修改成功!');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+            }
 
             return $this->redirect($this->generateUrl('grade_index'));
         }
@@ -187,14 +197,6 @@ class GradeController extends Controller
                      ->process();
         }
         return array('form' => $form->createView());
-        //下面的处理得重新处理
-        // $result = array(
-        //     'success' => 1
-        // );
-        
-        // $response = new Response(json_encode($result));
-        // $response->headers->set('Content-Type', 'application/json');
-        // return $response;
     }
 
     /**

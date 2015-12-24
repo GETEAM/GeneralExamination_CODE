@@ -15,6 +15,7 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
     	$em = $this->getEntityManager();
         $em->persist($student);
         $em->flush();
+        return true;
     }
 
 	//删除单个学生
@@ -23,7 +24,7 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
         $student=$this->findOneById($id);
         $em->remove($student);
         $em->flush();
-        return 1;
+        return true;
     }
 
     //批量删除学生
@@ -31,6 +32,6 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
     	foreach( $ids as $id ) {
     		$this->delete($id);
     	}
-    	return 1;
+    	return true;
     }
 }
