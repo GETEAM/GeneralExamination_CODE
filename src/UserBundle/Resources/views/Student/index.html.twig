@@ -12,7 +12,15 @@
         <ul>
             <li>学号：<input type="text" name="StudentName" class="common-findByText"></li>
             <li>姓名：<input type="text" name="StudentId " class="common-findByText"></li>
-            <li>学院：<input type="text" name="gradeID " class="common-findByText"></li>
+            <li>学院：
+                <select>
+                    {% if students|length ==0 %}
+                        <option>无<option>
+                    {% else %}
+                        <option>有<option>
+                    {% endif %}
+                </select>
+            </li>
             <li>年级：<input type="text" name="academicID " class="common-findByText"></li>
             <li><a href="#">
                 <img src="{{  asset('images/manage/view.png')  }}"  alt="查找" title="查找" />

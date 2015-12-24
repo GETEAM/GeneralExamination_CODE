@@ -27,6 +27,11 @@
     </div>
     <table class="common-table">
         <tbody>
+            {% if examinationroom=="" %}
+                <tr>
+                    <td>您指定的考场信息不存在，请您核实考场名称！</td>
+                <tr>
+            {% else %}
             <tr>
                 <th>编号</th>
                 <td>{{ examinationroom.id }}</td>

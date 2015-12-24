@@ -27,6 +27,11 @@
     </div>
     <table class="common-table">
         <tbody>
+            {% if academy=="" %}
+                <tr>
+                    <td>您指定的学院信息不存在，请您核实学院编号！</td>
+                <tr>
+            {% else %}
             <tr>
                 <th>编号</th>
                 <td>{{ academy.id }}</td>

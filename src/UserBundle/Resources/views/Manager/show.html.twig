@@ -25,6 +25,12 @@
     </div>
     <table class="common-table">
         <tbody>
+            {% if manager=="" %}
+                <tr>
+                    <td>您指定的教师信息不存在，请您核实教师编号！</td>
+                <tr>
+            {% else %}
+
             <tr>
                 <th>编号</th>
                 <td>{{ manager.id }}</td>

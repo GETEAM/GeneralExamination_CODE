@@ -27,6 +27,11 @@
     </div>
     <table class="common-table">
         <tbody>
+            {% if grade=="" %}
+                <tr>
+                    <td>您指定的年级信息不存在，请您核实年级编号！</td>
+                <tr>
+            {% else %}
             <tr>
                 <th>编号</th>
                 <td>{{ grade.id }}</td>
