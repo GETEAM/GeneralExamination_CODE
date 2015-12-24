@@ -52,7 +52,7 @@ class StudentEditType extends AbstractType
                         ->orderBy('a.academyName', 'ASC');
                 }
             ))
-            ->add('save', 'submit', array('label' => '添加'));
+            ->add('save', 'submit', array('label' => '修改'));
     }
 
 
