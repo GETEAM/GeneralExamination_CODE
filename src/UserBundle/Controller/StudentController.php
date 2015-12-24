@@ -12,6 +12,7 @@ use UserBundle\Entity\Student;
 use SystemManageBundle\Entity\Grade;
 use SystemManageBundle\Entity\Academy;
 use UserBundle\Form\StudentNewType;
+use UserBundle\Form\StudentEditType;
 
 /**
  * Student controller.
@@ -69,37 +70,7 @@ class StudentController extends Controller
 
         return array(
             'new_form' => $new_form->createView()
-        );
-
-        // $grade = new Grade();
-        // $grade->setGrade('B2013');
-        // $grade->setDescription('本科2013级');
-
-        // $academy= new academy();
-        // $academy->setAcademyID('225');
-        // $academy->setAcademyName('软件学院');
-
-        // $student = new Student();
-        // $student->setStudentId('SA13225006');
-        // $student->setName('高峰');
-        // $student->setAcademy($academy);
-        // $student->setGrade($grade);
-        // $student->setEmail('dd@qq.com');
-        // $student->setTelephone('1111');
-        // $student->setPassword('23');
-
-        // $em = $this->getDoctrine()->getManager();
-        // $em->persist($grade);
-        // $em->persist($academy);
-        // $em->persist($student);
-        // $em->flush();
-
-        // return new Response(
-        //     'Created product id: '.$grade->getId()
-        //     .' and category id: '.$student->getId()
-        // );
-        // 
-        
+        );        
     }
 
     /**
@@ -113,14 +84,14 @@ class StudentController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $manager = $em->getRepository('UserBundle:Student')->find($id);
+        $student = $em->getRepository('UserBundle:Student')->find($id);
 
-        if (!$manager) {
+        if (!$student) {
             throw $this->createNotFoundException('Unable to find manager entity.');
         }
         
         return array(
-            'manager' => $manager,
+            'student' => $student,
         );
     }
 
@@ -134,9 +105,9 @@ class StudentController extends Controller
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $manager = $em->getRepository('UserBundle:Student')->find($id);
+        $student = $em->getRepository('UserBundle:Student')->find($id);
 
-        $edit_form = $this->createForm(new ManagerEditType(), $manager, array(
+        $edit_form = $this->createForm(new StudentEditType($this->getDoctrine()), $student, array(
             'action' => $this->generateUrl('student_edit', array('id' => $id ) ),
             'method' => 'GET'
         ));
@@ -146,7 +117,7 @@ class StudentController extends Controller
         if ($edit_form->isValid()) {
 
             $em = $this->getDoctrine()->getManager();
-            $em->getRepository('UserBundle:Student')->add($manager);
+            $em->getRepository('UserBundle:Student')->add($student);
 
             return $this->redirect($this->generateUrl('student_index'));
         }
