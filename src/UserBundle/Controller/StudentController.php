@@ -13,6 +13,11 @@ use SystemManageBundle\Entity\Academy;
 use UserBundle\Entity\Student;
 use UserBundle\Form\StudentNewType;
 use UserBundle\Form\StudentEditType;
+use UserBundle\Form\StudentImportType;
+use Ddeboer\DataImport\Workflow;
+use Ddeboer\DataImport\Writer\DoctrineWriter;
+use Ddeboer\DataImport\Filter;
+use Ddeboer\DataImport\Reader\CsvReader;
 
 /**
  * Student controller.
@@ -44,8 +49,8 @@ class StudentController extends Controller
      * 添加学生信息.
      *
      * @Route("/new", name="student_new")
-     * @Method("GET")
-     * @Template("UserBundle:Student:new.html.twig")
+     * 
+     * @Template()
      */
     public function newAction(Request $request)
     {
@@ -53,10 +58,10 @@ class StudentController extends Controller
 
         $new_form = $this->createForm(new StudentNewType($this->getDoctrine()), $student, array(
             'action' => $this->generateUrl('student_new'),
-            'method' => 'GET'
+            'method' => 'POST'
         ));
-        
-        $new_form->handleRequest($request);
+          
+        $new_form->handleRequest($request);     
 
         if ($new_form->isValid()) {
             //添加成功跳转到列表页面，不成功跳转到本页面
@@ -77,8 +82,53 @@ class StudentController extends Controller
             } 
         }
 
+        // $import_form = $this->createForm(new StudentImportType($this->getDoctrine()),null, array(
+        //     'action' => $this->generateUrl('student_new'),
+        //     'method' => 'POST'
+        // ));
+        $import_form = $this->createFormBuilder()
+                            ->setMethod('POST')
+                            ->setAction($this->generateUrl('grade_import'))
+                            ->add('fileUrl', 'file', array(
+                                    'label' => '文件位置：',
+                                ))
+                            ->add('import', 'submit', array('label' => '导入'))
+                            ->add('cancel', 'reset', array('label' => '取消'))
+                            ->getForm();
+
+        $import_form->handleRequest($request);
+
+        if ($import_form->isValid()) 
+        {
+            if(!is_dir("student_import")){
+                mkdir("student_import");
+            }
+            $file=$form['fileUrl']->getData();
+            $filename = explode(".", $file->getClientOriginalName());
+            $extension = $filename[count($filename) - 1];
+            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
+
+            $file->move("student_import", $newefilename);
+
+            $upfile = new \SplFileObject("student_import/" . $newefilename);
+            $csvReader = new CsvReader($upfile);
+
+            $csvReader->setStrict(false)
+                   ->setHeaderRowNumber(0)
+                   ->setColumnHeaders(['grade_id', 'academy_id','student_id','name','email','telephone','password']);
+
+            $em = $this->getDoctrine()->getManager();
+            $doctrineWriter = new DoctrineWriter($em, 'UserBundle:Student');
+            $doctrineWriter->disableTruncate();
+
+            $workflow = new Workflow($csvReader);
+            $workflow->addWriter($doctrineWriter)
+                     ->process();
+        }
+
         return array(
-            'new_form' => $new_form->createView()
+            'new_form' => $new_form->createView(),
+            'import_form' => $import_form->createView()
         );        
     }
 
@@ -202,5 +252,4 @@ class StudentController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-
 }

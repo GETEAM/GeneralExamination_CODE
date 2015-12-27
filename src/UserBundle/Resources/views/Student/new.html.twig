@@ -48,11 +48,8 @@
                 {{ form_end(new_form, {'render_rest': true}) }}
             </div>
             <div id="student-import">
-                <form class="import-form" action="#" method="post">
-                    <label for="teacher-information">选择文件</label>
-                    <input type="file" id="teacher-information" placeholder="请选择导入文件" />
-                    <p class="help-block">上传的文件类型只能是：.xls、.doc</p>
-                    <button class="btn">确定导入</button>
+                <form class="import-form" action="student_new" method="post" {{ form_enctype(import_form) }}>
+                     {{ form_widget(import_form) }}
                 </form>
             </div>
         </div>

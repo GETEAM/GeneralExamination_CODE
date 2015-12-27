@@ -9,7 +9,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SystemManageBundle\Entity\Grade;
-use SystemManageBundle\Entity\Document;
 use SystemManageBundle\Form\GradeNewType;
 use SystemManageBundle\Form\GradeEditType;
 use Ddeboer\DataImport\Workflow;
