@@ -70,12 +70,15 @@ class GradeController extends Controller
                     $this->addFlash('success', $grade->getDescription().'添加成功');
                 }else{
                     $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新添加！');
+                    return $this->redirect($this->generateUrl('grade_new'));
                 }
+
+                return $this->redirect($this->generateUrl('grade_index'));
             } catch(\Exception $e){
                 $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新添加！');
+                return $this->redirect($this->generateUrl('grade_new'));
             }
 
-            return $this->redirect($this->generateUrl('grade_index'));
         }
 
         return array(
@@ -96,9 +99,10 @@ class GradeController extends Controller
 
         $grade = $em->getRepository('SystemManageBundle:Grade')->find($id);
 
-        if (!$grade) {
-            throw $this->createNotFoundException('没有找到指定年级信息.');
-        }
+        //调试错误提示
+        // if (!$grade) {
+        //     throw $this->createNotFoundException('没有找到指定年级信息.');
+        // }
         
         return array(
             'grade' => $grade
@@ -137,7 +141,9 @@ class GradeController extends Controller
                 $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
             }
 
-            return $this->redirect($this->generateUrl('grade_index'));
+            return $this->redirect($this->generateUrl('grade_edit', array(
+                'id' => $id
+            )));
         }
 
         return array(
@@ -232,13 +238,17 @@ class GradeController extends Controller
     {   
         $ids = $request->request->get('ids');
         
-        $em = $this->getDoctrine()->getManager();
-        $success = $em->getRepository('SystemManageBundle:Grade')->multiDelete($ids);
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('SystemManageBundle:Grade')->multiDelete($ids);
 
-        if($success){
-            $this->addFlash('success', '批量删除成功!');
-        }else{
-            $this->addFlash('error', '批量删除失败!请重新删除！');
+            if($success){
+                $this->addFlash('success', '批量删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
         }
 
         $result = array(

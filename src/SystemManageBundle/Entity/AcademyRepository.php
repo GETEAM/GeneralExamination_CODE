@@ -16,6 +16,7 @@ class AcademyRepository extends \Doctrine\ORM\EntityRepository
     	$em = $this->getEntityManager();
         $em->persist($academy);
         $em->flush();
+        return true;
     }
 
 	//删除单个学院信息

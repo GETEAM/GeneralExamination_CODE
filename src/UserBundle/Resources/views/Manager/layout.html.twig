@@ -2,3 +2,8 @@
 
 {% set nav_title = 'manager' %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/manage/user-manage/manager.css') }}"/>
+{% endblock %}
+

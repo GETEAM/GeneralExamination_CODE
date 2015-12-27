@@ -57,14 +57,23 @@ class AcademyController extends Controller
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('SystemManageBundle:Academy')->add($academy);
-            
-            $this->addFlash('success',
-                $academy->getAcademyName().'添加成功'
-            );
-
-            return $this->redirect($this->generateUrl('academy_index'));
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('SystemManageBundle:Academy')->add($academy);
+                
+                if($success){
+                    $this->addFlash('success', $academy->getAcademyName().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                    return $this->redirect($this->generateUrl('academy_new'));
+                }
+                return $this->redirect($this->generateUrl('academy_index'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('academy_new'));
+            }
         }
 
         return array(
@@ -85,9 +94,11 @@ class AcademyController extends Controller
 
         $academy = $em->getRepository('SystemManageBundle:Academy')->find($id);
 
-        if (!$academy) {
-            throw $this->createNotFoundException('Unable to find Academy entity.');
-        }
+        //调试错误提示
+        // if (!$academy) {
+        //     throw $this->createNotFoundException('Unable to find Academy entity.');
+        // }
+        
         return array(
             'academy' => $academy
         );
@@ -113,13 +124,21 @@ class AcademyController extends Controller
         $edit_form->handleRequest($request);
 
         if ($edit_form->isValid()) {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('SystemManageBundle:Academy')->add($academy);
+                if($success){
+                    $this->addFlash('success', $academy->getAcademyName().'修改成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+            }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('SystemManageBundle:Academy')->add($academy);
-
-            $this->addFlash('success','学院信息修改成功');
-
-            return $this->redirect($this->generateUrl('academy_index'));
+            return $this->redirect($this->generateUrl('academy_edit', array(
+                'id' => $id
+            )));
         }
 
         return array(
@@ -161,13 +180,18 @@ class AcademyController extends Controller
     public function multiDeleteAction(Request $request)
     {   
         $ids = $request->request->get('ids');
-        $em = $this->getDoctrine()->getManager();
-        $success = $em->getRepository('SystemManageBundle:Academy')->multiDelete($ids);
 
-        if($success){
-            $this->addFlash('success', '批量删除成功!');
-        }else{
-            $this->addFlash('error', '批量删除失败!请重新删除！');
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('SystemManageBundle:Academy')->multiDelete($ids);
+
+            if($success){
+                $this->addFlash('success', '批量删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
         }
 
         $result = array(

@@ -1,6 +1,8 @@
-{% extends 'UserBundle:Manager:layout.html.twig' %}
+{% extends 'UserBundle:Student:layout.html.twig' %}
 
 {% block title %}添加学生—基本信息设置—考务管理{% endblock %}
+
+{% block loading %}正在加载添加表单……{% endblock %}
 
 {% block right -%}
 
@@ -16,7 +18,7 @@
         <div class="tab-title">
             <ul>
                 <li>
-                    <a href="javascript:void(0)" class="btn btn-common-action add-selected" name="#single-student-add">
+                    <a href="javascript:void(0)" class="btn btn-common-action add-selected" name="#student-single-add">
                         <img src="{{ asset('images/manage/add.png') }}" width="20" height="20" alt="编辑" title="编辑">
                         单个添加学生信息
                     </a>
@@ -30,7 +32,7 @@
             </ul>   
         </div>
         <div class="tab-content">
-            <div id="single-student-add">
+            <div id="student-single-add">
                 {{ form_start(new_form) }}
                     {{ form_errors(new_form) }}
 

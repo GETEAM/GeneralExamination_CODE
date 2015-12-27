@@ -15,6 +15,7 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
     	$em = $this->getEntityManager();
         $em->persist($manager);
         $em->flush();
+        return true;
     }
 
 	//删除单个管理者
@@ -23,7 +24,7 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
         $manager=$this->findOneById($id);
         $em->remove($manager);
         $em->flush();
-        return 1;
+        return true;
     }
 
     //批量删除管理者
@@ -31,6 +32,6 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
     	foreach( $ids as $id ) {
     		$this->delete($id);
     	}
-    	return 1;
+    	return true;
     }
 }

@@ -26,11 +26,13 @@ class ManagerController extends Controller
      * @Method("GET")
      * @Template("UserBundle:Manager:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $managers = $em->getRepository('UserBundle:Manager')->findAll();
-
+        $manager = $em->getRepository('UserBundle:Manager')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $managers = $paginator->paginate($manager, $request->query->getInt('page', 1)); 
+        
         return array(
             'managers' => $managers,
         );
@@ -55,12 +57,23 @@ class ManagerController extends Controller
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('UserBundle:Manager')->add($manager);
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('UserBundle:Manager')->add($manager);
 
-            return $this->redirect($this->generateUrl('manager_index', array(
-                'id' => $manager->getId()
-            )));
+                if($success){
+                    $this->addFlash('success', $manager->getName().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                    return $this->redirect($this->generateUrl('manager_new'));
+                }
+                return $this->redirect($this->generateUrl('manager_index'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('manager_new'));
+            }
         }
 
         return array(
@@ -81,9 +94,10 @@ class ManagerController extends Controller
 
         $manager = $em->getRepository('UserBundle:Manager')->find($id);
 
-        if (!$manager) {
-            throw $this->createNotFoundException('Unable to find manager entity.');
-        }
+        //调试错误提示
+        // if (!$manager) {
+        //     throw $this->createNotFoundException('Unable to find manager entity.');
+        // }
         
         return array(
             'manager' => $manager,
@@ -110,11 +124,22 @@ class ManagerController extends Controller
         $edit_form->handleRequest($request);
 
         if ($edit_form->isValid()) {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('UserBundle:Manager')->add($manager);
 
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('UserBundle:Manager')->add($manager);
+                if($success){
+                    $this->addFlash('success', $manager->getName().'修改成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+            }
 
-            return $this->redirect($this->generateUrl('manager_index'));
+            return $this->redirect($this->generateUrl('manager_edit', array(
+                'id' => $id
+            )));
         }
 
         return array(
@@ -155,14 +180,18 @@ class ManagerController extends Controller
     public function multiDeleteAction(Request $request)
     {
         $ids = $request->request->get('ids');
-        
-        $em = $this->getDoctrine()->getManager();
-        $success = $em->getRepository('UserBundle:Manager')->multiDelete($ids);
 
-        if($success){
-            $this->addFlash('success', '批量删除成功!');
-        }else{
-            $this->addFlash('error', '批量删除失败!请重新删除！');
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('UserBundle:Manager')->multiDelete($ids);
+
+            if($success){
+                $this->addFlash('success', '批量删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
         }
 
         $result = array(

@@ -2,7 +2,7 @@
 
 {% block title %}学生信息管理—考务管理{% endblock %}
 
-{% block loading %}正在加载学生信息列表，请稍等……{% endblock %}
+{% block loading %}正在加载学生信息列表……{% endblock %}
 
 {% block right %}
     <h1>
@@ -111,6 +111,13 @@
             {% endfor %}
         {% endif %}
         </tbody>
+        <tfoot>
+            <tr>
+            <td colspan="9">
+                {{ knp_pagination_render(students) }}            
+            </td>
+            </tr>
+        </tfoot>
     </table>
 
     <!-- 批量删除对话框 -->

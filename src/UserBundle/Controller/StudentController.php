@@ -28,10 +28,12 @@ class StudentController extends Controller
      * @Method("GET")
      * @Template("UserBundle:Student:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
-        $students = $em->getRepository('UserBundle:Student')->findAll();
+        $student = $em->getRepository('UserBundle:Student')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $students = $paginator->paginate($student, $request->query->getInt('page', 1));
 
         return array(
             'students' => $students
@@ -57,6 +59,7 @@ class StudentController extends Controller
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
+            //添加成功跳转到列表页面，不成功跳转到本页面
             try{
                 $em = $this->getDoctrine()->getManager();
                 $success = $em->getRepository('UserBundle:Student')->add($student);
@@ -66,12 +69,10 @@ class StudentController extends Controller
                     $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
                     return $this->redirect($this->generateUrl('student_new'));
                 }
-
                 return $this->redirect($this->generateUrl('student_index'));
                 
             } catch(\Exception $e){
                 $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
-
                 return $this->redirect($this->generateUrl('student_new'));
             } 
         }
@@ -94,6 +95,7 @@ class StudentController extends Controller
 
         $student = $em->getRepository('UserBundle:Student')->find($id);
 
+        //调试错误提示
         // if (!$student) {
         //     // throw $this->createNotFoundException('Unable to find Student entity.');
         // }
@@ -179,13 +181,17 @@ class StudentController extends Controller
     {
         $ids = $request->request->get('ids');
         
-        $em = $this->getDoctrine()->getManager();
-        $success = $em->getRepository('UserBundle:Student')->multiDelete($ids);
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('UserBundle:Student')->multiDelete($ids);
 
-        if($success){
-            $this->addFlash('success', '批量删除成功!');
-        }else{
-            $this->addFlash('error', '批量删除失败!请重新删除！');
+            if($success){
+                $this->addFlash('success', '批量删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
         }
 
         $result = array(
