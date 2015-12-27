@@ -1,0 +1,15 @@
+{% extends ':manage:manage_base.html.twig' %}
+
+{% block left -%}
+	<div class="left-title">试卷管理</div>
+	<aside class="manage-nav">
+		<ul>
+			<li>
+				<a href="{{ path('questionBank_index') }}" class="{% if nav_title == 'questionBank' %}selected{% endif %}">试题库管理</a>
+			</li>
+			<li>
+				<a href="{{ path('grade_index') }}" class="{% if nav_title == 'paperBank' %}selected{% endif %}">试卷库管理</a>
+			</li>
+		</ul>
+	</aside>
+{% endblock %}
