@@ -57,15 +57,22 @@ class ExaminationRoomController extends Controller
         $new_form->handleRequest($request);
 
         if ($new_form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('SystemManageBundle:ExaminationRoom')->add($examinationroom);
-
-            $this->addFlash(
-                'success',
-                $examinationroom->getRoomName().'添加完成'
-            );
-
-            return $this->redirect($this->generateUrl('examinationroom_index'));
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('SystemManageBundle:ExaminationRoom')->add($examinationroom);
+                if($success){
+                    $this->addFlash('success', $examinationroom->getRoomName().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                    return $this->redirect($this->generateUrl('examinationroom_new'));
+                }
+                return $this->redirect($this->generateUrl('examinationroom_index'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('examinationroom_new'));
+            } 
         }
 
         return array(
@@ -86,9 +93,11 @@ class ExaminationRoomController extends Controller
 
         $examinationroom = $em->getRepository('SystemManageBundle:ExaminationRoom')->find($id);
 
-        if (!$examinationroom) {
-            throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
-        }
+        //调试错误提示
+        // if (!$examinationroom) {
+        //     throw $this->createNotFoundException('Unable to find ExaminationRoom entity.');
+        // }
+        
         return array(
             'examinationroom' => $examinationroom
         );
@@ -114,13 +123,21 @@ class ExaminationRoomController extends Controller
         $edit_form->handleRequest($request);
 
         if ($edit_form->isValid()) {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('SystemManageBundle:ExaminationRoom')->add($examinationroom);
+                if($success){
+                    $this->addFlash('success', $examinationroom->getRoomName().'修改成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+            }
 
-            $em = $this->getDoctrine()->getManager();
-            $em->getRepository('SystemManageBundle:ExaminationRoom')->add($examinationroom);
-
-            $this->addFlash('success','考场信息信息修改成功');
-
-            return $this->redirect($this->generateUrl('examinationroom_index'));
+            return $this->redirect($this->generateUrl('examinationroom_edit', array(
+                'id' => $id
+            )));
         }
 
         return array(
@@ -160,14 +177,18 @@ class ExaminationRoomController extends Controller
     public function multiDeleteAction(Request $request)
     {   
         $ids = $request->request->get('ids');
-        
-        $em = $this->getDoctrine()->getManager();
-        $success = $em->getRepository('SystemManageBundle:ExaminationRoom')->multiDelete($ids);
 
-        if($success){
-            $this->addFlash('success', '批量删除成功!');
-        }else{
-            $this->addFlash('error', '批量删除失败!请重新删除！');
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('SystemManageBundle:ExaminationRoom')->multiDelete($ids);
+
+            if($success){
+                $this->addFlash('success', '批量删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
         }
 
         $result = array(
