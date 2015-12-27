@@ -1,5 +1,5 @@
-question_bank_manage:
-    resource: "@QuestionBankManageBundle/Controller/"
+paper_manage:
+    resource: "@PaperManageBundle/Controller/"
     type:     annotation
     prefix:   /
 
