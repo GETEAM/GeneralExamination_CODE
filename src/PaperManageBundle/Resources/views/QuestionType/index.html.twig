@@ -1,20 +1,82 @@
 {% extends 'PaperManageBundle:QuestionBank:layout.html.twig' %}
 
-{% block title %}试题库管理—试卷管理{% endblock %}
+{% block title %}类型管理—试卷管理{% endblock %}
 
-{% block loading %}正在加载年级信息列表……{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/common/editable-box.css') }}"/>
-{% endblock %}
+{% block loading %}正在加载类型列表……{% endblock %}
 
 {% block right %}
     <h1>
-       试题列表
+       类型列表
     </h1>
   
-    
+  	<div class="common-action">
+        <a href="#" class="btn btn-common-action select-all">
+            <input type="checkbox" hidden/>
+            <i></i>
+            全选
+        </a>
+        <a href="{{ path('grade_new') }}" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加类型" title="添加类型">
+            添加类型
+        </a>
+        <a href="javascript:void(0)" class="btn btn-common-action btn-multi-delete">
+            <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
+            批量删除
+        </a>
+    </div>
+
+    <table class="common-table question_types">
+	    <thead>
+	        <tr>
+	            <th>编号</th>
+	            <th>类型名(英文)</th>
+	            <th>类型名(中文)</th>
+	            <th>类型样式</th>
+	            <th>操作</th>
+	        </tr>
+	    </thead>
+
+	    <tbody>
+		    {% if question_types|length == 0 %}
+		        <tr>
+		            <td colspan="3">尚不存在类型，请您添加！</td>
+		        </tr>
+		    {% else %}
+		        {% for question_type in question_types %}
+		            <tr>
+		                <td>
+		                    <input type="checkbox" name="question_types" value="{{ question_type.id }}" hidden/>
+		                    <a href="{{ path('question_type_show', { 'id': question_type.id }) }}">{{ question_type.id }}</a>
+		                </td>
+		                <td>{{ question_type.nameEn }}</td>
+		                <td>{{ question_type.nameCh }}</td>
+		                <td class="question_type_structure">类型示例</td>
+		                <td>
+		                    <a href="{{ path('question_type_show', { 'id': question_type.id }) }}">
+		                        <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="预览试题" title="预览">
+		                    </a>
+		                    <a href="{{ path('question_type_edit', { 'id': question_type.id }) }}">
+		                        <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑类型" title="编辑类型">
+		                    </a>
+		                    <a href="javascript:void(0)" class="delete-btn" question_type-id="{{ question_type.id }}">
+		                        <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除类型" title="删除类型">
+		                    </a>
+		                    <div id="delete-dialog_{{ question_type.id }}" class="delete-dialog" title="删除确认" question_type-id={{ question_type.id }} hidden>
+		                        <p>确定要删除   <span class="dialog-item-key">{{question_type.nameCh}}</span>   的类型信息吗？</p>
+		                    </div>
+		                </td>
+		            </tr>
+		        {% endfor %}
+		    {% endif %}
+	    </tbody>
+	    <tfoot>
+	        <tr>
+	        <td colspan="5">
+	            {{ knp_pagination_render(question_types) }}            
+	        </td>
+	        </tr>
+	    </tfoot>
+</table>
 
     <!-- 批量删除对话框 -->
     <div class="multi-delete-dialog" title="批量删除确认" hidden>
@@ -22,3 +84,7 @@
     </div>
 {% endblock %}
 
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/manage/paper-manage/question-type_index.js') }}"></script>
+{% endblock %}

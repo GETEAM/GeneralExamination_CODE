@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class QuestionTypeController extends Controller
 {
     /**
-     * 显示所有学生.
+     * 显示类型列表.
      *
      * @Route("/", name="question_type_index")
      * @Method("GET")
@@ -31,7 +31,7 @@ class QuestionTypeController extends Controller
         $question_types = $paginator->paginate($question_type, $request->query->getInt('page', 1));
 
         return array(
-            'students' => $question_types
+            'question_types' => $question_types
         );
     }
 
