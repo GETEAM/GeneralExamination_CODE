@@ -50,7 +50,7 @@ class StudentController extends Controller
      *
      * @Route("/new", name="student_new")
      * 
-     * @Template()
+     * @Template("UserBundle:Student:new.html.twig")
      */
     public function newAction(Request $request)
     {
@@ -88,7 +88,7 @@ class StudentController extends Controller
         // ));
         $import_form = $this->createFormBuilder()
                             ->setMethod('POST')
-                            ->setAction($this->generateUrl('grade_import'))
+                            ->setAction($this->generateUrl('student_new'))
                             ->add('fileUrl', 'file', array(
                                     'label' => '文件位置：',
                                 ))
@@ -98,8 +98,7 @@ class StudentController extends Controller
 
         $import_form->handleRequest($request);
 
-        if ($import_form->isValid()) 
-        {
+        if ($import_form->isValid()) {
             if(!is_dir("student_import")){
                 mkdir("student_import");
             }

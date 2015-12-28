@@ -13,7 +13,7 @@ use PaperManageBundle\Form\QuestionBankType;
 /**
  * QuestionBank controller.
  *
- * @Route("/questionbank")
+ * @Route("/manage/question-bank")
  */
 class QuestionBankController extends Controller
 {
@@ -21,8 +21,7 @@ class QuestionBankController extends Controller
     /**
      * Lists all QuestionBank entities.
      *
-     * @Route("/", name="questionBank_index")
-     * @Method("GET")
+     * @Route("/", name="question_bank_index")
      * @Template()
      */
     public function indexAction(Request $request)
@@ -35,14 +34,71 @@ class QuestionBankController extends Controller
         $paginator = $this->get('knp_paginator');
         $questions = $paginator->paginate($question, $request->query->getInt('page', 1));
 
+        //测试富文本
+        $import_form = $this->createFormBuilder()
+                            ->setMethod('POST')
+                            ->setAction($this->generateUrl('question_bank_index'))
+                            ->add('fileUrl', 'file', array(
+                                    'label' => '文件位置：',
+                                ))
+                            ->add('import', 'submit', array('label' => '导入'))
+                            ->add('cancel', 'reset', array('label' => '取消'))
+                            ->getForm();
+
+        $import_form->handleRequest($request);
+
+        if ($import_form->isValid()) {
+            if(!is_dir("student_import")){
+                mkdir("student_import");
+            }
+            $file=$import_form['fileUrl']->getData();
+            $filename = explode(".", $file->getClientOriginalName());
+            $extension = $filename[count($filename) - 1];
+            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
+
+            $file->move("student_import", $newefilename);
+
+        }
+          
+
         return array(
             'questions' => $questions,
+            'upload_form' => $import_form->createView()
         );
     }
+
+    /**
+     * 上传图片
+     *
+     * @Route("/", name="question_bank_upload_image")
+     * @Method("POST")
+     */
+    // public function uploadImageAction(Request $request)
+    // {
+
+    //     if(!is_dir("upload/images")){
+    //         mkdir("upload/images");
+    //     }
+    //     $file=$form['fileUrl']->getData();
+    //     $filename = explode(".", $file->getClientOriginalName());
+    //     $extension = $filename[count($filename) - 1];
+    //     $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
+
+    //     $file->move("student_import", $newefilename);
+
+    //     $result = array(
+    //         'success' => "1111"
+    //     );
+        
+    //     $response = new Response(json_encode($result));
+    //     $response->headers->set('Content-Type', 'application/json');
+    //     return $response;
+    // }
+
     /**
      * Creates a new QuestionBank entity.
      *
-     * @Route("/", name="questionbank_create")
+     * @Route("/", name="question_bank_create")
      * @Method("POST")
      * @Template("PaperManageBundle:QuestionBank:new.html.twig")
      */
@@ -57,7 +113,7 @@ class QuestionBankController extends Controller
             $em->persist($entity);
             $em->flush();
 
-            return $this->redirect($this->generateUrl('questionbank_show', array('id' => $entity->getId())));
+            return $this->redirect($this->generateUrl('question_bank_show', array('id' => $entity->getId())));
         }
 
         return array(
@@ -76,7 +132,7 @@ class QuestionBankController extends Controller
     private function createCreateForm(QuestionBank $entity)
     {
         $form = $this->createForm(new QuestionBankType(), $entity, array(
-            'action' => $this->generateUrl('questionbank_create'),
+            'action' => $this->generateUrl('question_bank_create'),
             'method' => 'POST',
         ));
 
@@ -88,7 +144,7 @@ class QuestionBankController extends Controller
     /**
      * Displays a form to create a new QuestionBank entity.
      *
-     * @Route("/new", name="questionbank_new")
+     * @Route("/new", name="question_bank_new")
      * @Method("GET")
      * @Template()
      */
@@ -106,7 +162,7 @@ class QuestionBankController extends Controller
     /**
      * Finds and displays a QuestionBank entity.
      *
-     * @Route("/{id}", name="questionbank_show")
+     * @Route("/{id}", name="question_bank_show")
      * @Method("GET")
      * @Template()
      */
@@ -131,7 +187,7 @@ class QuestionBankController extends Controller
     /**
      * Displays a form to edit an existing QuestionBank entity.
      *
-     * @Route("/{id}/edit", name="questionbank_edit")
+     * @Route("/{id}/edit", name="question_bank_edit")
      * @Method("GET")
      * @Template()
      */
@@ -165,7 +221,7 @@ class QuestionBankController extends Controller
     private function createEditForm(QuestionBank $entity)
     {
         $form = $this->createForm(new QuestionBankType(), $entity, array(
-            'action' => $this->generateUrl('questionbank_update', array('id' => $entity->getId())),
+            'action' => $this->generateUrl('question_bank_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
 
@@ -176,7 +232,7 @@ class QuestionBankController extends Controller
     /**
      * Edits an existing QuestionBank entity.
      *
-     * @Route("/{id}", name="questionbank_update")
+     * @Route("/{id}", name="question_bank_update")
      * @Method("PUT")
      * @Template("PaperManageBundle:QuestionBank:edit.html.twig")
      */
@@ -197,7 +253,7 @@ class QuestionBankController extends Controller
         if ($editForm->isValid()) {
             $em->flush();
 
-            return $this->redirect($this->generateUrl('questionbank_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('question_bank_edit', array('id' => $id)));
         }
 
         return array(
@@ -209,7 +265,7 @@ class QuestionBankController extends Controller
     /**
      * Deletes a QuestionBank entity.
      *
-     * @Route("/{id}", name="questionbank_delete")
+     * @Route("/{id}", name="question_bank_delete")
      * @Method("DELETE")
      */
     public function deleteAction(Request $request, $id)
@@ -242,7 +298,7 @@ class QuestionBankController extends Controller
     private function createDeleteForm($id)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('questionbank_delete', array('id' => $id)))
+            ->setAction($this->generateUrl('question_bank_delete', array('id' => $id)))
             ->setMethod('DELETE')
             ->add('submit', 'submit', array('label' => 'Delete'))
             ->getForm()
