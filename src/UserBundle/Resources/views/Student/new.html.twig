@@ -46,9 +46,10 @@
                     {{ form_row(new_form.save, {'attr': {'class': 'btn'} }) }}
 
                 {{ form_end(new_form, {'render_rest': true}) }}
+                
             </div>
             <div id="student-import">
-                <form class="import-form" action="student_new" method="post" {{ form_enctype(import_form) }}>
+                <form method="post" {{ form_enctype(import_form) }}>
                      {{ form_widget(import_form) }}
                 </form>
             </div>

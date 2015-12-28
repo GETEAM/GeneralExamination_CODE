@@ -11,10 +11,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use SystemManageBundle\Entity\Grade;
 use SystemManageBundle\Form\GradeNewType;
 use SystemManageBundle\Form\GradeEditType;
-use Ddeboer\DataImport\Workflow;
-use Ddeboer\DataImport\Writer\DoctrineWriter;
-use Ddeboer\DataImport\Filter;
-use Ddeboer\DataImport\Reader\CsvReader;
 
 /**
  * 年级信息管理Controller.
@@ -148,60 +144,6 @@ class GradeController extends Controller
         return array(
             'edit_form' => $edit_form->createView()
         );
-    }
-    /**
-     * 批量导入年级信息.
-     *
-     * @Route("/import", name="grade_import")
-     *
-     * @Template()
-     */
-    public function importAction(Request $request)
-    {   
-        $form = $this->createFormBuilder()
-        ->setMethod('POST')
-        ->setAction($this->generateUrl('grade_import'))
-        ->add('fileUrl', 'file', array(
-                'label' => '文件位置：',
-            ))
-        ->add('import', 'submit', array('label' => '导入'))
-        ->add('cancel', 'reset', array('label' => '取消'))
-        ->getForm();
-       
-       $form->handleRequest($request);
-        if ($form->isValid()) 
-        {
-            //导入学生文件
-            if(!is_dir("grade_import")){
-                mkdir("grade_import");
-            }
-            //获取文件框到内容
-            $file=$form['fileUrl']->getData();
-            //将原文档到文件名以“.”分割
-            $filename = explode(".", $file->getClientOriginalName());
-            //获取原文档到扩展名
-            $extension = $filename[count($filename) - 1];
-            //构造新到文件名
-            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
-        
-            $file->move("grade_import", $newefilename);
-
-            $upfile = new \SplFileObject("grade_import/" . $newefilename);
-            $csvReader = new CsvReader($upfile);
-
-            $csvReader->setStrict(false)
-                   ->setHeaderRowNumber(0)
-                   ->setColumnHeaders(['grade', 'description']);
-
-            $em = $this->getDoctrine()->getManager();
-            $doctrineWriter = new DoctrineWriter($em, 'SystemManageBundle:Grade');
-            $doctrineWriter->disableTruncate();
-
-            $workflow = new Workflow($csvReader);
-            $workflow->addWriter($doctrineWriter)
-                     ->process();
-        }
-        return array('form' => $form->createView());
     }
 
     /**
