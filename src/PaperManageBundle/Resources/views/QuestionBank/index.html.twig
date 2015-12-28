@@ -4,6 +4,11 @@
 
 {% block loading %}正在加载年级信息列表……{% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/common/editable-box.css') }}"/>
+{% endblock %}
+
 {% block right %}
     <h1>
        试题列表
@@ -39,7 +44,7 @@
         <tbody>
         {% if questions|length == 0 %}
             <tr>
-                <td colspan=4>尚不存在试题，请您添加！</td>
+                <td colspan="5">尚不存在试题，请您添加！</td>
             </tr>
         {% else %}
             {% for question in questions %}
@@ -71,7 +76,7 @@
         </tbody>
         <tfoot>
             <tr>
-            <td colspan="4">
+            <td colspan="5">
                 {{ knp_pagination_render(questions) }}            
             </td>
             </tr>
@@ -82,9 +87,20 @@
     <div class="multi-delete-dialog" title="批量删除确认" hidden>
         <p>确定要删除选中的年级信息吗？</p>
     </div>
+
+
+    <div class="editable-box">
+        <div class="editable-tools">
+            <div class="editable-tool">B</div>
+            <div class="editable-tool">I</div>
+            <div class="editable-tool">U</div>
+            <div class="editable-tool upload-image">上传图片</div>
+            {{ form(upload_form) }}
+        </div>
+        <div class="editable-area" contenteditable="true">
+            <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除年级信息" title="删除年级信息">
+        </div>
+    </div>
+
 {% endblock %}
 
-{% block javascripts %}
-    {{ parent() }}
-    <script src="{{ asset('js/manage/system-manage/question_index.js') }}"></script>
-{% endblock %}

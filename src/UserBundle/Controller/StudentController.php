@@ -94,8 +94,7 @@ class StudentController extends Controller
 
         $import_form->handleRequest($request);
 
-        if ($import_form->isValid()) 
-        {
+        if ($import_form->isValid()) {
             if(!is_dir("student_import")){
                 mkdir("student_import");
             }
