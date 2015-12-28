@@ -18,7 +18,7 @@ use Ddeboer\DataImport\Workflow;
 use Ddeboer\DataImport\Writer\DoctrineWriter;
 use Ddeboer\DataImport\Filter;
 use Ddeboer\DataImport\Reader\CsvReader;
-
+use Ddeboer\DataImport\Reader\OneToManyReader;
 /**
  * Student controller.
  *
@@ -82,35 +82,37 @@ class StudentController extends Controller
             } 
         }
 
-        $import_form = $this->createFormBuilder()
-                            ->setMethod('POST')
-                            ->setAction($this->generateUrl('student_new'))
-                            ->add('fileUrl', 'file', array(
-                                    'label' => '文件位置：',
-                                ))
-                            ->add('import', 'submit', array('label' => '导入'))
-                            ->add('cancel', 'reset', array('label' => '取消'))
-                            ->getForm();
+        //批量导入学生信息
+        $import_form = $this
+                    ->createFormBuilder()
+                    ->setMethod('POST')
+                    ->setAction($this->generateUrl('student_new'))
+                    ->add('fileUrl', 'file', array(
+                              'label' => '文件位置：',
+                           ))
+                    ->add('import', 'submit', array('label' => '导入'))
+                     ->add('cancel', 'reset', array('label' => '取消'))
+                    ->getForm();
 
         $import_form->handleRequest($request);
 
         if ($import_form->isValid()) {
-            if(!is_dir("student_import")){
-                mkdir("student_import");
+            if(!is_dir("upload/import/student_import")){
+                mkdir("upload/import/student_import");
             }
             $file=$import_form['fileUrl']->getData();
             $filename = explode(".", $file->getClientOriginalName());
             $extension = $filename[count($filename) - 1];
             $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
 
-            $file->move("student_import", $newefilename);
+            $file->move("upload/import/student_import", $newefilename);
 
-            $upfile = new \SplFileObject("student_import/" . $newefilename);
+            $upfile = new \SplFileObject("upload/import/student_import/" . $newefilename);
             $csvReader = new CsvReader($upfile);
 
             $csvReader->setStrict(false)
                    ->setHeaderRowNumber(0)
-                   ->setColumnHeaders(['grade', 'academy','studentId','name','email','telephone','password']);
+                   ->setColumnHeaders(['grade' => 'SystemManageBundle\Entity\Grade', 'academy' => 'SystemManageBundle\Entity\Academy','studentId','name','email','telephone','password']);
 
             $em = $this->getDoctrine()->getManager();
             $doctrineWriter = new DoctrineWriter($em, 'UserBundle:Student');
