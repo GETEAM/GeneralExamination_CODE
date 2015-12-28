@@ -32,7 +32,7 @@ class StudentImportType extends AbstractType
     {
         $builder
             ->add('fileUrl', 'file', array(
-                'label' => '文件位置：',
+                'label' => '文件：',
             ))
             ->add('import', 'submit', array('label' => '导入'))
             ->add('cancel', 'reset', array('label' => '取消'));

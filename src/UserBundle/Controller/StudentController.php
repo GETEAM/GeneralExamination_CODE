@@ -82,10 +82,6 @@ class StudentController extends Controller
             } 
         }
 
-        // $import_form = $this->createForm(new StudentImportType($this->getDoctrine()),null, array(
-        //     'action' => $this->generateUrl('student_new'),
-        //     'method' => 'POST'
-        // ));
         $import_form = $this->createFormBuilder()
                             ->setMethod('POST')
                             ->setAction($this->generateUrl('student_new'))
@@ -102,7 +98,7 @@ class StudentController extends Controller
             if(!is_dir("student_import")){
                 mkdir("student_import");
             }
-            $file=$form['fileUrl']->getData();
+            $file=$import_form['fileUrl']->getData();
             $filename = explode(".", $file->getClientOriginalName());
             $extension = $filename[count($filename) - 1];
             $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
@@ -114,7 +110,7 @@ class StudentController extends Controller
 
             $csvReader->setStrict(false)
                    ->setHeaderRowNumber(0)
-                   ->setColumnHeaders(['grade_id', 'academy_id','student_id','name','email','telephone','password']);
+                   ->setColumnHeaders(['grade', 'academy','studentId','name','email','telephone','password']);
 
             $em = $this->getDoctrine()->getManager();
             $doctrineWriter = new DoctrineWriter($em, 'UserBundle:Student');
@@ -124,7 +120,6 @@ class StudentController extends Controller
             $workflow->addWriter($doctrineWriter)
                      ->process();
         }
-
         return array(
             'new_form' => $new_form->createView(),
             'import_form' => $import_form->createView()
