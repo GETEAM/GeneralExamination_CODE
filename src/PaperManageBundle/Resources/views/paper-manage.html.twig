@@ -3,12 +3,22 @@
 {% block left -%}
 	<div class="left-title">试卷管理</div>
 	<aside class="manage-nav">
+		<label>题库管理</label>
 		<ul>
 			<li>
-				<a href="{{ path('question_bank_index') }}" class="{% if nav_title == 'question-bank' %}selected{% endif %}">试题库管理</a>
+				<a href="{{ path('questionbank_index') }}" class="{% if nav_title == 'question-type' %}selected{% endif %}">题型管理</a>
 			</li>
 			<li>
-				<a href="{{ path('grade_index') }}" class="{% if nav_title == 'paperBank' %}selected{% endif %}">试卷库管理</a>
+				<a href="{{ path('questionbank_index') }}" class="{% if nav_title == 'question' %}selected{% endif %}">试题管理</a>
+			</li>			
+		</ul>
+		<label>试卷库管理</label>
+		<ul>
+			<li>
+				<a href="{{ path('grade_index') }}" class="{% if nav_title == 'paper' %}selected{% endif %}">试卷管理</a>
+			</li>
+			<li>
+				<a href="{{ path('grade_index') }}" class="{% if nav_title == 'compose-paper' %}selected{% endif %}">组卷</a>
 			</li>
 		</ul>
 	</aside>

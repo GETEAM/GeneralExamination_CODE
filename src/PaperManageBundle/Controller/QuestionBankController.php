@@ -21,7 +21,8 @@ class QuestionBankController extends Controller
     /**
      * Lists all QuestionBank entities.
      *
-     * @Route("/", name="question_bank_index")
+     * @Route("/", name="questionbank_index")
+     * @Method("GET")
      * @Template()
      */
     public function indexAction(Request $request)
