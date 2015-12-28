@@ -13,7 +13,7 @@ use PaperManageBundle\Form\QuestionBankType;
 /**
  * QuestionBank controller.
  *
- * @Route("/manage/question-bank")
+ * @Route("/manage/questionbank")
  */
 class QuestionBankController extends Controller
 {
@@ -38,7 +38,7 @@ class QuestionBankController extends Controller
         //测试富文本
         $import_form = $this->createFormBuilder()
                             ->setMethod('POST')
-                            ->setAction($this->generateUrl('question_bank_index'))
+                            ->setAction($this->generateUrl('questionbank_index'))
                             ->add('fileUrl', 'file', array(
                                     'label' => '文件位置：',
                                 ))
