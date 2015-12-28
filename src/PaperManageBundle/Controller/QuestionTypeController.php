@@ -17,7 +17,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 class QuestionTypeController extends Controller
 {
     /**
-     * 显示所有学生.
+     * 显示所有题型.
      *
      * @Route("/", name="question_type_index")
      * @Method("GET")
@@ -36,7 +36,54 @@ class QuestionTypeController extends Controller
     }
 
     /**
-     * 添加学生信息.
+     * 可编辑div.
+     *
+     * @Route("/editable", name="question_type_editable")
+     * @Template("PaperManageBundle:QuestionType:editable.html.twig")
+     */
+    public function editableAction(Request $request)
+    {
+        //测试富文本
+        $import_form = $this->createFormBuilder()
+                            ->setMethod('POST')
+                            ->setAction($this->generateUrl('question_type_editable'))
+                            ->add('fileUrl', 'file', array(
+                                    'label' => '文件位置：',
+                                ))
+                            ->add('import', 'submit', array('label' => '导入'))
+                            ->add('cancel', 'reset', array('label' => '取消'))
+                            ->getForm();
+
+        $import_form->handleRequest($request);
+
+        if ($import_form->isValid()) {
+            if(!is_dir("upload/image")){
+                mkdir("upload/image");
+            }
+            $file=$import_form['fileUrl']->getData();
+            $filename = explode(".", $file->getClientOriginalName());
+            $extension = $filename[count($filename) - 1];
+            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
+
+            $file->move("upload/image", $newefilename);
+
+        }
+          
+        return array(
+            'upload_form' => $import_form->createView()
+        );
+    }
+
+
+
+
+
+
+
+
+
+    /**
+     * 添加题型信息.
      *
      * @Route("/new", name="question_type_new")
      * 
@@ -122,7 +169,7 @@ class QuestionTypeController extends Controller
     }
 
     /**
-     * 显示学生信息.
+     * 显示题型信息.
      *
      * @Route("/show/{id}", name="question_type_show")
      * @Method("GET")
@@ -145,7 +192,7 @@ class QuestionTypeController extends Controller
     }
 
     /**
-     * 编辑学生信息.
+     * 编辑题型信息.
      *
      * @Route("/edit/{id}", name="question_type_edit")
      * @Method("GET")
@@ -187,7 +234,7 @@ class QuestionTypeController extends Controller
     }
 
     /**
-     * 删除学生信息.
+     * 删除题型信息.
      *
      * @Route("/delete/{id}", name="question_type_delete")
      * @Method("GET")
@@ -211,7 +258,7 @@ class QuestionTypeController extends Controller
     }
 
     /**
-     * 批量删除学生信息.
+     * 批量删除题型信息.
      *
      * @Route("/multi-delete", name="question_type_multi_delete")
      * @Method("POST")

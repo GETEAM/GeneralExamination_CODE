@@ -1,0 +1,39 @@
+{% extends 'PaperManageBundle:QuestionType:layout.html.twig' %}
+
+{% block title %}试题库管理—试卷管理{% endblock %}
+
+{% block loading %}正在加载年级信息列表……{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/common/editable-box.css') }}"/>
+{% endblock %}
+
+{% block right %}
+    <h1>
+       可编辑div
+    </h1>
+  
+    <div class="editable-box">
+        <div class="editable-tools">
+            <div class="editable-tool">B</div>
+            <div class="editable-tool">I</div>
+            <div class="editable-tool">U</div>
+            <div class="editable-tool upload-image">上传图片</div>
+        </div>
+        <div class="editable-area" contenteditable="true">
+            <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除年级信息" title="删除年级信息">
+        </div>
+    </div>
+
+    <!-- 上传图片对话框 -->
+    <div class="upload-image-dialog" title="上传图片">
+        {{ form(upload_form) }}
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/common/editable-box.js') }}"></script> 
+{% endblock %}
+
