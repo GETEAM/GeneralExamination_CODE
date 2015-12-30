@@ -69,8 +69,10 @@
 }
 .add-question a{
 	color: #fff;
-	
 	display: inline-block;
+}
+.add-question:hover{
+	left: 70px;
 }
 
 /* 点击标签之后的显示和隐藏 */
