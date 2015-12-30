@@ -24,7 +24,16 @@
 .item{
 	width: auto;
 	margin: 0 auto;
+	text-align: left;
+	counter-increment: item 1;
+	counter-reset: option-order-num 0;
+}
+.item:before {
+	float: left;
 	text-align: center;
+	margin-left: 15px;
+	margin-right: 10px;
+	content: "第"counter(item)"题"
 }
 .item-stem {
 	margin-bottom: 10px;
@@ -49,13 +58,11 @@
 	padding: 10px;
 	font-size: 12px;
 	margin-bottom: 15px;
-	border:1px solid red;
 }
 .question {
 	margin-bottom: 10px;
 	counter-increment: question 1;
 	counter-reset: option-order-num 0;
-	border: 1px solid #777;
 }
 .question:last-child {
 	margin-bottom: 0;
@@ -123,7 +130,7 @@ label:last-child {
 	text-align: center;
 }
 .answer-area input, .answer-area input:focus {
-	width: 100%;
+	width: auto;
 	border: none;
 	background-color: inherit;
 	border-bottom: 1px solid #333;

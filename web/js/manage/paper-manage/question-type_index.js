@@ -268,13 +268,13 @@ $(function(){
 
     $('.question-type-td').mouseover(function(){
 		var question_type_id="#question-type_" + $(this).attr('question-type-id');
-
-
-
 		//$(question_type_id).text();
 		$(question_type_id).show();
 	});
 
+    $('.question-type-td').mouseout(function(){
+		$('.show-type').hide();
+    })
 	
 	function getStructureDate(){
 		$.ajax({

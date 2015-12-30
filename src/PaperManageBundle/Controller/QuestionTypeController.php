@@ -91,7 +91,9 @@ class QuestionTypeController extends Controller
      */
     public function newAction(Request $request)
     {
-        $question_type = new Student();
+        //return $this->redirect($this->generateUrl('question_type_new'));
+
+        /*$question_type = new Student();
 
         $new_form = $this->createForm(new StudentNewType($this->getDoctrine()), $question_type, array(
             'action' => $this->generateUrl('question_type_new'),
@@ -165,7 +167,7 @@ class QuestionTypeController extends Controller
         return array(
             'new_form' => $new_form->createView(),
             'import_form' => $import_form->createView()
-        );        
+        );    */    
     }
 
     /**

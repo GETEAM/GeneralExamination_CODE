@@ -23,3 +23,10 @@
 		</ul>
 	</aside>
 {% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/manage/paper-manage/react.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/react-dom.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/browser.min.js') }}"></script>
+{% endblock %}

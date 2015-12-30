@@ -20,7 +20,7 @@
             <i></i>
             全选
         </a>
-        <a href="{{ path('grade_new') }}" class="btn btn-common-action">
+        <a href="{{ path('question_type_new') }}" class="btn btn-common-action">
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加类型" title="添加类型">
             添加类型
         </a>
@@ -95,9 +95,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/manage/paper-manage/react.js') }}"></script>
-    <script src="{{ asset('js/manage/paper-manage/react-dom.js') }}"></script>
-    <script src="{{ asset('js/manage/paper-manage/browser.min.js') }}"></script>
-    <script src="{{ asset('js/manage/paper-manage/browser.min.js') }}"></script>
     <script type="text/babel" src="{{ asset('js/manage/paper-manage/question-type_index.js') }}"></script>
 {% endblock %}
