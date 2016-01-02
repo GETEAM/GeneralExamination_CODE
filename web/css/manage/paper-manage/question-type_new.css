@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 .item {
 	padding-left: 10px!important;
 	border: 1px dashed #eee;
@@ -21,11 +22,16 @@
 .right form textarea{
 	width: 500px;s
 =======
+=======
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
 .right form > div:last-of-type {
 	padding-left: 0px;
 }
 .right form textarea{
 	width: 500px;
+<<<<<<< HEAD
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+=======
 >>>>>>> b8de744fb856805c7792d69640feef249c981151
 }
 .right form label{
@@ -35,9 +41,15 @@
 .right form div{
 	margin-bottom: 15px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
 /* 问题自增长 */
 /*.questions{
+=======
+}
+/* 问题自增长 */
+.questions{
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
 =======
 }
 /* 问题自增长 */
@@ -65,15 +77,21 @@
 .question .question-stem label a:after {
 	content: counter(question)'. ';
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
 
 /* 如果是选择题，则选项的自增长 */
 /*.question-options{
 =======
+=======
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
 }
 
 /* 如果是选择题，则选项的自增长 */
 .question-options{
+<<<<<<< HEAD
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+=======
 >>>>>>> b8de744fb856805c7792d69640feef249c981151
 	margin-left: 125px;
 	counter-reset: question-option 0;
@@ -90,15 +108,21 @@
 	content: counter(question-option, upper-alpha)'.';
 	margin-right: 10px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
 
 /* 考虑点击添加问题 */
 /*.add-question{
 =======
+=======
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
 }
 
 /* 考虑点击添加问题 */
 .add-question{
+<<<<<<< HEAD
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+=======
 >>>>>>> b8de744fb856805c7792d69640feef249c981151
 	text-align: center;
 	border:1px solid #f70;
@@ -118,15 +142,21 @@
 .add-question:hover{
 	left: 70px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
 
 /* 点击标签之后的显示和隐藏 */
 /*.question-toggle{
 =======
+=======
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
 }
 
 /* 点击标签之后的显示和隐藏 */
 .question-toggle{
+<<<<<<< HEAD
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+=======
 >>>>>>> b8de744fb856805c7792d69640feef249c981151
 	border:1px solid #EEC591;
 }
@@ -134,7 +164,11 @@
 .btn{
 	margin: 20px 20px 10px 130px;
 <<<<<<< HEAD
+<<<<<<< HEAD
 }*/
+=======
+}
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
 =======
 }
 >>>>>>> b8de744fb856805c7792d69640feef249c981151
