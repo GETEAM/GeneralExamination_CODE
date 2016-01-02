@@ -5,6 +5,7 @@
 /vendor/
 /web/bundles/
 /web/upload/
+/web/udeitor/php/upload/
 /app/bootstrap.php.cache
 /app/cache/*
 !app/cache/.gitkeep

@@ -262,8 +262,7 @@
 
 /*右侧表单样式*/
 .right form {
-    width: 80%;
-    margin: 40px auto 0;
+    margin: 20px auto 0;
     border: 1px solid #eee;
     padding: 50px 80px;
     font-size: 16px;
@@ -314,50 +313,60 @@
 }
 
 /* 单个添加和批量导入的标签样式 */
-.right .tab{
-    border: 1px solid #eee;
-    padding-top: 10px;
+.right .tabs {
 }
-.right .tab .tab-title{
-    overflow: hidden;
-    background-color: #F4F4F4;
-    padding-left: 30px;
+.right .tabs .tab-title{
+    /*word-spacing: 0;*/
+    font-size: 0;
 }
-.right .tab .tab-title li{
-    display: block;
-    float: left;
+.right .tabs .tab-title li{
+    display: inline-block;
+    margin-right: 3px;
 }
- .right .tab .tab-title a{
+.right .tabs .tab-title a{
     display: block;
     text-align: center;
-    font-size: 16px;
-    padding: 2px 5px;
+    font-size: 15px;
+    padding: 8px 15px;
     margin: 0px;
-    border-top-left-radius: 4px;
-    border-top-right-radius: 4px;
+    background-color: #dedede;
+    border: 1px solid transparent;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom: none;
 }
-.right .tab .tab-title a img{
-    vertical-align: sub;
-}
-.add-selected{
-    border: 1px solid #f70;
-    font-weight: bold;
-    color: #3D3D3D;
+.right .tabs .tab-title a.selected{
+    position: relative;
     background-color: #fff;
-    border-bottom: 0;
+    border: 1px solid #ddd;
+    border-bottom: none;
 }
-.no-selected{
-    color: #707070;
-    background-color: #EAEAEA;
+.right .tabs .tab-title a.selected:after {
+    content: "";
+    display: block;
+    height: 1px;
+    background-color: #fff;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1px;
 }
-.right .tab form{
+.tabs .tab-content {
+    border: 1px solid #ddd;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+.tabs .tab-content > div {
+    display: none;
+}
+.right .tabs form{
     border: 0px;
     margin-top: 0px;
 }
-.right .import-form button {
+/*.right .import-form button {
     margin-top: 20px;
     margin-left: 130px;
-}
+}*/
 
 
 /*管理端提示信息样式*/

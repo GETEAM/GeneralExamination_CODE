@@ -195,24 +195,41 @@ function multiDelete(name, names) {
 	});
 }
 
-/*tab标签切换通用方法
- *@param: $tab_id -> 指定标签的id（比如管理员添加时为manager-add-tab）
- */
-function tab($tab_id){
-	//默认显示第一个
-	var default_content_id=$tab_id.find('.tab-title li:first a').addClass('add-selected').attr('name');
- 	$(default_content_id).show().siblings().hide();
 
- 	//单击变换
-	$tab_id.find('.tab-title li a').click(function(){
-		//变换样式
-		$(this).removeClass('no-selected').addClass('add-selected');
-    	$(this).parent().siblings().find('a').removeClass('add-selected').addClass('no-selected');
-    	//内容改变
-    	var content_id=$(this).attr('name');
-    	$(content_id).show().siblings().hide();
-	});
-}
+$.fn.extend({
+
+	/*tab标签切换通用方法
+	 *@param: num -> 指定显示的标签（序号从0开始）
+	 */
+	tabs: function(num) {
+		$tabs = $(this);
+		num = num || 0;
+		tabs_num = $tabs.find(".tab-title li").length;
+		
+		//如果指定的num大于tab_num
+		num = tabs_num < num ? tabs_num - 1 : num;
+		console.log(num)
+		$show_tab_title = $($tabs.find('.tab-title li')[num]).find('a');
+
+		$show_tab_title.addClass('selected');
+		$show_tab_title.parent().siblings().find('a').removeClass('selected');
+
+		$show_tab_content = $($show_tab_title.attr('name'));
+		$show_tab_content.show().siblings().hide();
+
+	 	//单击切换
+		$tabs.find('.tab-title li a').click(function(){
+			//变换样式
+			$(this).addClass('selected');
+	    	$(this).parent().siblings().find('a').removeClass('selected');
+	    	
+	    	//内容改变
+	    	var content_id=$(this).attr('name');
+	    	$(content_id).show().siblings().hide();
+		});
+	}
+	
+});
 
 /*更新选择框
  *@param: $selectId -> 指定要选择的select的id

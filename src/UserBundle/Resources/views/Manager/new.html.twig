@@ -12,18 +12,16 @@
             <span>返回考场信息列表</span>
         </a>
     </h1>
-    <div class="tab" id="manager-add-tab">
+    <div class="tabs" id="manager-add-tabs">
         <div class="tab-title">
             <ul>
                 <li>
-                    <a href="javascript:void(0)" class="btn btn-common-action add-selected" name="#single-add">
-                        <img src="{{ asset('images/manage/add.png') }}" width="20" height="20" alt="编辑" title="编辑">
+                    <a href="javascript:void(0)" name="#single-add">                        
                         单个添加教师信息
                     </a>
                 </li>
                 <li>
-                    <a href="javascript:void(0)" class="btn btn-common-action no-selected" name="#import">
-                        <img src="{{ asset('images/manage/deletes.png') }}" width="20" height="20" alt="删除" title="删除">
+                    <a href="javascript:void(0)" class="" name="#import">
                         批量导入教师信息
                     </a>
                 </li>
@@ -48,11 +46,8 @@
             </div>
 
             <div id="import">
-                <form class="import-form" action="#" method="post">
-                    <label for="teacher-information">选择文件</label>
-                    <input type="file" id="teacher-information" placeholder="请选择导入文件" />
-                    <p class="help-block">上传的文件类型只能是：.xls、.doc</p>
-                    <button class="btn">确定导入</button>
+                <form method="post" {{ form_enctype(import_form) }}>
+                     {{ form_widget(import_form) }}
                 </form>
             </div>
         </div>

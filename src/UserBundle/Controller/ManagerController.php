@@ -11,6 +11,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use UserBundle\Entity\Manager;
 use UserBundle\Form\ManagerNewType;
 use UserBundle\Form\ManagerEditType;
+use Ddeboer\DataImport\Workflow;
+use Ddeboer\DataImport\Writer\DoctrineWriter;
+use Ddeboer\DataImport\Filter;
+use Ddeboer\DataImport\Reader\CsvReader;
+use Ddeboer\DataImport\Reader\OneToManyReader;
 
 /**
  * Manager controller.
@@ -42,7 +47,7 @@ class ManagerController extends Controller
      * 添加管理者信息.
      *
      * @Route("/new", name="manager_new")
-     * @Method("GET")
+     * 
      * @Template("UserBundle:Manager:new.html.twig")
      */
     public function newAction(Request $request)
@@ -76,9 +81,50 @@ class ManagerController extends Controller
             }
         }
 
+        //批量导入管理员信息
+        $import_form = $this
+                    ->createFormBuilder()
+                    ->setMethod('POST')
+                    ->setAction($this->generateUrl('manager_new'))
+                    ->add('fileUrl', 'file', array(
+                              'label' => '文件位置：',
+                           ))
+                    ->add('import', 'submit', array('label' => '导入'))
+                     ->add('cancel', 'reset', array('label' => '取消'))
+                    ->getForm();
+
+        $import_form->handleRequest($request);
+
+        if ($import_form->isValid()) {
+            if(!is_dir("upload/import/manager_import")){
+                mkdir("upload/import/manager_import");
+            }
+            $file=$import_form['fileUrl']->getData();
+            $filename = explode(".", $file->getClientOriginalName());
+            $extension = $filename[count($filename) - 1];
+            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
+
+            $file->move("upload/import/manager_import", $newefilename);
+
+            $upfile = new \SplFileObject("upload/import/manager_import/" . $newefilename);
+            $csvReader = new CsvReader($upfile);
+
+            $csvReader->setStrict(false)
+                   ->setHeaderRowNumber(0)
+                   ->setColumnHeaders(['username', 'name','email','telephone','roles' => 'FOS\UserBundle\Model\User','password']);
+
+            $em = $this->getDoctrine()->getManager();
+            $doctrineWriter = new DoctrineWriter($em, 'UserBundle:Manager');
+            $doctrineWriter->disableTruncate();
+
+            $workflow = new Workflow($csvReader);
+            $workflow->addWriter($doctrineWriter)
+                     ->process();
+        }
         return array(
             'new_form' => $new_form->createView(),
-        );
+            'import_form' => $import_form->createView()
+        );        
     }
 
     /**

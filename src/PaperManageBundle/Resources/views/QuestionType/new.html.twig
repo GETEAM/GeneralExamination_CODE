@@ -1,0 +1,97 @@
+{% extends 'PaperManageBundle:QuestionType:layout.html.twig' %}
+
+{% block title %}添加类型—试题管理—系统管理{% endblock %}
+
+{% block loading %}正在加载添加表单……{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type_new.css') }}"/>
+{% endblock %}
+
+
+{% block right -%}
+    <h1>
+        添加类型
+        <a href="{{ path('question_type_index') }}">
+            <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回年级信息列表" title="返回年级信息列表">
+            <span>返回年级信息列表</span>
+        </a>
+    </h1>
+
+    <form >
+    	
+    	<div>
+	    	<label> 类型名(英文)</label>
+	    	<input type="text" name="nameEn" placeholder="请输入类型英文名" />
+		</div>
+		<div>
+	    	<label> 类型名(中文)</label>
+	    	<input type="text" name="nameEn" placeholder="请输入类型中文名" />
+	    </div>	
+
+    	<fieldset>
+    		<legend>类型样式</legend>
+    	</fieldset>
+<<<<<<< HEAD
+    	<!--
+=======
+
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+    	<div class="questions">
+			<div class="stem">
+				<label>题干</label>
+	    		<textarea  rows="10" placeholder="请输入题干"></textarea>
+			<div>
+			<div class="add-question">
+				<a href="#" title="点击添加问题">+</a>
+				<ul hidden>
+					<li><a href="">选择题</a></li>
+					<li><a href="">填空题</a></li>
+					<li><a href="">简答题</a></li>
+					<li><a href="">录音题</a></li>
+				</ul>
+			</div>
+    		<div class="question">	
+		    	<div class="question-stem">
+					<label><a href="#" title="点击隐藏和显示" class="question-toggle">问题</a></label>
+		    		<textarea rows="2" placeholder="请输入问题"></textarea>
+		    	</div>
+		    	<div>
+			    	<label>选项</label>
+			    	<div class="question-options">
+			    		<div class="question-option"><input type="text" placeholder=" 请输入选项" /></div>
+			    		<div class="question-option"><input type="text" placeholder=" 请输入选项" /></div>
+			    		<div class="question-option"><input type="text" placeholder=" 请输入选项" /></div>
+			    		<div class="question-option"><input type="text" placeholder=" 请输入选项" /></div>
+				    </div>
+				    <div class="answer">
+				    	<label>答案</label>
+				    	<textarea cols="10" rows="2" placeholder="请输入答案"></textarea>
+				    </div>
+				    <div class="answer-analysis">
+				    	<label>答案解析</label>
+				    	<textarea cols="10" rows="4" placeholder="请输入答案解析"></textarea>
+				    </div>
+				</div>
+		    </div>
+	    </div>
+    	<button class="btn">确认</button> <button class="btn">预览</button>
+<<<<<<< HEAD
+    	-->
+    	<div class="item">
+    		<div class="item-stem">
+    			<label>题干</label>
+    			<div class="item-stem-content">此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。</div>
+    		</div>
+    	</div>
+=======
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+    </form>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/babel" src="{{ asset('js/manage/paper-manage/question-type_new.js') }}"></script>
+{% endblock %}

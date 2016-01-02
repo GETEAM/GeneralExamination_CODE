@@ -46,28 +46,13 @@ class QuestionTypeController extends Controller
         //测试富文本
         $import_form = $this->createFormBuilder()
                             ->setMethod('POST')
-                            ->setAction($this->generateUrl('question_type_editable'))
+                            ->setAction($this->generateUrl('upload_image'))
                             ->add('fileUrl', 'file', array(
-                                    'label' => '文件位置：',
+                                    'label' => '文件位置：'
                                 ))
-                            ->add('import', 'submit', array('label' => '导入'))
-                            ->add('cancel', 'reset', array('label' => '取消'))
                             ->getForm();
 
         $import_form->handleRequest($request);
-
-        if ($import_form->isValid()) {
-            if(!is_dir("upload/image")){
-                mkdir("upload/image");
-            }
-            $file=$import_form['fileUrl']->getData();
-            $filename = explode(".", $file->getClientOriginalName());
-            $extension = $filename[count($filename) - 1];
-            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
-
-            $file->move("upload/image", $newefilename);
-
-        }
           
         return array(
             'upload_form' => $import_form->createView()
@@ -91,7 +76,9 @@ class QuestionTypeController extends Controller
      */
     public function newAction(Request $request)
     {
-        $question_type = new Student();
+        //return $this->redirect($this->generateUrl('question_type_new'));
+
+        /*$question_type = new Student();
 
         $new_form = $this->createForm(new StudentNewType($this->getDoctrine()), $question_type, array(
             'action' => $this->generateUrl('question_type_new'),
@@ -165,7 +152,7 @@ class QuestionTypeController extends Controller
         return array(
             'new_form' => $new_form->createView(),
             'import_form' => $import_form->createView()
-        );        
+        );    */    
     }
 
     /**

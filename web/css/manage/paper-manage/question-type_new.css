@@ -1,0 +1,140 @@
+<<<<<<< HEAD
+.item {
+	padding-left: 10px!important;
+	border: 1px dashed #eee;
+	padding: 10px;
+}
+.item .item-stem label {
+	width: auto!important;
+	padding: 2px 10px;
+	background-color: #dedede;
+	border-radius: 3px;
+}
+.item .item-stem-content {
+	display: inline-block;
+}
+
+
+/*.right form > div:last-of-type {
+	padding-left: 0px;
+}
+.right form textarea{
+	width: 500px;s
+=======
+.right form > div:last-of-type {
+	padding-left: 0px;
+}
+.right form textarea{
+	width: 500px;
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+}
+.right form label{
+	float: left;
+	line-height: 31px;
+}
+.right form div{
+	margin-bottom: 15px;
+<<<<<<< HEAD
+}*/
+/* 问题自增长 */
+/*.questions{
+=======
+}
+/* 问题自增长 */
+.questions{
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+	padding-top: 20px;
+	counter-reset: question 0;
+	overflow: hidden;
+}
+.question{
+	width: auto;
+	counter-increment: question 1;
+}
+.question .question-stem{
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+.question .question-stem label a{
+	text-align: center;
+	padding: 0px 4px;
+}
+.question .question-stem label a:hover{
+	border: #f70;
+}
+.question .question-stem label a:after {
+	content: counter(question)'. ';
+<<<<<<< HEAD
+}*/
+
+/* 如果是选择题，则选项的自增长 */
+/*.question-options{
+=======
+}
+
+/* 如果是选择题，则选项的自增长 */
+.question-options{
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+	margin-left: 125px;
+	counter-reset: question-option 0;
+}
+
+.question-option{
+	width: auto;
+	margin: 0 auto 15px;
+	counter-increment: question-option 1;
+}
+.question-option:before{
+	text-align: center;
+	display: inline-block;
+	content: counter(question-option, upper-alpha)'.';
+	margin-right: 10px;
+<<<<<<< HEAD
+}*/
+
+/* 考虑点击添加问题 */
+/*.add-question{
+=======
+}
+
+/* 考虑点击添加问题 */
+.add-question{
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+	text-align: center;
+	border:1px solid #f70;
+	padding: 0px 6px;
+	margin-right: 10px;
+	border-radius: 2px;
+	margin-top: 5px;
+	position: absolute;
+	left: 100px;
+	float: left;
+	background-color: #f70;
+}
+.add-question a{
+	color: #fff;
+	display: inline-block;
+}
+.add-question:hover{
+	left: 70px;
+<<<<<<< HEAD
+}*/
+
+/* 点击标签之后的显示和隐藏 */
+/*.question-toggle{
+=======
+}
+
+/* 点击标签之后的显示和隐藏 */
+.question-toggle{
+>>>>>>> b8de744fb856805c7792d69640feef249c981151
+	border:1px solid #EEC591;
+}
+
+.btn{
+	margin: 20px 20px 10px 130px;
+<<<<<<< HEAD
+}*/
+=======
+}
+>>>>>>> b8de744fb856805c7792d69640feef249c981151

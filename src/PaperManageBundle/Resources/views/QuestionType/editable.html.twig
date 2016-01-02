@@ -27,13 +27,30 @@
     </div>
 
     <!-- 上传图片对话框 -->
+    <!--
     <div class="upload-image-dialog" title="上传图片">
-        {{ form(upload_form) }}
+        {{ form_start(upload_form, {'enctype': 'multipart/form-data', 'attr': {'id': 'upload-image-form'}} ) }}
+            {{ form_row(upload_form.fileUrl, {'attr': {'placeholder': '请输入教师工号', 'autocomplete': 'off'} }) }}
+        {{ form_end(upload_form, {'render_rest': true}) }}
     </div>
+    -->
+    <!-- 加载编辑器的容器 -->
+    <script id="container" name="content" type="text/plain">
+        这里写你的初始化内容
+    </script>
 {% endblock %}
 
 {% block javascripts %}
     {{ parent() }}
+    <script src="{{ asset('js/common/jquery.form.js') }}"></script> 
     <script src="{{ asset('js/common/editable-box.js') }}"></script> 
+
+    <!-- ueditor配置文件 -->
+    <script type="text/javascript" src="{{ asset('ueditor/ueditor.config.js') }}"></script>
+    <!-- 编辑器源码文件 -->
+    <script type="text/javascript" src="{{ asset('ueditor/ueditor.all.js') }}"></script>
+    <script type="text/javascript">
+        var ue = UE.getEditor('container');
+    </script>
 {% endblock %}
 

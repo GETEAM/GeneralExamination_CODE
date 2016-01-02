@@ -483,6 +483,8 @@ button.ui-button::-moz-focus-inner {
 	outline: 0;
 }
 .ui-dialog .ui-dialog-titlebar {
+	/*自定义margin-bottom*/
+	margin-bottom: 10px;
 	padding: .4em 1em;
 	position: relative;
 }
