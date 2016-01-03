@@ -33,22 +33,14 @@
     	<fieldset>
     		<legend>类型样式</legend>
     	</fieldset>
-<<<<<<< HEAD
-<<<<<<< HEAD
     	<!--
-=======
-
->>>>>>> b8de744fb856805c7792d69640feef249c981151
-=======
-
->>>>>>> b8de744fb856805c7792d69640feef249c981151
     	<div class="questions">
 			<div class="stem">
 				<label>题干</label>
 	    		<textarea  rows="10" placeholder="请输入题干"></textarea>
 			<div>
 			<div class="add-question">
-				<a href="#" title="点击添加问题">+</a>
+				<a href="javascript:void(0)" title="点击添加问题">+</a>
 				<ul hidden>
 					<li><a href="">选择题</a></li>
 					<li><a href="">填空题</a></li>
@@ -58,7 +50,7 @@
 			</div>
     		<div class="question">	
 		    	<div class="question-stem">
-					<label><a href="#" title="点击隐藏和显示" class="question-toggle">问题</a></label>
+					<label><a href="javascript:void(0)" title="点击隐藏和显示" class="question-toggle">问题</a></label>
 		    		<textarea rows="2" placeholder="请输入问题"></textarea>
 		    	</div>
 		    	<div>
@@ -81,19 +73,59 @@
 		    </div>
 	    </div>
     	<button class="btn">确认</button> <button class="btn">预览</button>
-<<<<<<< HEAD
-<<<<<<< HEAD
-    	-->
+   		-->
+   		<div class="item-operations">
+    		<ul>
+    			<li class="add-question">
+    				<a href="javascript:void(0)" class="item-operation">添加小题</a>
+    				<ul class="add-question-of-type">
+    					<li class="add-single-choice">单项选择题</li>
+    					<li>多项选择题</li>
+    					<li>填空题</li>
+    					<li>简答题</li>
+    					<li>录音题</li>
+    				</ul>
+    			</li>
+    			<li class="add-item-option">
+		    		<a href="javascript:void(0)" class="item-operation">添加试题选项</a>
+    			</li>
+    		</ul>
+    	</div>
     	<div class="item">
     		<div class="item-stem">
     			<label>题干</label>
     			<div class="item-stem-content">此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。</div>
     		</div>
+    		<!--试题选项格式模板
+	    		<div class="item-options">
+	    			<label>试题选项</label>
+	    			<ul class="item-options-list">
+	    				<li>
+	    					试题选项内容
+	    					<a href="javascript:void(0)" class="delete-item-option"><img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题选项" title="删除试题选项" /></a>
+	    				</li>
+	    			</ul>
+	    		</div>
+    		-->
+    		<!--试题选项格式模板 -->
+	    		<div class="item-questions">
+	    			<label>包含小题</label>
+	    			<div class="questions">
+	    				<div class="question" question-type="SingleChoice">
+	    					<div class="question-stem">
+	    						<span>此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。</span>
+	    					</div>
+	    					<ul class="question-options">
+	    						<li>
+	    							单选小题选项内容
+	    							<a href="javascript:void(0)" class="delete-question-option"><img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题选项" title="删除小题选项" /></a>
+	    							<a href="javascript:void(0)" class="add-question-option"><img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题选项" title="添加小题选项" /></a>
+	    						</li>
+	    					</ul>
+	    				</div>
+	    			</div>
+	    		</div>
     	</div>
-=======
->>>>>>> b8de744fb856805c7792d69640feef249c981151
-=======
->>>>>>> b8de744fb856805c7792d69640feef249c981151
     </form>
 {% endblock %}
 

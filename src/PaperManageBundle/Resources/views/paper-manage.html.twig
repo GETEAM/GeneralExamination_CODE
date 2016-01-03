@@ -9,7 +9,7 @@
 				<a href="{{ path('question_type_index') }}" class="{% if nav_title == 'question-type' %}selected{% endif %}">题型管理</a>
 			</li>
 			<li>
-				<a href="#" class="{% if nav_title == 'question' %}selected{% endif %}">试题管理</a>
+				<a href="javascript:void(0)" class="{% if nav_title == 'question' %}selected{% endif %}">试题管理</a>
 			</li>			
 		</ul>
 		<label>试卷库管理</label>
@@ -26,7 +26,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/manage/paper-manage/react.js') }}"></script>
-    <script src="{{ asset('js/manage/paper-manage/react-dom.js') }}"></script>
-    <script src="{{ asset('js/manage/paper-manage/browser.min.js') }}"></script>
+    <script src="{{ asset('js/common/react/react.js') }}"></script>
+    <script src="{{ asset('js/common/react/react-dom.js') }}"></script>
+    <script src="{{ asset('js/common/react/browser.min.js') }}"></script>
 {% endblock %}
