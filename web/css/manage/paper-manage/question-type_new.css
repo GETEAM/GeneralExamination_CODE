@@ -99,9 +99,9 @@
 	float: right;
 	display: none;
 	text-align: center;
-	width: 22px;
-	height: 22px;
-	margin-top: 3px;
+	width: 24px;
+	height: 24px;
+	margin-top: 2px;
 	border-radius: 2px;
 }
 .delete-item-option img, .delete-question-option img, .add-question-option img {
@@ -141,6 +141,9 @@
 	float: left;
 	display: inline-block;
 	content: counter(question)' ';
+}
+.item-questions .questions .question-options li:only-of-type .delete-question-option {
+	display: none;
 }
 /*小题区域内添加试题的样式*/
 .item-questions .question-stem {
