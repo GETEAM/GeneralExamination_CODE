@@ -1,7 +1,7 @@
 /*试题类型添加部分 类型结构样式*/
 /*item structure表单隐藏*/
 .item-structure {
-	/*display: none;*/
+	display: none;
 }
 /*试题功能样式*/
 .item-operations {
