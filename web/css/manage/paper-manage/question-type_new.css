@@ -95,7 +95,8 @@
 .item-options-list li:hover, .question-options li:hover {
 	background-color: #dedede;
 }
-.delete-item-option, .delete-question-option, .add-question-option {
+.delete-item-option, .delete-question-option, .add-question-option
+, .delete-question-a, .add-question-a {
 	float: right;
 	display: none;
 	text-align: center;
@@ -104,11 +105,18 @@
 	margin-top: 2px;
 	border-radius: 2px;
 }
-.delete-item-option img, .delete-question-option img, .add-question-option img {
+.delete-question-a, .add-question-a {
+	display: block;
+}
+.delete-item-option img, .delete-question-option img, .add-question-option img 
+, .delete-question-a img, .add-question-a img {
 	margin-top: -1px;
 }
-.delete-item-option:hover, .delete-question-option:hover, .add-question-option:hover {
+.delete-item-option:hover, .delete-question-option:hover, .add-question-option:hover  {
 	background-color: #f8f8f8;
+}
+.delete-question-a:hover, .add-question-a:hover {
+	background-color: #efefef;
 }
 .item-options-list li:hover .delete-item-option, .question-options li:hover .delete-question-option
 , .question-options li:hover .add-question-option {

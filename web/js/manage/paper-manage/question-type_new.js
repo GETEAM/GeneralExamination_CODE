@@ -14,6 +14,7 @@ $(function(){
 	});
 
 });
+
 //添加试题选项
 $.fn.addItemOption = function() {
 	var $item_options = $('.item-options');
@@ -44,7 +45,8 @@ $.fn.addItemOption = function() {
 		var $item_options_list = $('<ul>').addClass('item-options-list');
 		$item_option_li.appendTo($item_options_list);
 		$item_options.append($item_options_list);
-		$('.item').append($item_options);
+		// $('.item').append($item_options);
+		$item_options.insertAfter($('.item-stem'));
 	}
 
 };
@@ -81,7 +83,7 @@ $.fn.addQuestion = function() {
 			.addClass('delete-question-option');
 	var $delete_question = $('<a>')
 			.attr('href', 'javascript:void(0)')
-			.addClass('delete-question');
+			.addClass('delete-question-a');
 
 	var $delete_img = $('<img>').attr({
 		'width': 16,
@@ -94,12 +96,6 @@ $.fn.addQuestion = function() {
 	$delete_img.clone(true).attr({'alt': '删除小题', 'title': '删除小题'}).
 	appendTo($delete_question);
 
-	/*小题选项，注册删除、添加事件.*/
-	//点击删除小题选项时，删除小题选项 
-	$delete_question_option.click(function(){
-		$(this).deleteQuestionOption();
-	});
-
 	$delete_question_option.appendTo($question_option);
 	$delete_question.appendTo($question_stem);
 
@@ -108,7 +104,7 @@ $.fn.addQuestion = function() {
 			.addClass('add-question-option');
 	var $add_question = $('<a>')
 			.attr('href', 'javascript:void(0)')
-			.addClass('add-question');
+			.addClass('add-question-a');
 
 	var $add_img = $('<img>').attr({
 		'width': 16,
@@ -121,13 +117,30 @@ $.fn.addQuestion = function() {
 	$add_img.clone(true).attr({'alt': '以该题为模板添加小题', 'title': '以该题为模板添加小题'})
 		.appendTo($add_question);
 
+	$add_question_option.appendTo($question_option);
+	$add_question.appendTo($question_stem);
+
+	/*小题选项，注册删除、添加事件.*/
+	//点击删除小题选项时，删除小题选项 
+	$delete_question_option.click(function(){
+		$(this).deleteQuestionOption();
+	});
+
 	//点击添加小题选项时，添加小题选项 
 	$add_question_option.click(function(){
 		$(this).addQuestionOption();
 	});
 
-	$add_question_option.appendTo($question_option);
-	$add_question.appendTo($question_stem);
+	/*小题，注册删除、添加事件.*/
+	//点击删除小题时，删除小题 
+	$delete_question.click(function(){
+		$(this).deleteQuestion();
+	});
+	
+	//点击以当前模板添加小题时，添加小题 
+	$add_question.click(function(){
+		$(this).addQuestionFormCurrent();
+	});
 
 	//默认添加四个选项
 	for(var i = 0; i < 4; i++){
@@ -148,11 +161,33 @@ $.fn.addQuestion = function() {
 	}
 };
 
+//以当前小题为模板添加小题
+$.fn.addQuestionFormCurrent = function() {
+	var $new_question = $(this).closest('.question').clone(true);
+	//在当前小题后添加新题
+	$new_question.insertAfter($(this).closest('.question'));
+};
+
+//删除小题
+$.fn.deleteQuestion = function() {
+	var $item_questions = $(this).closest('.item-questions');
+	var question_num = $item_questions.find('.question').length;
+	//如果试题多于1个，则删除当前试题
+	if( question_num > 1 ){
+		$(this).closest('.question').remove();
+	}else {
+	//如果试题个数小于等于1，则删除试题
+		$item_questions.remove();
+	}
+};
+
 /*单选小题*/
 //删除小题选项
 $.fn.deleteQuestionOption = function() {
 	$(this).closest('li').remove();
 };
+
+//添加小题选项
 $.fn.addQuestionOption = function() {
 	var $question_option = $('<li>').html('单选小题选项内容');
 	var $delete_question_option = $('<a>')
