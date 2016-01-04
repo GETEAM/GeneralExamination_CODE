@@ -13,12 +13,34 @@ $(function(){
 	// 	$(this).addQuestion();
 	// });
 	
-	var deepCopy= function(source) { 
-		var result={};
-		for (var key in source) {
-	     	result[key] = typeof source[key]==='object' ? deepCopy(source[key]): source[key];
-	   	} 
-	   	return result; 
+	var deepCopy= function clone(obj){  
+	    var o;  
+	    switch(typeof obj){  
+	    case 'undefined': break;  
+	    case 'string'   : o = obj + '';break;  
+	    case 'number'   : o = obj - 0;break;  
+	    case 'boolean'  : o = obj;break;  
+	    case 'object'   :  
+	        if(obj === null){  
+	            o = null;  
+	        }else{  
+	            if(obj instanceof Array){  
+	                o = [];  
+	                for(var i = 0, len = obj.length; i < len; i++){  
+	                    o.push(clone(obj[i]));  
+	                }  
+	            }else{  
+	                o = {};  
+	                for(var k in obj){  
+	                    o[k] = clone(obj[k]);  
+	                }  
+	            }  
+	        }  
+	        break;  
+	    default:          
+	        o = obj;break;  
+	    }  
+	    return o;     
 	}
 
 	var item = {	
@@ -181,6 +203,7 @@ $(function(){
 			var order = this.props.order;
 			//复制当前小题为新小题
 			var new_question = deepCopy(question);
+
 			//插入item
 			item.questions.splice(order, 0, new_question);
 
@@ -216,7 +239,6 @@ $(function(){
 
 			//小题做答区域
 			var answer_area;
-
 			//当item_options存在时，小题默认为单选题
 			// if(item_options) {
 			// 	//展示选项时，是否展示选项内容
@@ -236,10 +258,8 @@ $(function(){
 
 			return (
 				<div className="question">
-					<div className="question-content">
-						{question.stem}
-						{answer_area}
-					</div>
+					{question_stem}
+					{answer_area}
 				</div>
 			);
 		}
