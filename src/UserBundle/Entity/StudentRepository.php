@@ -34,4 +34,28 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
     	}
     	return true;
     }
+
+    //根据学号，姓名，年级和学院查找到学生列表
+    public function findStudent($studentId,$name,$grade,$academy){
+        return $this->getEntityManager()
+            ->createQuery('SELECT s FROM UserBundle:Student s 
+                WHERE s.studentId = :studentId 
+                AND s.name = :name 
+                AND s.grade = :grade 
+                AND s.academy = :academy')
+            ->setParameter('studentId',$studentId)
+            ->setParameter('name',$name)
+            ->setParameter('grade',$grade)
+            ->setParameter('academy',$academy)
+            ->getResult();
+    }
+    //测试用的一个小方法
+    public function findStudentById($studentId){
+        return $this->getEntityManager()
+            ->createQuery('SELECT s FROM UserBundle:Student s 
+                WHERE s.studentId = :studentId '
+                )
+            ->setParameter('studentId',$studentId)
+            ->getResult();
+    }
 }

@@ -14,6 +14,7 @@ use UserBundle\Entity\Student;
 use UserBundle\Form\StudentNewType;
 use UserBundle\Form\StudentEditType;
 use UserBundle\Form\StudentImportType;
+use UserBundle\Form\StudentFindType;
 use Ddeboer\DataImport\Workflow;
 use Ddeboer\DataImport\Writer\DoctrineWriter;
 use Ddeboer\DataImport\Filter;
@@ -34,13 +35,29 @@ class StudentController extends Controller
      * @Template("UserBundle:Student:index.html.twig")
      */
     public function indexAction(Request $request)
-    {
+    {   
+        //查找表单
+        $student = new Student();
+        $find_form = $this->createForm(new StudentFindType($this->getDoctrine()), $student,array(
+            'action' => $this->generateUrl('student_find' ),
+            'method' => 'GET'
+        ));
+        
+        $find_form->handleRequest($request);
+
+
+
+
+
+
+        //首页显示的学生信息
         $em = $this->getDoctrine()->getManager();
-        $student = $em->getRepository('UserBundle:Student')->findAll();
+        $stus = $em->getRepository('UserBundle:Student')->findAll();
         $paginator = $this->get('knp_paginator');
-        $students = $paginator->paginate($student, $request->query->getInt('page', 1));
+        $students = $paginator->paginate($stus, $request->query->getInt('page', 1));
 
         return array(
+            'find_form' => $find_form->createView(),
             'students' => $students
         );
     }
@@ -248,4 +265,68 @@ class StudentController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+
+
+    /**
+     * 查找学生信息.,测试用的
+     *
+     * @Route("/find", name="student_find")
+     * @Method("GET")
+     * @Template("UserBundle:Student:find.html.twig")
+     */
+    public function findAction(Request $request)
+    {   
+
+        //$em = $this->getDoctrine()->getManager();
+        //$students = $em->getRepository('UserBundle:Student')->findAll();
+
+        $student = new Student();
+        $find_form = $this->createForm(new StudentFindType($this->getDoctrine()), $student,array(
+            'action' => $this->generateUrl('student_find' ),
+            'method' => 'GET'
+        ));
+        
+        $find_form->handleRequest($request);
+
+
+        $em = $this->getDoctrine()->getManager();
+        $students = $em->getRepository('UserBundle:Student')->findStudentById('saaa');
+/*
+        if ($find_form->isValid()) {
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+
+                $studentId=$find_form['studentId']->getData();
+                $name=$find_form['name']->getData();
+                $grade=$find_form['grade']->getData();
+                $academy=$find_form['academy']->getData();
+                
+                $em = $this->getDoctrine()->getManager();
+                $students = $em->getRepository('UserBundle:Student')->findStudent($studentId,$name,$grade,$academy);
+                
+                if($success){
+                    $this->addFlash('success', $student->getName().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                    return $this->redirect($this->generateUrl('student_new'));
+                }
+                return $this->redirect($this->generateUrl('student_find'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('student_index'));
+            } 
+        }
+
+*/
+        return array(
+            'find_form' => $find_form->createView(),
+            'students' =>$students
+        );
+
+      
+    }
+
+
+
 }
