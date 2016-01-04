@@ -1,4 +1,8 @@
 /*试题类型添加部分 类型结构样式*/
+/*item structure表单隐藏*/
+.item-structure {
+	/*display: none;*/
+}
 /*试题功能样式*/
 .item-operations {
 	padding: 10px;
@@ -50,6 +54,9 @@
 	border-bottom: none;
 }
 /*试题类型内容*/
+#item-area {
+	padding-left: 0px;
+}
 .item {
 	border: 1px dashed #eee;
 	padding-left: 10px!important;

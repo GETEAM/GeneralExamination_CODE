@@ -8,6 +8,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use PaperManageBundle\Entity\QuestionType;
+use PaperManageBundle\Form\QuestionTypeNewType;
 
 /**
  * 题型 controller.
@@ -36,6 +38,49 @@ class QuestionTypeController extends Controller
     }
 
     /**
+     * 添加题型信息.
+     *
+     * @Route("/new", name="question_type_new")
+     * 
+     * @Template("PaperManageBundle:QuestionType:new.html.twig")
+     */
+    public function newAction(Request $request)
+    {
+        $question_type = new QuestionType();
+
+        $new_form = $this->createForm(new QuestionTypeNewType(), $question_type, array(
+            'action' => $this->generateUrl('question_type_new'),
+            'method' => 'GET'
+        ));
+        
+        $new_form->handleRequest($request);
+
+        if ($new_form->isValid()) {
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('PaperManageBundle:QuestionType')->add($question_type);
+                
+                if($success){
+                    $this->addFlash('success', $question_type->getNameEn().'('.$question_type->getNameCh().')'.'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添111加！');
+                    return $this->redirect($this->generateUrl('question_type_new'));
+                }
+                return $this->redirect($this->generateUrl('question_type_index'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('question_type_new'));
+            }
+        }
+
+        return array(
+            'new_form' => $new_form->createView()
+        );
+    }
+
+    /**
      * 可编辑div.
      *
      * @Route("/editable", name="question_type_editable")
@@ -60,100 +105,6 @@ class QuestionTypeController extends Controller
     }
 
 
-
-
-
-
-
-
-
-    /**
-     * 添加题型信息.
-     *
-     * @Route("/new", name="question_type_new")
-     * 
-     * @Template("PaperManageBundle:QuestionType:new.html.twig")
-     */
-    public function newAction(Request $request)
-    {
-        //return $this->redirect($this->generateUrl('question_type_new'));
-
-        /*$question_type = new Student();
-
-        $new_form = $this->createForm(new StudentNewType($this->getDoctrine()), $question_type, array(
-            'action' => $this->generateUrl('question_type_new'),
-            'method' => 'POST'
-        ));
-          
-        $new_form->handleRequest($request);     
-
-        if ($new_form->isValid()) {
-            //添加成功跳转到列表页面，不成功跳转到本页面
-            try{
-                $em = $this->getDoctrine()->getManager();
-                $success = $em->getRepository('PaperManageBundle:QuestionType')->add($question_type);
-                if($success){
-                    $this->addFlash('success', $question_type->getName().'添加成功');
-                }else{
-                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
-                    return $this->redirect($this->generateUrl('question_type_new'));
-                }
-                return $this->redirect($this->generateUrl('question_type_index'));
-                
-            } catch(\Exception $e){
-                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
-                return $this->redirect($this->generateUrl('question_type_new'));
-            } 
-        }
-
-        // $import_form = $this->createForm(new StudentImportType($this->getDoctrine()),null, array(
-        //     'action' => $this->generateUrl('question_type_new'),
-        //     'method' => 'POST'
-        // ));
-        $import_form = $this->createFormBuilder()
-                            ->setMethod('POST')
-                            ->setAction($this->generateUrl('question_type_new'))
-                            ->add('fileUrl', 'file', array(
-                                    'label' => '文件位置：',
-                                ))
-                            ->add('import', 'submit', array('label' => '导入'))
-                            ->add('cancel', 'reset', array('label' => '取消'))
-                            ->getForm();
-
-        $import_form->handleRequest($request);
-
-        if ($import_form->isValid()) {
-            if(!is_dir("question_type_import")){
-                mkdir("question_type_import");
-            }
-            $file=$form['fileUrl']->getData();
-            $filename = explode(".", $file->getClientOriginalName());
-            $extension = $filename[count($filename) - 1];
-            $newefilename = $filename[0] . "_" . rand(1, 9999) . "." . $extension;
-
-            $file->move("question_type_import", $newefilename);
-
-            $upfile = new \SplFileObject("question_type_import/" . $newefilename);
-            $csvReader = new CsvReader($upfile);
-
-            $csvReader->setStrict(false)
-                   ->setHeaderRowNumber(0)
-                   ->setColumnHeaders(['grade_id', 'academy_id','question_type_id','name','email','telephone','password']);
-
-            $em = $this->getDoctrine()->getManager();
-            $doctrineWriter = new DoctrineWriter($em, 'PaperManageBundle:QuestionType');
-            $doctrineWriter->disableTruncate();
-
-            $workflow = new Workflow($csvReader);
-            $workflow->addWriter($doctrineWriter)
-                     ->process();
-        }
-
-        return array(
-            'new_form' => $new_form->createView(),
-            'import_form' => $import_form->createView()
-        );    */    
-    }
 
     /**
      * 显示题型信息.

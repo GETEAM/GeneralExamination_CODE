@@ -45,52 +45,12 @@ $(function(){
 
 	var item = {	
 		"stem": "此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。",
-		"length": 300,
 		"showLength": true, 
-		"options": [ 		
-			"试题选项内容",			
-			"试题选项内容",	
-			"试题选项内容",	
-			"试题选项内容",	
-			"试题选项内容",	
-			"试题选项内容",	
-			"试题选项内容"
-		],
 		"shuffle": true,
-		"preShow": true,
-		"questions": [			
-			{
-				"type": "SingleChoice",	
-				"pause": 20, //此处单位为秒
-				"shuffle": true, //只有当type为多选或者单选时，该选项才有效			
-				"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
-				"options": [		//question的各个选项
-					"单选小题选项内容",
-					"单选小题选项内容",
-					"单选小题选项内容",
-					"单选小题选项内容"
-				],
-				"strict": true,	//正确答案是否要与参考答案完全匹配
-				"reference-answer": "参考答案",		
-				"answer-analysis": "参考答案解析"
-			},
-			{
-				"type": "SingleChoice",	
-				"pause": 20, //此处单位为秒
-				"shuffle": true, //只有当type为多选或者单选时，该选项才有效			
-				"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
-				"options": [		//question的各个选项
-					"单选小题选项内容",
-					"单选小题选项内容",
-					"单选小题选项内容",
-					"单选小题选项内容"
-				],
-				"strict": true,	//正确答案是否要与参考答案完全匹配
-				"reference-answer": "参考答案",		
-				"answer-analysis": "参考答案解析"
-			}
-		]
+		"preShow": true
 	};
+
+	var $item_structure = $('.item-structure textarea');
 
 	//试题Item
 	var Item = React.createClass({
@@ -103,6 +63,7 @@ $(function(){
 			this.setState({
 				item: item
 			});
+			$item_structure.val(JSON.stringify(item));
 		},
 		render: function() {
 			var item = this.state.item;
@@ -110,10 +71,10 @@ $(function(){
 			var options = item.options;
 
 			//如果item选项存在，则插入ItemOptions
-			var item_options = options ?　<ItemOptions options={options} changeItemState={this.handleChangeState} /> : '';
+			var item_options = (options && options.length != 0) ?　<ItemOptions options={options} changeItemState={this.handleChangeState} /> : '';
 
 			//如果存在questions，则插入Question
-			var questions = item.questions ? <Questions questions={item.questions} itemOptions={options} changeItemState={this.handleChangeState}/> : '';
+			var questions = (item.questions && item.questions.length != 0) ? <Questions questions={item.questions} itemOptions={options} changeItemState={this.handleChangeState}/> : '';
 			
 			return (
 				<div className="item">
@@ -316,6 +277,57 @@ $(function(){
 		<Item />,
 		$('#item-area')[0]
 	);
+
+	/*★★★★★★★★★★注意：添加位置如何决定*/
+	/*添加删除试题选项*/
+	//点击添加试题选项时，添加试题选项
+	$('.add-item-option').click(function() {
+		//添加试题选项
+		var new_item_options = '试题选项内容';
+
+		//如果item中不存在options，设为空数组
+		item.options = item.options ? item.options : [];
+		item.options.push(new_item_options);
+
+		$item_structure.val(JSON.stringify(item));
+
+		//重新渲染Item
+		ReactDOM.render(
+			<Item />,
+			$('#item-area')[0]
+		);
+	});
+
+	/*添加单选小题*/
+	$('.add-single-choice').click(function(){
+		var new_question = {
+			"type": "SingleChoice",	
+			"pause": 20, //此处单位为秒
+			"shuffle": true, //只有当type为多选或者单选时，该选项才有效			
+			"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
+			"options": [		//question的各个选项
+				"单选小题选项内容",
+				"单选小题选项内容",
+				"单选小题选项内容",
+				"单选小题选项内容"
+			],
+			"strict": true,	//正确答案是否要与参考答案完全匹配
+			"reference-answer": "参考答案",		
+			"answer-analysis": "参考答案解析"
+		};
+		//如果item中不存在questions，设为空数组
+		item.questions = item.questions ? item.questions : [];
+		item.questions.push(new_question);
+
+					$item_structure.val(JSON.stringify(item));
+
+
+		//重新渲染Item
+		ReactDOM.render(
+			<Item />,
+			$('#item-area')[0]
+		);
+	});
 
 });
 
