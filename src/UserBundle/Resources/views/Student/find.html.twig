@@ -40,7 +40,7 @@
         </thead>
         <tbody>
 
-        {% if students == "" %}
+        {% if students|length == 0 %}
             <tr>
                 <td colspan=9>尚不存在学生信息，请您添加！</td>
             <tr>

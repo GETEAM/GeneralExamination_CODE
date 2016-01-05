@@ -45,7 +45,23 @@ class StudentController extends Controller
         
         $find_form->handleRequest($request);
 
+        if ($find_form->isValid()) {
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
 
+                $studentId=$find_form['studentId']->getData();
+                $name=$find_form['name']->getData();
+                $grade=$find_form['grade']->getData();
+                $academy=$find_form['academy']->getData();
+                
+                $em = $this->getDoctrine()->getManager();
+                $students = $em->getRepository('UserBundle:Student')->findStudent($studentId,$name,$grade,$academy);
+
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('student_index'));
+            } 
+        }
 
 
 
@@ -268,7 +284,7 @@ class StudentController extends Controller
 
 
     /**
-     * 查找学生信息.,测试用的
+     * 查找学生信息
      *
      * @Route("/find", name="student_find")
      * @Method("GET")
@@ -288,37 +304,17 @@ class StudentController extends Controller
         
         $find_form->handleRequest($request);
 
-
+        //根据学号查
         $em = $this->getDoctrine()->getManager();
-        $students = $em->getRepository('UserBundle:Student')->findStudentById('saaa');
-/*
-        if ($find_form->isValid()) {
-            //添加成功跳转到列表页面，不成功跳转到本页面
-            try{
+        //$students = $em->getRepository('UserBundle:Student')->findStudentById('saaa');
+        //根据年级学院查,第一步根据年级描述找到所有符合的学生，再根据学生找到。。。。。
 
-                $studentId=$find_form['studentId']->getData();
-                $name=$find_form['name']->getData();
-                $grade=$find_form['grade']->getData();
-                $academy=$find_form['academy']->getData();
-                
-                $em = $this->getDoctrine()->getManager();
-                $students = $em->getRepository('UserBundle:Student')->findStudent($studentId,$name,$grade,$academy);
-                
-                if($success){
-                    $this->addFlash('success', $student->getName().'添加成功');
-                }else{
-                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
-                    return $this->redirect($this->generateUrl('student_new'));
-                }
-                return $this->redirect($this->generateUrl('student_find'));
-                
-            } catch(\Exception $e){
-                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
-                return $this->redirect($this->generateUrl('student_index'));
-            } 
-        }
-
-*/
+        //$grade = $em->getRepository('SystemManageBundle:Grade')->findOneByDescription('2013级本科生');
+        //$students=$grade->getStudents();
+        //测试通过了年级和学院查找
+        //$students = $em->getRepository('UserBundle:Student')->findStudentByGrade('2013级本科生','软件学院');
+        //测试通过不严格匹配查找
+        $students = $em->getRepository('UserBundle:Student')->findStudentByName('a');
         return array(
             'find_form' => $find_form->createView(),
             'students' =>$students

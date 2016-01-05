@@ -37,18 +37,18 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
 
     //根据学号，姓名，年级和学院查找到学生列表
     public function findStudent($studentId,$name,$grade,$academy){
-        return $this->getEntityManager()
-            ->createQuery('SELECT s FROM UserBundle:Student s 
-                WHERE s.studentId = :studentId 
-                AND s.name = :name 
-                AND s.grade = :grade 
-                AND s.academy = :academy')
-            ->setParameter('studentId',$studentId)
-            ->setParameter('name',$name)
-            ->setParameter('grade',$grade)
-            ->setParameter('academy',$academy)
+       return $this->getEntityManager()
+            ->createQuery('SELECT s, g, a FROM UserBundle:Student s
+            JOIN s.grade g JOIN s.academy a
+            WHERE s.studentId like :studentId AND s.name like :name AND g.description = :gradeDescript AND a.academyName = :academyName'
+            )
+            ->setParameter('studentId','%'.$studentId.'%')
+            ->setParameter('name','%'.$name.'%')
+            ->setParameter('gradeDescript',$gradeDescript)
+            ->setParameter('academyName',$academyName)
             ->getResult();
     }
+
     //测试用的一个小方法
     public function findStudentById($studentId){
         return $this->getEntityManager()
@@ -56,6 +56,28 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
                 WHERE s.studentId = :studentId '
                 )
             ->setParameter('studentId',$studentId)
+            ->getResult();
+    }
+
+    //测试用的一个小方法，根据年级查
+    public function findStudentByGA($gradeDescript,$academyName){
+        return $this->getEntityManager()
+            ->createQuery('SELECT s, g, a FROM UserBundle:Student s
+            JOIN s.grade g JOIN s.academy a
+            WHERE g.description = :gradeDescript AND a.academyName = :academyName'
+            )
+            ->setParameter('gradeDescript',$gradeDescript)
+            ->setParameter('academyName',$academyName)
+            ->getResult();
+    }
+
+    //测试用的一个小方法，姓名不严格匹配
+    public function findStudentByName($name){
+        return $this->getEntityManager()
+            ->createQuery('SELECT s FROM UserBundle:Student s
+            WHERE s.name like :name'
+            )
+            ->setParameter('name','%'.$name.'%')
             ->getResult();
     }
 }
