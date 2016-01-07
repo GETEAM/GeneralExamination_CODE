@@ -37,38 +37,35 @@ class StudentController extends Controller
     public function indexAction(Request $request)
     {   
         //查找表单
-        $student = new Student();
-        $find_form = $this->createForm(new StudentFindType($this->getDoctrine()), $student,array(
-            'action' => $this->generateUrl('student_find' ),
+        $find_form = $this->createForm(new StudentFindType($this->getDoctrine()), null ,array(
+            'action' => $this->generateUrl('student_index' ),
             'method' => 'GET'
         ));
         
         $find_form->handleRequest($request);
 
+        $em = $this->getDoctrine()->getManager();
+
         if ($find_form->isValid()) {
             //添加成功跳转到列表页面，不成功跳转到本页面
             try{
 
-                $studentId=$find_form['studentId']->getData();
+                $studentId=$find_form['student_id']->getData();
                 $name=$find_form['name']->getData();
                 $grade=$find_form['grade']->getData();
                 $academy=$find_form['academy']->getData();
-                
-                $em = $this->getDoctrine()->getManager();
-                $students = $em->getRepository('UserBundle:Student')->findStudent($studentId,$name,$grade,$academy);
+               
+                $stus = $em->getRepository('UserBundle:Student')->findStudentByAny($studentId,$name,$grade,$academy);
 
             } catch(\Exception $e){
-                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                $this->addFlash('error', '网络原因或数据库故障，查找失败！');
                 return $this->redirect($this->generateUrl('student_index'));
             } 
+        }else{//首页显示的学生信息
+            $stus = $em->getRepository('UserBundle:Student')->findAll();
         }
 
 
-
-
-        //首页显示的学生信息
-        $em = $this->getDoctrine()->getManager();
-        $stus = $em->getRepository('UserBundle:Student')->findAll();
         $paginator = $this->get('knp_paginator');
         $students = $paginator->paginate($stus, $request->query->getInt('page', 1));
 
@@ -281,48 +278,5 @@ class StudentController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
-
-
-    /**
-     * 查找学生信息
-     *
-     * @Route("/find", name="student_find")
-     * @Method("GET")
-     * @Template("UserBundle:Student:find.html.twig")
-     */
-    public function findAction(Request $request)
-    {   
-
-        //$em = $this->getDoctrine()->getManager();
-        //$students = $em->getRepository('UserBundle:Student')->findAll();
-
-        $student = new Student();
-        $find_form = $this->createForm(new StudentFindType($this->getDoctrine()), $student,array(
-            'action' => $this->generateUrl('student_find' ),
-            'method' => 'GET'
-        ));
-        
-        $find_form->handleRequest($request);
-
-        //根据学号查
-        $em = $this->getDoctrine()->getManager();
-        //$students = $em->getRepository('UserBundle:Student')->findStudentById('saaa');
-        //根据年级学院查,第一步根据年级描述找到所有符合的学生，再根据学生找到。。。。。
-
-        //$grade = $em->getRepository('SystemManageBundle:Grade')->findOneByDescription('2013级本科生');
-        //$students=$grade->getStudents();
-        //测试通过了年级和学院查找
-        //$students = $em->getRepository('UserBundle:Student')->findStudentByGrade('2013级本科生','软件学院');
-        //测试通过不严格匹配查找
-        $students = $em->getRepository('UserBundle:Student')->findStudentByName('a');
-        return array(
-            'find_form' => $find_form->createView(),
-            'students' =>$students
-        );
-
-      
-    }
-
-
 
 }

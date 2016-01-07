@@ -35,49 +35,52 @@ class StudentRepository extends \Doctrine\ORM\EntityRepository
     	return true;
     }
 
+   
+
     //根据学号，姓名，年级和学院查找到学生列表
-    public function findStudent($studentId,$name,$grade,$academy){
+    public function findStudentByAny($studentId,$name,$description,$academyName){
+
+        $sql='SELECT s '.($description ? ',g' : '').''.($academyName ? ',a' : '').' FROM UserBundle:Student s '
+        .($description ? 'JOIN s.grade g' : '').''.($academyName ? ' JOIN s.academy a ' : '')
+        .'WHERE '.($studentId ? 's.studentId like :studentId' : '').''
+        .($studentId && $name ? ' AND ' : '').''.($name ? 's.name like :name' : '').''
+        .(($studentId || $name) && $description ? ' AND ' : '').''.($description ? 'g.description = :description' : '')
+        .(($studentId || $name || $description) && $academyName  ? ' AND ' : '').''.($academyName ? 'a.academyName = :academyName' : '');
+
+
+        //$arr=array('studentId'=> '%'.$name.'%','name' => '%'.$name.'%','description' => $description,'academyName'=> $academyName);
+        $arr=array();
+
+        if($studentId!=''){
+            $arr['studentId']='%'.$studentId.'%';
+        }
+        if($name!=''){
+            $arr['name']='%'.$name.'%';
+        }
+        if($description!=''){
+            $arr['description']=$description;
+        }
+        if($academyName!=''){
+            $arr['academyName']=$academyName;
+        }   
+       return $this->getEntityManager()
+            ->createQuery($sql
+            )
+            ->setParameters($arr)
+            ->getResult();
+    }
+
+     //根据学号，姓名，年级和学院查找到学生列表
+    public function findStudent($studentId,$name,$description,$academyName){
        return $this->getEntityManager()
             ->createQuery('SELECT s, g, a FROM UserBundle:Student s
             JOIN s.grade g JOIN s.academy a
-            WHERE s.studentId like :studentId AND s.name like :name AND g.description = :gradeDescript AND a.academyName = :academyName'
+            WHERE s.studentId like :studentId AND s.name like :name AND g.description = :description AND a.academyName = :academyName'
             )
             ->setParameter('studentId','%'.$studentId.'%')
             ->setParameter('name','%'.$name.'%')
-            ->setParameter('gradeDescript',$gradeDescript)
+            ->setParameter('description',$description)
             ->setParameter('academyName',$academyName)
-            ->getResult();
-    }
-
-    //测试用的一个小方法
-    public function findStudentById($studentId){
-        return $this->getEntityManager()
-            ->createQuery('SELECT s FROM UserBundle:Student s 
-                WHERE s.studentId = :studentId '
-                )
-            ->setParameter('studentId',$studentId)
-            ->getResult();
-    }
-
-    //测试用的一个小方法，根据年级查
-    public function findStudentByGA($gradeDescript,$academyName){
-        return $this->getEntityManager()
-            ->createQuery('SELECT s, g, a FROM UserBundle:Student s
-            JOIN s.grade g JOIN s.academy a
-            WHERE g.description = :gradeDescript AND a.academyName = :academyName'
-            )
-            ->setParameter('gradeDescript',$gradeDescript)
-            ->setParameter('academyName',$academyName)
-            ->getResult();
-    }
-
-    //测试用的一个小方法，姓名不严格匹配
-    public function findStudentByName($name){
-        return $this->getEntityManager()
-            ->createQuery('SELECT s FROM UserBundle:Student s
-            WHERE s.name like :name'
-            )
-            ->setParameter('name','%'.$name.'%')
             ->getResult();
     }
 }

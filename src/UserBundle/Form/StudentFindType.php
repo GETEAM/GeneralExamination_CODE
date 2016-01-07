@@ -31,27 +31,30 @@ class StudentFindType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('student_id', 'text', array('label' => '学号'))
-            ->add('name', 'text', array('label' => '姓名'))
+            ->add('student_id', 'text', array('label' => '学号', 'required' => false))
+            ->add('name', 'text', array('label' => '姓名','required' => false))
             ->add('grade', 'entity', array(
+                'placeholder' => '选择年级',
                 'label' => '年级',
                 'class' => 'SystemManageBundle:Grade',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('g')
                         ->orderBy('g.description', 'ASC');
-                }
+                },
+                'required' => false
             ))
             ->add('academy', 'entity', array(
+                'placeholder' => '选择学院',
                 'label' => '学院',
                 'class' => 'SystemManageBundle:Academy',
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('a')
                         ->orderBy('a.academyName', 'ASC');
-                }
+                },
+                'required' => false
             ))
             ->add('save', 'submit', array('label' => '查找'));
     }
-
 
     /**
      * @param OptionsResolverInterface $resolver
