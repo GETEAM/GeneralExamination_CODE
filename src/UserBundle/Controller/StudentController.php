@@ -52,10 +52,10 @@ class StudentController extends Controller
 
                 $studentId=$find_form['student_id']->getData();
                 $name=$find_form['name']->getData();
-                $grade=$find_form['grade']->getData();
-                $academy=$find_form['academy']->getData();
+                $gradeId=$find_form['grade']->getData()->getId();
+                $academyId=$find_form['academy']->getData()->getId();
                
-                $stus = $em->getRepository('UserBundle:Student')->findStudentByAny($studentId,$name,$grade,$academy);
+                $stus = $em->getRepository('UserBundle:Student')->findStudentByAny($studentId,$name,0,0);
 
             } catch(\Exception $e){
                 $this->addFlash('error', '网络原因或数据库故障，查找失败！');

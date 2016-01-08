@@ -34,4 +34,56 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
     	}
     	return true;
     }
+
+
+
+
+
+    //根据工号，姓名，权限查找到管理员列表
+    public function findManagerByAny($managerId,$name,$rolesArr){
+
+        $sql='SELECT m FROM UserBundle:Manager m '
+        .($managerId || $name || count($rolesArr)!=0 ? 'WHERE ' : '').''.($managerId ? 'm.managerId like :managerId' : '').''
+        .($managerId && $name ? ' AND ' : '').''.($name ? 'm.name like :name' : '').''
+        .(($managerId || $name) && count($rolesArr)!=0 ? ' AND ' : '').''.(count($rolesArr)!=0 ? 'm.roles = :rolesArr' : '');
+       
+       //给参数设定数组
+        $arr=array();
+
+        if($managerId!=''){
+            $arr['managerId']='%'.$managerId.'%';
+        }
+        if($name!=''){
+            $arr['name']='%'.$name.'%';
+        }
+        if(count($rolesArr)!=0){
+            $arr['rolesArr']=$rolesArr;
+        }
+           
+       return $this->getEntityManager()
+            ->createQuery($sql
+            )
+            ->setParameters($arr)
+            ->getResult();
+    }
+
+     //根据工号姓名查找管理员列表
+    public function findManager($managerId,$name){
+       return $this->getEntityManager()
+            ->createQuery('SELECT m FROM UserBundle:Manager m 
+                where m.username like :managerId AND m.name like :name '
+            )
+            ->setParameter('managerId','%'.$managerId.'%')
+            ->setParameter('name','%'.$name.'%')
+            ->getResult();
+    }
+    //根据权限查找管理员列表
+    public function findManagerByRoles($roles){
+       return $this->getEntityManager()
+            ->createQuery('SELECT m FROM UserBundle:Manager m 
+                where m.roles = :roles '
+            )
+            ->setParameter('roles',$roles)
+            ->getResult();
+    }
 }
