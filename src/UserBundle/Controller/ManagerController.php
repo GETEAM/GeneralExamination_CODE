@@ -45,16 +45,16 @@ class ManagerController extends Controller
         $find_form->handleRequest($request);
 
         if ($find_form->isValid()) {
+
+            $username=$find_form['username']->getData();
+            $name=$find_form['name']->getData();
+            $roles=$find_form['roles']->getData();
+            var_dump($roles);
             //添加成功跳转到列表页面，不成功跳转到本页面
             try{
-
-                $managerId=$find_form['username']->getData();
-                $name=$find_form['name']->getData();
-                //$roles=$find_form['roles']->getData();
-                
-               
+                //
                 //$manager = $em->getRepository('UserBundle:Manager')->findManagerByAny($managerId,$name,$roles);
-                $manager = $em->getRepository('UserBundle:Manager')->findManager('21','李');
+                $manager = $em->getRepository('UserBundle:Manager')->findManager($username,$name);
 
             } catch(\Exception $e){
                 $this->addFlash('error', '网络原因或数据库故障，查找失败！');

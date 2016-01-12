@@ -47,15 +47,29 @@ class StudentController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         if ($find_form->isValid()) {
-            //添加成功跳转到列表页面，不成功跳转到本页面
-            try{
+            //获取到输入的值
+            $studentId=$find_form['student_id']->getData();
+            $name=$find_form['name']->getData();
+            $grade=$find_form['grade']->getData();
+            $academy=$find_form['academy']->getData();
+            $gradeId=0;
+            $academyId=0;
 
-                $studentId=$find_form['student_id']->getData();
-                $name=$find_form['name']->getData();
-                $gradeId=$find_form['grade']->getData()->getId();
-                $academyId=$find_form['academy']->getData()->getId();
-               
-                $stus = $em->getRepository('UserBundle:Student')->findStudentByAny($studentId,$name,0,0);
+            if($grade){
+                $gradeId=$grade->getId();
+            }else{
+                $gradeId==0;
+            }
+            
+            if($academy){
+                $academyId=$academy->getId();
+            }else{
+                $academyId==0;
+            }
+            
+            //查找成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $stus = $em->getRepository('UserBundle:Student')->findStudentByAny($studentId,$name,$gradeId,$academyId);
 
             } catch(\Exception $e){
                 $this->addFlash('error', '网络原因或数据库故障，查找失败！');

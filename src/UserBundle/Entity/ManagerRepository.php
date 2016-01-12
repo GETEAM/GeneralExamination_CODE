@@ -69,12 +69,21 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
 
      //根据工号姓名查找管理员列表
     public function findManager($managerId,$name){
+       $sql='SELECT m FROM UserBundle:Manager m'.($managerId || $name ? ' WHERE ' : '').''.($managerId ? 'm.username like :managerId' : '')
+        .($managerId && $name ? ' AND ' : '').''.($name ? 'm.name like :name' : '');
+        
+        $arr=array();
+        if($managerId!=''){
+            $arr['managerId']='%'.$managerId.'%';
+        }
+        if($name!=''){
+            $arr['name']='%'.$name.'%';
+        }
+
        return $this->getEntityManager()
-            ->createQuery('SELECT m FROM UserBundle:Manager m 
-                where m.username like :managerId AND m.name like :name '
+            ->createQuery($sql
             )
-            ->setParameter('managerId','%'.$managerId.'%')
-            ->setParameter('name','%'.$name.'%')
+            ->setParameters($arr)
             ->getResult();
     }
     //根据权限查找管理员列表
