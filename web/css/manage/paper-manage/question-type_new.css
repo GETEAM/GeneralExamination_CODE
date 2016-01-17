@@ -1,12 +1,11 @@
-/*单选按钮现实问题*/
+/*单选按钮问题*/
 #papermanage_question_type_new_flowable, #papermanage_question_type_new_questionsNumLimit {
 	display: inline-block;
 }
-
 /*试题类型添加部分 类型结构样式*/
 /*item structure表单隐藏*/
 .item-structure {
-	display: none;
+	/*display: none;*/
 }
 /*试题类型添加步骤*/
 .item-add-steps, .basic-infor, .item-stem, .item-options, .item-questions {
@@ -17,18 +16,7 @@
 .item-add-steps {
 	padding: 15px;
 }
-/*试题类型基本信息*/
-.basic-infor > form {
-	margin-top: 0;
-	border: none;
-	padding: 30px 30px 15px 30px;
-}
-.right .title {
-	font-size: 14px;
-	padding: 5px 15px;
-	border-bottom: 1px solid #eee;
-	background-color: #eee;
-}
+/*各步骤具体内容框架样式*/
 .item-add-steps > .step, .item-add-steps > .next-step  {
 	/*opacity: 0.4;*/
 	display: inline-block;
@@ -62,6 +50,7 @@
 }
 /*添加小题样式*/
 .add-question .add-question-of-type {
+	z-index: 999;
 	display: none;
 	position: absolute;
 	width: 120px;
@@ -86,6 +75,53 @@
 }
 .add-question .add-question-of-type > li:last-child {
 	border-bottom: none;
+}
+/*title样式*/
+.right .title {
+	position: relative;
+	font-size: 14px;
+	padding: 5px 15px;
+	border-bottom: 1px solid #eee;
+	background: #bbb url('/images/manage/arrow-down.png') no-repeat 99% 50%;
+}
+.right .title.close {
+	background: #bbb url('/images/manage/arrow-right.png') no-repeat 99% 50%;	
+} 
+.title .title-oprations {
+	/*display: none;*/
+	position: absolute;
+	right: -34px;
+	top: -0px;
+	width: 24px;
+	padding: 3px 5px;
+	background-color: #ddd;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 3px;
+}
+.right .title:hover .title-oprations {
+	display: block;
+}
+.title .title-oprations a {
+	display: inline-block;
+	text-align: center;
+    width: 24px;
+    height: 24px;
+    margin-top: 0px;
+    margin-right: 2px;
+    border-radius: 2px;
+    padding-bottom: 1px;
+}
+.title .title-oprations a img {
+	margin-top: 4px;
+}
+.title .title-oprations a:hover {
+	background-color: #bbb;
+}
+/*试题类型基本信息*/
+.basic-infor > form {
+	margin-top: 0;
+	border: none;
+	padding: 30px 30px 15px 30px;
 }
 /*试题类型内容*/
 #item-area {
@@ -164,6 +200,7 @@
 	display: block;
 	margin: 3px auto;
 }
+/*小题操作区域*/
 .question-operations  {
 	position: absolute;
 	right: -33px;
@@ -171,10 +208,6 @@
 	width: 32px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
-}
-.delete-item-stem img, .delete-item-option img, .add-item-option-a img, .delete-question-option img, .add-question-option img 
-{
-	/*margin-top: -1px;*/
 }
 .delete-item-stem:hover, .delete-item-option:hover, .add-item-option-a:hover, 
 .delete-question-option:hover, .add-question-option:hover, .delete-question-a:hover, 
@@ -188,8 +221,6 @@
 , .question-options li:hover .add-question-option {
 	display: block;
 }
-
-
 /*小题区域样式*/
 .item-questions .questions {
 	overflow: hidden;
@@ -226,91 +257,3 @@
 .item-questions .question-stem {
 	margin-bottom: 5px;
 }
-
-
-
-/*.right form > div:last-of-type {
-	padding-left: 0px;
-}
-.right form textarea{
-	width: 500px;s
-}
-.right form label{
-	float: left;
-	line-height: 31px;
-}
-.right form div{
-	margin-bottom: 15px;
-}*/
-/* 问题自增长 */
-/*.questions{
-	padding-top: 20px;
-	counter-reset: question 0;
-	overflow: hidden;
-}
-.question{
-	width: auto;
-	counter-increment: question 1;
-}
-.question .question-stem{
-	margin-top: 10px;
-	margin-bottom: 10px;
-}
-.question .question-stem label a{
-	text-align: center;
-	padding: 0px 4px;
-}
-.question .question-stem label a:hover{
-	border: #f70;
-}
-.question .question-stem label a:after {
-	content: counter(question)'. ';
-}*/
-
-/* 如果是选择题，则选项的自增长 */
-/*.question-options{
-	margin-left: 125px;
-	counter-reset: question-option 0;
-}
-
-.question-option{
-	width: auto;
-	margin: 0 auto 15px;
-	counter-increment: question-option 1;
-}
-.question-option:before{
-	text-align: center;
-	display: inline-block;
-	content: counter(question-option, upper-alpha)'.';
-	margin-right: 10px;
-}*/
-
-/* 考虑点击添加问题 */
-/*.add-question{
-	text-align: center;
-	border:1px solid #f70;
-	padding: 0px 6px;
-	margin-right: 10px;
-	border-radius: 2px;
-	margin-top: 5px;
-	position: absolute;
-	left: 100px;
-	float: left;
-	background-color: #f70;
-}
-.add-question a{
-	color: #fff;
-	display: inline-block;
-}
-.add-question:hover{
-	left: 70px;
-}*/
-
-/* 点击标签之后的显示和隐藏 */
-/*.question-toggle{
-	border:1px solid #EEC591;
-}
-
-.btn{
-	margin: 20px 20px 10px 130px;
-}*/

@@ -1,4 +1,40 @@
 /****管理端各页面通用js****/
+$(function(){
+	//提示框初始化
+	$(document).tooltip({
+		track: true
+	});
+});
+/*对象深度拷贝*/
+var deepCopy= function clone(obj){  
+    var o;  
+    switch(typeof obj){  
+    case 'undefined': break;  
+    case 'string'   : o = obj + '';break;  
+    case 'number'   : o = obj - 0;break;  
+    case 'boolean'  : o = obj;break;  
+    case 'object'   :  
+        if(obj === null){  
+            o = null;  
+        }else{  
+            if(obj instanceof Array){  
+                o = [];  
+                for(var i = 0, len = obj.length; i < len; i++){  
+                    o.push(clone(obj[i]));  
+                }  
+            }else{  
+                o = {};  
+                for(var k in obj){  
+                    o[k] = clone(obj[k]);  
+                }  
+            }  
+        }  
+        break;  
+    default:          
+        o = obj;break;  
+    }  
+    return o;     
+};
 
 /*列表页的tr 选择初始化(单选、全选)
  *@param: $tr_selector -> 需要实现可选的tr的jquery对象
@@ -264,3 +300,4 @@ function deleteRepeatElement(arr){
     }
     return newarr;
 }
+

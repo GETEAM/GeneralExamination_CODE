@@ -292,10 +292,14 @@
 .right form input[type='checkbox']:checked + label {
     background-color: #B8F3B8;
 }
-.right form input {
-    width: 300px;
+.right form input, .right form textarea {
+    width: 540px;
     padding: 5px;
     font-size: 14px;
+}
+.right form textarea {
+    height: 150px;
+    vertical-align: top;
 }
 .right form input[type="radio"], .right form input[type="checkbox"] {
     width: auto

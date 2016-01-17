@@ -40,17 +40,17 @@
     
     <div class="item-add-steps">
         <div class="step active">题型基本信息</div>
-        <div class="next-step active" title="下一步"><img src="{{ asset('images/manage/next.png') }}" width="14" height="14" alt="下一步"></div>
-        
-        <div class="step add-item-stem" title="点击添加题干">添加题干</div>
         <div class="next-step" title="下一步"><img src="{{ asset('images/manage/next.png') }}" width="14" height="14" alt="下一步"></div>
         
-        <div class="step add-item-option" title="点击添加试题选项">
+        <div class="step active add-item-stem" title="点击添加题干">添加题干</div>
+        <div class="next-step" title="下一步"><img src="{{ asset('images/manage/next.png') }}" width="14" height="14" alt="下一步"></div>
+        
+        <div class="step active add-item-option" title="点击添加试题选项">
             <a href="javascript:void(0)" class="item-operation">添加试题选项</a>
         </div>
         <div class="next-step" title="下一步"><img src="{{ asset('images/manage/next.png') }}" width="14" height="14" alt="下一步"></div>
         
-        <div class="step add-question">
+        <div class="step active add-question">
             <a href="javascript:void(0)" class="item-operation">添加小题</a>
             <ul class="add-question-of-type">
                 <li class="add-single-choice">单项选择题</li>
@@ -62,7 +62,9 @@
         </div>
     </div>
     <div class="basic-infor">
-        <div class="title">试题类型基本信息</div>
+        <div class="title" title="点击显示/隐藏该区域">
+            试题类型基本信息
+        </div>
         {{ form_start(new_form) }}
             {{ form_errors(new_form) }}
 
@@ -82,55 +84,6 @@
     </div>
     <div id="item-area">
     </div>
-    <!--item模板
-        <div class="item">
-            <div class="item-stem">
-                <div class="title">试题题干</div>
-                <div class="item-stem-content">
-                    <div class="params">
-                        <label title="选中此选项则显示题干包含的字数，反之不显示">
-                            <input type="checkbox" name="show-stem-length" defaultChecked={showStemLength} onChange={this.handelShowStemLengthChange} />
-                            显示题干字数
-                        </label>
-                    </div>
-                    <div class="item-stem-content-text">
-                        此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。(长度)
-                        <a href="javascript:void(0)" class="delete-item-stem" onClick={this.deleteItemStem} title="删除试题题干" >
-                            <img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题题干" />
-                        </a>
-                    </div>
-                </div>
-            </div>
-            <div class="item-options">
-                <div class="title">试题选项</div>
-                <ul class="item-options-list">
-                    <li>
-                        试题选项内容
-                        <a href="javascript:void(0)" class="delete-item-option"><img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题选项" title="删除试题选项" /></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="item-questions">
-                <label>包含小题</label>
-                <div class="questions">
-                    <div class="question" question-type="SingleChoice">
-                        <div class="question-stem">
-                            <span>此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。</span>
-                            <a href="javascript:void(0)" class="delete-question-a"><img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题" title="删除小题" /></a>
-                            <a href="javascript:void(0)" class="add-question-a"><img src="/images/manage/add-min.png" width="16" height="16" alt="以该题为模板添加小题" title="以该题为模板添加小题" /></a>
-                        </div>
-                        <ul class="question-options">
-                            <li>
-                                <span>单选小题选项内容</span>
-                                <a href="javascript:void(0)" class="delete-question-option"><img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题选项" title="删除小题选项" /></a>
-                                <a href="javascript:void(0)" class="add-question-option"><img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题选项" title="添加小题选项" /></a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-        </div>
-    -->
 {% endblock %}
 
 
