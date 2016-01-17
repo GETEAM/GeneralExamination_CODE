@@ -90,9 +90,16 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
     public function findManagerByRoles($roles){
        return $this->getEntityManager()
             ->createQuery('SELECT m FROM UserBundle:Manager m 
-                where m.roles = :roles '
+                WHERE m.id IN (0,1,2)'
+            )
+            ->getResult();
+    }
+   /* public function findManagerByRoles2($roles){
+       return $this->getEntityManager()
+            ->createQuery('SELECT m FROM UserBundle:Manager m 
+                WHERE :roles IN ('ROLE_SYSTEM_MANAGER','ROLE_SECRETARY','ROLE_TEACHER','ROLE_MONITOR','ROLE_QUESTIONS_MANAGER')'
             )
             ->setParameter('roles',$roles)
             ->getResult();
-    }
+    }*/
 }

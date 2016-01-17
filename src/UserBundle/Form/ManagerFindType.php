@@ -29,7 +29,7 @@ class ManagerFindType extends AbstractType
             	),
             	'required' => false,
             	'expanded' => false,
-            	'multiple' => false
+            	'multiple' => true,
             ))
             ->add('save', 'submit', array('label' => '查找'));*/
 
@@ -55,6 +55,6 @@ class ManagerFindType extends AbstractType
      */
     public function getName()
     {
-        return 'userbundle_manager_new';
+        return 'userbundle_manager_find';
     }
 }

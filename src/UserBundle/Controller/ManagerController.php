@@ -43,18 +43,17 @@ class ManagerController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $find_form->handleRequest($request);
-
         if ($find_form->isValid()) {
 
             $username=$find_form['username']->getData();
             $name=$find_form['name']->getData();
-            $roles=$find_form['roles']->getData();
-            var_dump($roles);
+           /* $roles=$find_form['roles']->getData();
+            var_dump($roles);*/
             //添加成功跳转到列表页面，不成功跳转到本页面
             try{
-                //
-                //$manager = $em->getRepository('UserBundle:Manager')->findManagerByAny($managerId,$name,$roles);
+                
                 $manager = $em->getRepository('UserBundle:Manager')->findManager($username,$name);
+                //$manager = $em->getRepository('UserBundle:Manager')->findManagerByRoles('ROLE_SYSTEM_MANAGER');
 
             } catch(\Exception $e){
                 $this->addFlash('error', '网络原因或数据库故障，查找失败！');
@@ -64,8 +63,6 @@ class ManagerController extends Controller
             $manager = $em->getRepository('UserBundle:Manager')->findAll();
         }
 
-
-        
         
         $paginator = $this->get('knp_paginator');
         $managers = $paginator->paginate($manager, $request->query->getInt('page', 1)); 

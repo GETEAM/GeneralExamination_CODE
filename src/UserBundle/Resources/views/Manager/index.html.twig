@@ -14,7 +14,7 @@
                 <ul>
                     <li>{{ form_row(find_form.username, {'attr': {'placeholder': '请输入工号', 'autocomplete': 'off'} }) }}</li>
                     <li>{{ form_row(find_form.name, {'attr': {'placeholder': '请输入姓名', 'autocomplete': 'off'} }) }}</li>
-                    
+                   
                     <li>{{ form_row(find_form.save, {'attr': {'class': 'btn'} }) }}</li>
                 </ul> 
        {{ form_end(find_form, {'render_rest': true}) }}
@@ -66,7 +66,25 @@
                     <td>{{ manager.username }}</td>
                     <td>{{ manager.name }}</td>
                     <td>{{ manager.telephone }}</td>
-                    <td>{{ manager.email }}</td>
+                    <td>
+                    {% for role in manager.roles %}
+                        {% if role=='ROLE_SYSTEM_MANAGER' %}
+                            系统管理员
+                        {% endif %}
+                        {% if role=='ROLE_SECRETARY' %}
+                            考务员
+                        {% endif %}
+                        {% if role=='ROLE_TEACHER' %}
+                            英语老师
+                        {% endif %}
+                        {% if role=='ROLE_MONITOR' %}
+                            调度员
+                        {% endif %}
+                        {% if role=='ROLE_QUESTIONS_MANAGER' %}
+                            题库管理员
+                        {% endif %}
+                    {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ path('manager_show', { 'id': manager.id }) }}">  
                             <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="查看" title="查看">

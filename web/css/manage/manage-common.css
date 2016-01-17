@@ -183,9 +183,8 @@
     height: 30px;
     line-height: 20px;
 }
-.right .common-find ul li a img{
-    vertical-align: bottom;
-}
+
+
 /*右侧标题*/
 .right h1 {
     font-size: 20px;
