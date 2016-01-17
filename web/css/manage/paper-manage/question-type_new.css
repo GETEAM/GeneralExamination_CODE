@@ -1,89 +1,133 @@
+/*单选按钮现实问题*/
+#papermanage_question_type_new_flowable, #papermanage_question_type_new_questionsNumLimit {
+	display: inline-block;
+}
+
 /*试题类型添加部分 类型结构样式*/
 /*item structure表单隐藏*/
 .item-structure {
 	display: none;
 }
-/*试题功能样式*/
-.item-operations {
-	padding: 10px;
-	border: 1px dashed #eee;
+/*试题类型添加步骤*/
+.item-add-steps, .basic-infor, .item-stem, .item-options, .item-questions {
+	border: 1px solid #eee;
 	border-bottom: none;
-	margin-bottom: 0!important;
+	font-size: 16px;
 }
-.item-operations > ul > li {
-	display: inline-block;
-	position: relative;
+.item-add-steps {
+	padding: 15px;
 }
-.item-operations .item-operation {
+/*试题类型基本信息*/
+.basic-infor > form {
+	margin-top: 0;
+	border: none;
+	padding: 30px 30px 15px 30px;
+}
+.right .title {
+	font-size: 14px;
+	padding: 5px 15px;
+	border-bottom: 1px solid #eee;
+	background-color: #eee;
+}
+.item-add-steps > .step, .item-add-steps > .next-step  {
+	/*opacity: 0.4;*/
 	display: inline-block;
 	font-size: 12px;
-	padding: 5px 8px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	color: #666;
 	background-color: #f8f8f8;
+	cursor: pointer;
 }
-.item-operations .item-operation:hover {
+.item-add-steps > .active {
+	opacity: 1;
+}
+.item-add-steps > .active:hover {
 	color: #333;
 	background-color: #eee;
-	border: 1px solid #f70;
+	border: 1px solid #eee;
 }
-.item-operations .add-question .add-question-of-type {
+.item-add-steps > .step {
+	padding: 5px 8px;
+	position: relative;
+}
+.item-add-steps > .next-step {
+	font-size: 14px;
+	margin: 0 10px;
+	padding: 0px 5px;
+}
+.item-add-steps > .next-step img {
+	margin-top: -3px;
+	vertical-align: middle;
+}
+/*添加小题样式*/
+.add-question .add-question-of-type {
 	display: none;
 	position: absolute;
 	width: 120px;
 	border: 1px solid #ddd;
 	border-radius: 3px;
 	background-color: #ccc;
-	top: 30px;
+	top: 29px;
+	left: -1px;
 }
-.item-operations .add-question:hover .add-question-of-type {
+.add-question:hover .add-question-of-type {
 	display: block;
 }
-.item-operations .add-question .add-question-of-type > li {
+.add-question .add-question-of-type > li {
 	cursor: pointer;
 	text-align: center;
 	padding: 5px 0;
 	font-size: 12px;
 	border-bottom: 1px solid #ddd;
 }
-.item-operations .add-question .add-question-of-type > li:hover {
+.add-question .add-question-of-type > li:hover {
 	background-color: #f8f8f8;
 }
-.item-operations .add-question .add-question-of-type > li:last-child {
+.add-question .add-question-of-type > li:last-child {
 	border-bottom: none;
 }
 /*试题类型内容*/
 #item-area {
 	padding-left: 0px;
+	border-bottom: 1px solid #eee;
+
 }
-.item {
-	border: 1px dashed #eee;
-	padding-left: 10px!important;
-	padding: 10px;
-}
-.item > div {
-	margin-bottom: 10px;
-}
-.item .item-stem label, .item .item-options label, .item .item-questions label {
-	float: left;
-	width: 4em;
-	text-align: center;
-	margin-right: 10px;
-	padding: 4px 10px;
-	background-color: #dedede;
-	border-radius: 3px;
-}
-.item .item-stem-content, .item .item-options-list, .item-questions .questions {
+/*试题题干*/
+.item .item-stem-area, .item .item-options-area, .item-questions .questions-area {
+	width: 100%;
+	display: table;
 	overflow: hidden;
 	vertical-align: text-top;
-	margin-left: 10px;	
 	line-height: 28px;
+	padding-right: 5px;
+}
+.item .item-stem .params, .item .item-options .params, .item .item-questions .questions-area .params {
+	display: table-cell;
+	width: 160px;
+	text-align: left;
+	margin-right: 10px;
+	padding: 10px;
+	/*background-color: #dedede;*/
+	border-right: 1px solid #eee;
+}
+.item .item-stem .params label, .item .item-options .params label, .item .item-questions .questions-area .params label {
+	display: block;
+}
+.item-stem-content, .item-options-list, .item .item-questions .questions  {
+	display: table-cell;
+	padding: 10px;
 }
 /*试题选项和小题选项的样式*/
 .item-options-list, .question-options {
+	overflow: hidden;
 	counter-reset: option 0;
 	border-radius: 3px;
+}
+.item-options-list li.no-order-num {
+	display: inline-block;
+	margin: 3px 5px;
+	padding-right: 2px;
 }
 .item-options-list li, .question-options li {
 	counter-increment: option;
@@ -93,7 +137,10 @@
 	padding: 0px 10px;
 	border-radius: 3px;
 }
-.item-options-list li:before, .question-options li:before {
+.item-options-list li:last-child, .question-options li:last-child {
+	margin-bottom: 0;
+}
+.item-options-list li.show-order-num:before, .question-options li:before {
 	width: 2em;
 	text-align: center;
 	display: inline-block;
@@ -102,30 +149,42 @@
 .item-options-list li:hover, .question-options li:hover {
 	background-color: #dedede;
 }
-.delete-item-option, .delete-question-option, .add-question-option
-, .delete-question-a, .add-question-a {
+.delete-item-stem, .delete-item-option, .add-item-option-a, .delete-question-option, .add-question-option
+ , .delete-question-a, .add-question-a, .add-question-stem-a, .delete-question-stem-a {
 	float: right;
-	display: none;
+	/*display: none;*/
 	text-align: center;
 	width: 24px;
 	height: 24px;
 	margin-top: 2px;
 	border-radius: 2px;
 }
-.delete-question-a, .add-question-a {
+.delete-question-a, .add-question-a, .add-question-stem-a {
+	float: none;
 	display: block;
+	margin: 3px auto;
 }
-.delete-item-option img, .delete-question-option img, .add-question-option img 
-, .delete-question-a img, .add-question-a img {
-	margin-top: -1px;
+.question-operations  {
+	position: absolute;
+	right: -33px;
+	background-color: #ddd;
+	width: 32px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
 }
-.delete-item-option:hover, .delete-question-option:hover, .add-question-option:hover  {
-	background-color: #f8f8f8;
+.delete-item-stem img, .delete-item-option img, .add-item-option-a img, .delete-question-option img, .add-question-option img 
+{
+	/*margin-top: -1px;*/
 }
-.delete-question-a:hover, .add-question-a:hover {
+.delete-item-stem:hover, .delete-item-option:hover, .add-item-option-a:hover, 
+.delete-question-option:hover, .add-question-option:hover, .delete-question-a:hover, 
+.add-question-a:hover , .add-question-stem-a:hover  {
 	background-color: #efefef;
 }
-.item-options-list li:hover .delete-item-option, .question-options li:hover .delete-question-option
+.delete-question-stem-a:hover {
+	background-color: #eee;
+}
+.item-stem-content:hover .delete-item-stem, .item-options-list li:hover .delete-item-option, .item-options-list li:hover .add-item-option-a, .question-options li:hover .delete-question-option
 , .question-options li:hover .add-question-option {
 	display: block;
 }
@@ -137,8 +196,11 @@
 	counter-reset: question 0;
 }
 .item-questions .questions .question {
+	position: relative;
+	width: 93%;
+	min-height: 90px;
 	border-radius: 3px;
-	padding: 0 5px 2px;
+	padding: 2px 5px 2px;
 	margin-top: 10px;
 	counter-increment: question;
 	border: 1px solid #ddd;

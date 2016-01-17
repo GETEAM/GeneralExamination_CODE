@@ -287,7 +287,7 @@
     margin-right: 5px;
 }
 .right form input[type='checkbox'] {
-    display: none;
+    /*display: none;*/
 }
 .right form input[type='checkbox']:checked + label {
     background-color: #B8F3B8;
@@ -296,6 +296,9 @@
     width: 300px;
     padding: 5px;
     font-size: 14px;
+}
+.right form input[type="radio"], .right form input[type="checkbox"] {
+    width: auto
 }
 .right form .btn {
     background-color: #f70;

@@ -1,18 +1,7 @@
 $(function(){
-	// /*★★★★★★★★★★注意：添加位置如何决定*/
-	// /*添加删除试题选项*/
-	// //点击添加试题选项时，添加试题选项
-	// $('.add-item-option').click(function() {
-	// 	//添加试题选项
-	// 	$(this).addItemOption();
-	// });
+	//提示框初始化
+	$(document).tooltip();
 
-	// /*添加、删除小题*/
-	// $('.add-single-choice').click(function(){
-	// 	//添加小题
-	// 	$(this).addQuestion();
-	// });
-	
 	var deepCopy= function clone(obj){  
 	    var o;  
 	    switch(typeof obj){  
@@ -44,10 +33,6 @@ $(function(){
 	}
 
 	var item = {	
-		"stem": "此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。",
-		"showLength": true, 
-		"shuffle": true,
-		"preShow": true
 	};
 
 	var $item_structure = $('.item-structure textarea');
@@ -70,15 +55,31 @@ $(function(){
 
 			var options = item.options;
 
+			//该值默认为true
+			var showOptionsOrderNum = item['show-options-order-num'] === false ? false : true;
+
+			var shuffle = item.shuffle ? item.shuffle : false;
+
+			//该值默认为true
+			var questionsNumLimit = item['questions-num-limit'] === false ? false : true;
+
+			//该值默认为true
+			var preShow = item['pre-show'] === false ? false : true;
+
+			//如果item题干存在，则插入ItemStem
+			var item_stem = item.stem ?　<ItemStem stem={item.stem} showStemLength={item['show-stem-length']} changeItemState={this.handleChangeState} /> : '';
+
 			//如果item选项存在，则插入ItemOptions
-			var item_options = (options && options.length != 0) ?　<ItemOptions options={options} changeItemState={this.handleChangeState} /> : '';
+			var item_options = (options && options.length != 0) ?　<ItemOptions options={options} shuffle={shuffle} showOptionsOrderNum={showOptionsOrderNum} changeItemState={this.handleChangeState} /> : '';
 
 			//如果存在questions，则插入Question
-			var questions = (item.questions && item.questions.length != 0) ? <Questions questions={item.questions} itemOptions={options} changeItemState={this.handleChangeState}/> : '';
+			var questions = (item.questions && item.questions.length != 0) 
+						? <Questions  questionsNumLimit={questionsNumLimit} preShow={preShow} questions={item.questions} itemOptions={options} changeItemState={this.handleChangeState}/> 
+						: '';
 			
 			return (
 				<div className="item">
-					<ItemStem stem={item.stem}/>
+					{item_stem}
 					{item_options}
 					{questions}
 				</div>
@@ -88,12 +89,44 @@ $(function(){
 
 	//试题item题干
 	var ItemStem = React.createClass({
+		handelShowStemLengthChange: function(event) {
+			var showStemLength = event.target.checked;
+			//改变item的show-stem-length
+			item['show-stem-length'] = showStemLength;
+			//改变item state
+			this.props.changeItemState();
+		},
+		deleteItemStem: function(event) {
+			//此处手动移出鼠标，否则tooltips不会消失
+			$(event.target).mouseout();
+			//删除item的stem属性
+			delete item.stem;
+			//改变item state
+			this.props.changeItemState();
+		},
 		render: function() {
+			var showStemLength = this.props.showStemLength ? true : false;
+			var stem = this.props.stem;
+
 			return (
 				<div className="item-stem">
-					<label>题干</label>
-					<div className="item-stem-content">
-						{this.props.stem}
+					<div className="title">试题题干</div>
+					<div className="item-stem-area">
+						<div className="params">
+							<label title="选中此选项则显示题干包含的字数，反之不显示。该参数在具体试题内可作修改！">
+								<input type="checkbox" name="show-stem-length" defaultChecked={showStemLength} onChange={this.handelShowStemLengthChange} />
+								显示题干字数
+							</label>
+						</div>
+						<div className="item-stem-content">
+							{stem}
+							{
+								showStemLength ? ('(' + stem.length + 'words)') : ''
+							}
+							<a href="javascript:void(0)" className="delete-item-stem" onClick={this.deleteItemStem} title="删除试题题干" >
+								<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题题干" />
+							</a>
+						</div>
 					</div>
 				</div>
 			);
@@ -102,32 +135,75 @@ $(function(){
 
 	// 试题item的options
 	var ItemOptions = React.createClass({
-		deleteItemOption: function() {
+		deleteItemOption: function(event) {
+			//此处手动移出鼠标，否则tooltips不会消失
+			$(event.target).mouseout();
 			//移除试题选项中的一个
 			item.options.pop();
+			//改变item state
+			this.props.changeItemState();
+		},
+		addItemOption: function() {
+			//添加试题选项
+			var new_item_stem = '试题选项内容';
+
+			//如果item中不存在options，设为空数组
+			item.options = item.options ? item.options : [];
+			item.options.push(new_item_stem);
+			//改变item state
+			this.props.changeItemState();
+		},
+		handelShowOptionsOrderNum: function(event) {
+			var showOptionsOrderNum = event.target.checked;
+			//改变item的show-stem-length
+			item['show-options-order-num'] = showOptionsOrderNum;
+			//改变item state
+			this.props.changeItemState();
+		},
+		handelShuffle: function(event) {
+			var shuffle = event.target.checked;
+			//改变item的show-stem-length
+			item.shuffle = shuffle;
 			//改变item state
 			this.props.changeItemState();
 		},
 		render: function() {
 			var self = this;
 			var options = this.props.options;
+			var showOptionsOrderNum = this.props.showOptionsOrderNum;
+			var shuffle = this.props.shuffle;
 			return (
 				<div className="item-options">
-	    			<label>试题选项</label>
-	    			<ul className="item-options-list">
-    				{
-    					options.map(function(option) {
-    						return (
-    							<li>
-    								<span>{option}</span>
-    								<a href="javascript:void(0)" className="delete-item-option" onClick={self.deleteItemOption}>
-    									<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题选项" title="删除试题选项" />
-    								</a>
-    							</li>
-    						);
-    					})
-    				}
-	    			</ul>
+	    			<div className="title">试题选项</div>
+	    			<div className="item-options-area">
+	    				<div className="params">
+	    					<label title="选中此选项则显示选项序号，反之不显示。该参数在具体试题内不可作修改！">
+                            	<input type="checkbox" name="show-options-order-num" defaultChecked={showOptionsOrderNum} onChange={this.handelShowOptionsOrderNum} />
+                           		显示试题选项序号
+                        	</label>
+                        	<label title="选中此选项则打乱选项，反之不打乱。该参数在具体试题内可作修改！">
+                            	<input type="checkbox" name="options-shuffle" defaultChecked={shuffle} onChange={this.handleShuffle} />
+                           		打乱试题选项顺序
+                        	</label>
+	    				</div>
+		    			<ul className="item-options-list">
+						{
+							options.map(function(option) {
+								return (
+									<li className={ showOptionsOrderNum ? 'show-order-num' : 'no-order-num' }>
+										<span>{option}</span>
+										<a href="javascript:void(0)" className="delete-item-option" onClick={self.deleteItemOption} title="删除试题选项" >
+											<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题选项"/>
+										</a>
+										<a href="javascript:void(0)" className="add-item-option-a" onClick={self.addItemOption}  title="添加试题选项">
+											<img src="/images/manage/add-min.png" width="16" height="16" alt="添加试题选项" />
+										</a>
+									</li>
+								);
+							})
+						}
+		    			</ul>
+	    			</div>
 	    		</div>
 			)
 		}
@@ -135,22 +211,54 @@ $(function(){
 
 	//试题item内的questions
 	var Questions = React.createClass({
+		handelQuestionsNulLimit: function() {
+			var questionsNumLimit = event.target.checked;
+			//改变item的show-stem-length
+			item['questions-num-limit'] = questionsNumLimit;
+			//改变item state
+			this.props.changeItemState();
+		},
+		handelPreShow: function() {
+			var preShow = event.target.checked;
+			//改变item的show-stem-length
+			item['pre-show'] = preShow;
+			//改变item state
+			this.props.changeItemState();
+		},
 		render: function() {
 			var self = this;
+			
+			var questionsNumLimit = this.props.questionsNumLimit;
+
+			var preshow = this.props.preShow;
+
 			var item_options = this.props.itemOptions;
+
 			var questions = this.props.questions;
 
 			return (
 				<div className="item-questions">
-					<label>包含小题</label>
-					<div className="questions">
-					{
-						 questions.map(function( question, i, questions ){
-							return (
-								<Question question={question} itemOptions={item_options} order={i} changeItemState={self.props.changeItemState} />
-							);
-						})
-					}
+					<div className="title">试题题干</div>
+					<div className="questions-area">
+	    				<div className="params">
+	    					<label title="选中此选项则限制小题数量，反之不限制。不限制小题数量的题型，在添加具体试题时，可以以任一小题为模板额外增加小题。该参数在具体试题内不可作修改！">
+                            	<input type="checkbox" name="questions-num-limit" defaultChecked={questionsNumLimit} onChange={this.handelQuestionsNulLimit} />
+                           		限制小题数量
+                        	</label>
+                        	<label title="选中此选项则提前显示各小题，反之不提前显示。该参数在具体试题内可作修改！">
+                            	<input type="checkbox" name="pre-show" defaultChecked={preshow} onChange={this.handelPreShow} />
+                           		提前显示各小题
+                        	</label>
+	    				</div>
+	    				<div className="questions">
+							{
+								 questions.map(function( question, i, questions ){
+									return (
+										<Question question={question} itemOptions={item_options} order={i} changeItemState={self.props.changeItemState} />
+									);
+								})
+							}
+						</div>
 					</div>
 				</div>
 			);
@@ -171,10 +279,32 @@ $(function(){
 			//改变item state
 			this.props.changeItemState();
 		},
-		deleteQuestion: function() {
+		deleteQuestion: function(event) {
+			$(event.target).mouseout();
+
 			var order = this.props.order;
 			//插入item
 			item.questions.splice(order, 1);
+
+			//改变item state
+			this.props.changeItemState();
+		},
+		addQuestionStem: function(event) {
+			$(event.target).mouseout();
+			
+			var order = this.props.order;
+			//添加
+			item.questions[order].stem = "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。";
+
+			//改变item state
+			this.props.changeItemState();
+		},
+		deleteQuestionStem: function(event) {
+			$(event.target).mouseout();
+
+			var order = this.props.order;
+			//删除题干
+			delete item.questions[order].stem;
 
 			//改变item state
 			this.props.changeItemState();
@@ -189,11 +319,8 @@ $(function(){
 			var question_stem = question.stem ? 
 				<div className="question-stem">
 					<span>{question.stem}</span>
-					<a href="javascript:void(0)" className="delete-question-a" onClick={this.deleteQuestion}>
-						<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题" title="删除小题" />
-					</a>
-					<a href="javascript:void(0)" className="add-question-a" onClick={this.addQuestionFromCurrent}>
-						<img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题" title="添加小题" />
+					<a href="javascript:void(0)" className="delete-question-stem-a" onClick={this.deleteQuestionStem} title="删除小题题干">
+						<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题题干" />
 					</a>
 				</div> 
 				: '';
@@ -219,6 +346,21 @@ $(function(){
 
 			return (
 				<div className="question">
+					<div className="question-operations">
+						<a href="javascript:void(0)" className="delete-question-a" onClick={this.deleteQuestion} title="删除小题">
+							<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题" />
+						</a>
+						{
+							!question_stem ? 
+							<a href="javascript:void(0)" className="add-question-stem-a" onClick={this.addQuestionStem} title="添加小题题干">
+								<img src="/images/manage/add-stem.png" width="16" height="16" alt="添加小题题干" />
+							</a>
+							: ""
+						}
+						<a href="javascript:void(0)" className="add-question-a" onClick={this.addQuestionFromCurrent} title="添加小题">
+							<img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题" />
+						</a>
+					</div>
 					{question_stem}
 					{answer_area}
 				</div>
@@ -228,7 +370,9 @@ $(function(){
 
 	//小题Question中的答题区域部分————单选题
 	var SingleChoice = React.createClass({
-		deleteQuestionOption: function() {
+		deleteQuestionOption: function(event) {
+			$(event.target).mouseout();
+
 			var question_order = this.props.questionOrder;
 			//删除当前小题的一个选项
 			item.questions[question_order].options.pop();
@@ -257,11 +401,16 @@ $(function(){
 						return (
 							<li>
 								<span>{option}</span>
-								<a href="javascript:void(0)" className="delete-question-option" onClick={self.deleteQuestionOption}>
-									<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题选项" title="删除小题选项" />
-								</a>
-								<a href="javascript:void(0)" className="add-question-option" onClick={self.addQuestionOption}>
-									<img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题选项" title="添加小题选项" />
+								{
+									a.length > 2 
+									? 
+									<a href="javascript:void(0)" className="delete-question-option" onClick={self.deleteQuestionOption} title="删除小题选项" >
+										<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题选项"/>
+									</a>
+									: ""
+								}
+								<a href="javascript:void(0)" className="add-question-option" onClick={self.addQuestionOption} title="添加小题选项" >
+									<img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题选项"/>
 								</a>
 							</li>
 						)
@@ -278,16 +427,32 @@ $(function(){
 		$('#item-area')[0]
 	);
 
-	/*★★★★★★★★★★注意：添加位置如何决定*/
+
+	/*添加删除题干*/
+	$('.add-item-stem').click(function() {
+		//添加试题题干
+		var new_item_stem = '此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。';
+
+		item.stem = new_item_stem
+
+		$item_structure.val(JSON.stringify(item));
+
+		//重新渲染Item
+		ReactDOM.render(
+			<Item />,
+			$('#item-area')[0]
+		);
+	});
+
 	/*添加删除试题选项*/
 	//点击添加试题选项时，添加试题选项
 	$('.add-item-option').click(function() {
 		//添加试题选项
-		var new_item_options = '试题选项内容';
+		var new_item_stem = '试题选项内容';
 
 		//如果item中不存在options，设为空数组
 		item.options = item.options ? item.options : [];
-		item.options.push(new_item_options);
+		item.options.push(new_item_stem);
 
 		$item_structure.val(JSON.stringify(item));
 
@@ -330,219 +495,3 @@ $(function(){
 	});
 
 });
-
-//添加试题选项
-$.fn.addItemOption = function() {
-	var $item_options = $('.item-options');
-	var $delete_img = $('<img>').attr({
-		'width': 16,
-		'height': 16,
-		'alt': '删除试题选项',
-		'title': '删除试题选项',
-		'src': '/images/manage/delete-min.png'
-	});
-	var $delete_item_option = $('<a>').attr('href', 'javascript:void(0)').addClass('delete-item-option').append($delete_img);	
-
-	//添加试题选项后，添加删除事件
-	//点击删除试题选项时，删除试题选项 
-	$delete_item_option.click(function(){
-		$(this).deleteItemOption();
-	});
-
-	var $item_option_li = $('<li>').html('试题选项内容').append($delete_item_option);
-	//如果已经存在试题选项，直接添加选项内容
-	if($item_options.length > 0){
-		$item_option_li.appendTo($('.item-options-list'));
-	}else{
-		//如果不存存在试题选项，添加框架
-		var $item_options = $('<div>').addClass('item-options');
-		$('<label>').html('试题选项').appendTo($item_options);
-
-		var $item_options_list = $('<ul>').addClass('item-options-list');
-		$item_option_li.appendTo($item_options_list);
-		$item_options.append($item_options_list);
-		// $('.item').append($item_options);
-		$item_options.insertAfter($('.item-stem'));
-	}
-
-};
-
-//删除试题选项
-$.fn.deleteItemOption = function (){
-	var $item_options = $(this).closest('.item-options');
-	var item_option_num = $item_options.find('li').length;
-	//如果试题选项多于1个，则删除当前li
-	if( item_option_num > 1 ){
-		$(this).closest('li').remove();
-	}else {
-	//如果试题个数小于等于1，则删除整个列表
-		$item_options.remove();
-	}
-};
-
-//添加小题
-$.fn.addQuestion = function() {
-	//判断小题是否存在
-	var $item_questions = $('.item-questions');
-	
-	var $question = $('<div>').attr({
-		'class': 'question',
-		'question-type': 'SingleChoice'
-	});
-	var $question_stem = $('<div>')
-				.html('此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。')
-				.appendTo($question);
-	var $question_options = $('<ul>').addClass('question-options');
-	var $question_option = $('<li>').html('单选小题选项内容');
-	var $delete_question_option = $('<a>')
-			.attr('href', 'javascript:void(0)')
-			.addClass('delete-question-option');
-	var $delete_question = $('<a>')
-			.attr('href', 'javascript:void(0)')
-			.addClass('delete-question-a');
-
-	var $delete_img = $('<img>').attr({
-		'width': 16,
-		'height': 16,
-		'alt': '删除试题选项',
-		'title': '删除试题选项',
-		'src': '/images/manage/delete-min.png'
-	});
-	$delete_img.clone(true).appendTo($delete_question_option);
-	$delete_img.clone(true).attr({'alt': '删除小题', 'title': '删除小题'}).
-	appendTo($delete_question);
-
-	$delete_question_option.appendTo($question_option);
-	$delete_question.appendTo($question_stem);
-
-	var $add_question_option = $('<a>')
-			.attr('href', 'javascript:void(0)')
-			.addClass('add-question-option');
-	var $add_question = $('<a>')
-			.attr('href', 'javascript:void(0)')
-			.addClass('add-question-a');
-
-	var $add_img = $('<img>').attr({
-		'width': 16,
-		'height': 16,
-		'alt': '删除试题选项',
-		'title': '删除试题选项',
-		'src': '/images/manage/add-min.png'
-	});
-	$add_img.clone(true).appendTo($add_question_option);
-	$add_img.clone(true).attr({'alt': '以该题为模板添加小题', 'title': '以该题为模板添加小题'})
-		.appendTo($add_question);
-
-	$add_question_option.appendTo($question_option);
-	$add_question.appendTo($question_stem);
-
-	/*小题选项，注册删除、添加事件.*/
-	//点击删除小题选项时，删除小题选项 
-	$delete_question_option.click(function(){
-		$(this).deleteQuestionOption();
-	});
-
-	//点击添加小题选项时，添加小题选项 
-	$add_question_option.click(function(){
-		$(this).addQuestionOption();
-	});
-
-	/*小题，注册删除、添加事件.*/
-	//点击删除小题时，删除小题 
-	$delete_question.click(function(){
-		$(this).deleteQuestion();
-	});
-	
-	//点击以当前模板添加小题时，添加小题 
-	$add_question.click(function(){
-		$(this).addQuestionFromCurrent();
-	});
-
-	//默认添加四个选项
-	for(var i = 0; i < 4; i++){
-		$question_option.clone(true).appendTo($question_options);
-	}
-	$question_options.appendTo($question);
-
-	//如果已经存在小题，直接添加小题
-	if($item_questions.length > 0){
-		$question.appendTo($('.item-questions .questions'));
-	}else{
-		//如果不存存在小题，添加框架
-		var $item_questions = $('<div>').addClass('item-questions');
-		$('<label>').html('包含小题').appendTo($item_questions);
-		var $questions = $('<div>').addClass('questions');
-		$questions.append($question).appendTo($item_questions);
-		$('.item').append($item_questions);
-	}
-};
-
-//以当前小题为模板添加小题
-$.fn.addQuestionFromCurrent = function() {
-	var $new_question = $(this).closest('.question').clone(true);
-	//在当前小题后添加新题
-	$new_question.insertAfter($(this).closest('.question'));
-};
-
-//删除小题
-$.fn.deleteQuestion = function() {
-	var $item_questions = $(this).closest('.item-questions');
-	var question_num = $item_questions.find('.question').length;
-	//如果试题多于1个，则删除当前试题
-	if( question_num > 1 ){
-		$(this).closest('.question').remove();
-	}else {
-	//如果试题个数小于等于1，则删除试题
-		$item_questions.remove();
-	}
-};
-
-/*单选小题*/
-//删除小题选项
-$.fn.deleteQuestionOption = function() {
-	$(this).closest('li').remove();
-};
-
-//添加小题选项
-$.fn.addQuestionOption = function() {
-	var $question_option = $('<li>').html('单选小题选项内容');
-	var $delete_question_option = $('<a>')
-			.attr('href', 'javascript:void(0)')
-			.addClass('delete-question-option');
-
-	var $delete_img = $('<img>').attr({
-		'width': 16,
-		'height': 16,
-		'alt': '删除试题选项',
-		'title': '删除试题选项',
-		'src': '/images/manage/delete-min.png'
-	}).appendTo($delete_question_option);
-	$delete_question_option.appendTo($question_option);
-
-	var $add_question_option = $('<a>')
-			.attr('href', 'javascript:void(0)')
-			.addClass('add-question-option');
-	var $add_img = $('<img>').attr({
-		'width': 16,
-		'height': 16,
-		'alt': '删除试题选项',
-		'title': '删除试题选项',
-		'src': '/images/manage/add-min.png'
-	}).appendTo($add_question_option);
-	$add_question_option.appendTo($question_option);
-
-	/*添加小题选项后，注册删除、添加事件.*/
-	//点击删除小题选项时，删除小题选项 
-	$delete_question_option.click(function(){
-		$(this).deleteQuestionOption();
-	});
-
-	/****注意添加删除的多次绑定 每次绑定在当前的即可****/
-	//点击添加小题选项时，添加小题选项 
-	$add_question_option.click(function(){
-		$(this).addQuestionOption();
-	});
-
-	//向最近的小题选项中添加小题选项
-	$question_option.appendTo($(this).closest('.question-options'));
-}

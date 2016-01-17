@@ -17,6 +17,25 @@ class QuestionTypeNewType extends AbstractType
         $builder
             ->add('nameEn', 'text', array('label' => '类型名(英文)'))
             ->add('nameCh', 'text', array('label' => '类型名(中文)'))
+            ->add('flowable', 'choice', array(
+                'label' => '流程性试题',
+                'choices' => array(
+                    '1' => '是',
+                    '0' => '否'
+                ),
+                'expanded' => true,
+                'multiple' => false
+                ))
+            ->add('questionsNumLimit', 'choice', array(
+                'label' => '限制小题数量',
+                'choices' => array(
+                    '1' => '是',
+                    '0' => '否'
+                ),
+                'expanded' => true,
+                'multiple' => false
+                ))
+            ->add('description', 'textarea', array('label' => '题型描述'))
             ->add('structure', 'textarea', array('label' => '类型结构'))
             ->add('save', 'submit', array('label' => '添加题型'));
     }
