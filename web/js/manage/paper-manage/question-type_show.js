@@ -1,13 +1,6 @@
 $(function(){
-
-  //删除操作
-  singleDelete('question_type');
-
-
-
-
 	//首先取到要渲染的id
-	var questiontypeId='question-type_' + $('.question-type-td').attr('question-type-id');
+	var questiontypeId= $('.question_type_sample').attr('id');
 
 	Array.prototype.shuffle = function() {
       var newArr = [];
@@ -266,39 +259,10 @@ $(function(){
       }
     });
     
-    
     ReactDOM.render(
       <Item item={item} />,
       document.getElementById(questiontypeId)
     );
 
 
-    $('.question-type-td').mouseover(function(){
-		var question_type_id="#question-type_" + $(this).attr('question-type-id');
-		//$(question_type_id).text();
-		$(question_type_id).show();
-	});
-
-    $('.question-type-td').mouseout(function(){
-		$('.show-type').hide();
-    })
-	
-	function getStructureDate(){
-		$.ajax({
-			url: '',
-			
-			datatype:'json',
-			success: function(data) {
-				if(data.success){
-
-				}else{
-
-				}
-			},
-			error: function(XMLHttpRequest, textStatus, errorThrown) {
-
-			}
-		})
-	}
-
-});
+})

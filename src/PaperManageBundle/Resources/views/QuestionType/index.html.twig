@@ -4,12 +4,6 @@
 
 {% block loading %}正在加载类型列表……{% endblock %}
 
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type.css') }}"/>
-{% endblock %}
-
-
 {% block right %}
     <h1>
        类型列表
@@ -36,7 +30,7 @@
 	            <th>编号</th>
 	            <th>类型名(英文)</th>
 	            <th>类型名(中文)</th>
-	            <th>类型样式</th>
+	            <th>类型描述</th>
 	            <th>操作</th>
 	        </tr>
 	    </thead>
@@ -55,11 +49,7 @@
 		                </td>
 		                <td>{{ question_type.nameEn }}</td>
 		                <td>{{ question_type.nameCh }}</td>
-		                <td class="question-type-td" question-type-id="{{ question_type.id }}">
-		                	<span>类型示例</span>
-		                	<div id="question-type_{{ question_type.id }}" class="show-type">
-		                	</div>
-		                </td>
+		                <td>{{ question_type.description }}</td>
 		                <td>
 		                    <a href="{{ path('question_type_show', { 'id': question_type.id }) }}">
 		                        <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="预览试题" title="预览">

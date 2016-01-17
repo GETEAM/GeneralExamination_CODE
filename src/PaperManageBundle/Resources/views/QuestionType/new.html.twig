@@ -57,7 +57,10 @@
                 <li>多项选择题</li>
                 <li>填空题</li>
                 <li>简答题</li>
+                <li>判断题</li>
                 <li>录音题</li>
+                <li>排序题</li>
+                <li>改错题</li>
             </ul>
         </div>
     </div>
@@ -69,7 +72,7 @@
             {{ form_errors(new_form) }}
 
                 {{ form_row(new_form.nameEn, {'attr': {'placeholder': '请输入题型名(英文)', 'autocomplete': 'off'} }) }}
-                {{ form_row(new_form.nameCh, {'attr': {'placeholder': '请输入题型名(英文)', 'autocomplete': 'off'} }) }}
+                {{ form_row(new_form.nameCh, {'attr': {'placeholder': '请输入题型名(中文)', 'autocomplete': 'off'} }) }}
                 {{ form_row(new_form.flowable) }}
                 {{ form_row(new_form.questionsNumLimit) }}
                 {{ form_row(new_form.description, {'attr': {'placeholder': '请输入题型描述'} }) }}

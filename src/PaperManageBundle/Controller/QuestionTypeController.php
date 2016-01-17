@@ -120,12 +120,12 @@ class QuestionTypeController extends Controller
         $question_type = $em->getRepository('PaperManageBundle:QuestionType')->find($id);
 
         //调试错误提示
-        // if (!$question_type) {
-        //     // throw $this->createNotFoundException('Unable to find Student entity.');
-        // }
+        if (!$question_type) {
+            throw $this->createNotFoundException('Unable to find Student entity.');
+        }
         
         return array(
-            'student' => $question_type
+            'question_type' => $question_type
         );
     }
 
