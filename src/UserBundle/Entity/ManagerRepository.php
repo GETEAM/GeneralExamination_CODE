@@ -34,4 +34,72 @@ class ManagerRepository extends \Doctrine\ORM\EntityRepository
     	}
     	return true;
     }
+
+
+
+
+
+    //根据工号，姓名，权限查找到管理员列表
+    public function findManagerByAny($managerId,$name,$rolesArr){
+
+        $sql='SELECT m FROM UserBundle:Manager m '
+        .($managerId || $name || count($rolesArr)!=0 ? 'WHERE ' : '').''.($managerId ? 'm.managerId like :managerId' : '').''
+        .($managerId && $name ? ' AND ' : '').''.($name ? 'm.name like :name' : '').''
+        .(($managerId || $name) && count($rolesArr)!=0 ? ' AND ' : '').''.(count($rolesArr)!=0 ? 'm.roles = :rolesArr' : '');
+       
+       //给参数设定数组
+        $arr=array();
+
+        if($managerId!=''){
+            $arr['managerId']='%'.$managerId.'%';
+        }
+        if($name!=''){
+            $arr['name']='%'.$name.'%';
+        }
+        if(count($rolesArr)!=0){
+            $arr['rolesArr']=$rolesArr;
+        }
+           
+       return $this->getEntityManager()
+            ->createQuery($sql
+            )
+            ->setParameters($arr)
+            ->getResult();
+    }
+
+     //根据工号姓名查找管理员列表
+    public function findManager($managerId,$name){
+       $sql='SELECT m FROM UserBundle:Manager m'.($managerId || $name ? ' WHERE ' : '').''.($managerId ? 'm.username like :managerId' : '')
+        .($managerId && $name ? ' AND ' : '').''.($name ? 'm.name like :name' : '');
+        
+        $arr=array();
+        if($managerId!=''){
+            $arr['managerId']='%'.$managerId.'%';
+        }
+        if($name!=''){
+            $arr['name']='%'.$name.'%';
+        }
+
+       return $this->getEntityManager()
+            ->createQuery($sql
+            )
+            ->setParameters($arr)
+            ->getResult();
+    }
+    //根据权限查找管理员列表
+    public function findManagerByRoles($roles){
+       return $this->getEntityManager()
+            ->createQuery('SELECT m FROM UserBundle:Manager m 
+                WHERE m.id IN (0,1,2)'
+            )
+            ->getResult();
+    }
+   /* public function findManagerByRoles2($roles){
+       return $this->getEntityManager()
+            ->createQuery('SELECT m FROM UserBundle:Manager m 
+                WHERE :roles IN ('ROLE_SYSTEM_MANAGER','ROLE_SECRETARY','ROLE_TEACHER','ROLE_MONITOR','ROLE_QUESTIONS_MANAGER')'
+            )
+            ->setParameter('roles',$roles)
+            ->getResult();
+    }*/
 }

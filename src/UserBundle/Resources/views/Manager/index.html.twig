@@ -9,22 +9,15 @@
         教师信息列表
     </h1>
     <div class="common-find">
-        <ul>
-            <li>教师账号：<input type="text" name="managerName" class="common-findByText"></li>
-            <li>教师姓名：<input type="text" name="managerId " class="common-findByText"></li>
-            <li>教师权限：
-                <select>
-                    <option value="zs">系统管理员</option>
-                    <option value="zs">考务员</option>
-                    <option value="zs">英语教师</option>
-                    <option value="zs">调度员</option>
-                    <option value="zs">题库管理员</option>
-                </select>
-            </li>
-            <li><a href="javascript:void(0)">
-                <img src="{{  asset('images/manage/view.png')  }}"  alt="查找" title="查找" />
-                查找</a></li>
-        </ul> 
+        {{ form_start(find_form) }}
+            {{ form_errors(find_form) }}
+                <ul>
+                    <li>{{ form_row(find_form.username, {'attr': {'placeholder': '请输入工号', 'autocomplete': 'off'} }) }}</li>
+                    <li>{{ form_row(find_form.name, {'attr': {'placeholder': '请输入姓名', 'autocomplete': 'off'} }) }}</li>
+                   
+                    <li>{{ form_row(find_form.save, {'attr': {'class': 'btn'} }) }}</li>
+                </ul> 
+       {{ form_end(find_form, {'render_rest': true}) }}
     </div>
 
     <div class="common-action">
@@ -73,7 +66,25 @@
                     <td>{{ manager.username }}</td>
                     <td>{{ manager.name }}</td>
                     <td>{{ manager.telephone }}</td>
-                    <td>{{ manager.email }}</td>
+                    <td>
+                    {% for role in manager.roles %}
+                        {% if role=='ROLE_SYSTEM_MANAGER' %}
+                            系统管理员
+                        {% endif %}
+                        {% if role=='ROLE_SECRETARY' %}
+                            考务员
+                        {% endif %}
+                        {% if role=='ROLE_TEACHER' %}
+                            英语老师
+                        {% endif %}
+                        {% if role=='ROLE_MONITOR' %}
+                            调度员
+                        {% endif %}
+                        {% if role=='ROLE_QUESTIONS_MANAGER' %}
+                            题库管理员
+                        {% endif %}
+                    {% endfor %}
+                    </td>
                     <td>
                         <a href="{{ path('manager_show', { 'id': manager.id }) }}">  
                             <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="查看" title="查看">

@@ -9,37 +9,17 @@
         学生信息列表
     </h1>
     <div class="common-find">
-        <ul>
-            <li>学号：<input type="text" name="StudentName" class="common-findByText"></li>
-            <li>姓名：<input type="text" name="StudentId " class="common-findByText"></li>
-            <li>学院：
-                <select id="academyName">
-                    {% if students|length ==0 %}
-                        <option>无<option>
-                    {% else %}
-                        {% for student in students %}
-                            <option>{{ student.academy }}</option>
-                        {% endfor %}
-                    {% endif %}
-                </select>
-            </li>
-            <li>年级：
-                <select id="gradeName">
-                    {% if students|length ==0 %}
-                        <option>无<option>
-                    {% else %}
-                        {% for student in students %}
-                            <option>{{ student.grade }}</option>
-                        {% endfor %}
-                    {% endif %}
-                </select>
-            </li>
-            <li><a href="javascript:void(0)">
-                <img src="{{  asset('images/manage/view.png')  }}"  alt="查找" title="查找" />
-                查找</a></li>
-        </ul> 
+        {{ form_start(find_form) }}
+            {{ form_errors(find_form) }}
+                <ul>
+                    <li>{{ form_row(find_form.student_id, {'attr': {'placeholder': '请输入学号', 'autocomplete': 'off'} }) }}</li>
+                    <li>{{ form_row(find_form.name, {'attr': {'placeholder': '请输入姓名', 'autocomplete': 'off'} }) }}</li>
+                    <li>{{ form_row(find_form.grade) }}</li>
+                    <li>{{ form_row(find_form.academy) }}</li>
+                    <li>{{ form_row(find_form.save, {'attr': {'class': 'btn'} }) }}</li>
+                </ul> 
+       {{ form_end(find_form, {'render_rest': true}) }}
     </div>
-
     <div class="common-action">
         <a href="javascript:void(0)" class="btn btn-common-action select-all">
             <input type="checkbox" hidden/>

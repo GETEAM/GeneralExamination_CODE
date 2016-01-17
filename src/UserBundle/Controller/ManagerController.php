@@ -11,6 +11,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use UserBundle\Entity\Manager;
 use UserBundle\Form\ManagerNewType;
 use UserBundle\Form\ManagerEditType;
+use UserBundle\Form\ManagerFindType;
 use Ddeboer\DataImport\Workflow;
 use Ddeboer\DataImport\Writer\DoctrineWriter;
 use Ddeboer\DataImport\Filter;
@@ -33,13 +34,42 @@ class ManagerController extends Controller
      */
     public function indexAction(Request $request)
     {
+
+        $find_form = $this->createForm(new ManagerFindType(), null, array(
+            'action' => $this->generateUrl('manager_index'),
+            'method' => 'GET'
+        ));
+        
         $em = $this->getDoctrine()->getManager();
-        $manager = $em->getRepository('UserBundle:Manager')->findAll();
+
+        $find_form->handleRequest($request);
+        if ($find_form->isValid()) {
+
+            $username=$find_form['username']->getData();
+            $name=$find_form['name']->getData();
+           /* $roles=$find_form['roles']->getData();
+            var_dump($roles);*/
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+                
+                $manager = $em->getRepository('UserBundle:Manager')->findManager($username,$name);
+                //$manager = $em->getRepository('UserBundle:Manager')->findManagerByRoles('ROLE_SYSTEM_MANAGER');
+
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，查找失败！');
+                return $this->redirect($this->generateUrl('manager_index'));
+            } 
+        }else{
+            $manager = $em->getRepository('UserBundle:Manager')->findAll();
+        }
+
+        
         $paginator = $this->get('knp_paginator');
         $managers = $paginator->paginate($manager, $request->query->getInt('page', 1)); 
         
         return array(
-            'managers' => $managers,
+            'find_form' => $find_form->createView(),
+            'managers' => $managers
         );
     }
 

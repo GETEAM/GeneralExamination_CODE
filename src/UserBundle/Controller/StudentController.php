@@ -14,6 +14,7 @@ use UserBundle\Entity\Student;
 use UserBundle\Form\StudentNewType;
 use UserBundle\Form\StudentEditType;
 use UserBundle\Form\StudentImportType;
+use UserBundle\Form\StudentFindType;
 use Ddeboer\DataImport\Workflow;
 use Ddeboer\DataImport\Writer\DoctrineWriter;
 use Ddeboer\DataImport\Filter;
@@ -34,13 +35,56 @@ class StudentController extends Controller
      * @Template("UserBundle:Student:index.html.twig")
      */
     public function indexAction(Request $request)
-    {
+    {   
+        //查找表单
+        $find_form = $this->createForm(new StudentFindType($this->getDoctrine()), null ,array(
+            'action' => $this->generateUrl('student_index' ),
+            'method' => 'GET'
+        ));
+        
+        $find_form->handleRequest($request);
+
         $em = $this->getDoctrine()->getManager();
-        $student = $em->getRepository('UserBundle:Student')->findAll();
+
+        if ($find_form->isValid()) {
+            //获取到输入的值
+            $studentId=$find_form['student_id']->getData();
+            $name=$find_form['name']->getData();
+            $grade=$find_form['grade']->getData();
+            $academy=$find_form['academy']->getData();
+            $gradeId=0;
+            $academyId=0;
+
+            if($grade){
+                $gradeId=$grade->getId();
+            }else{
+                $gradeId==0;
+            }
+            
+            if($academy){
+                $academyId=$academy->getId();
+            }else{
+                $academyId==0;
+            }
+            
+            //查找成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $stus = $em->getRepository('UserBundle:Student')->findStudentByAny($studentId,$name,$gradeId,$academyId);
+
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，查找失败！');
+                return $this->redirect($this->generateUrl('student_index'));
+            } 
+        }else{//首页显示的学生信息
+            $stus = $em->getRepository('UserBundle:Student')->findAll();
+        }
+
+
         $paginator = $this->get('knp_paginator');
-        $students = $paginator->paginate($student, $request->query->getInt('page', 1));
+        $students = $paginator->paginate($stus, $request->query->getInt('page', 1));
 
         return array(
+            'find_form' => $find_form->createView(),
             'students' => $students
         );
     }
@@ -248,4 +292,5 @@ class StudentController extends Controller
         $response->headers->set('Content-Type', 'application/json');
         return $response;
     }
+
 }
