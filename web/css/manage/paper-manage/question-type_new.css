@@ -18,7 +18,7 @@
 }
 /*各步骤具体内容框架样式*/
 .item-add-steps > .step, .item-add-steps > .next-step  {
-	/*opacity: 0.4;*/
+	opacity: 0.3;
 	display: inline-block;
 	font-size: 12px;
 	border: 1px solid #ddd;
@@ -115,7 +115,7 @@
 	margin-top: 4px;
 }
 .title .title-oprations a:hover {
-	background-color: #bbb;
+	background-color: #aaa;
 }
 /*试题类型基本信息*/
 .basic-infor > form {
@@ -172,6 +172,10 @@
 	padding-right: 5px;
 	padding: 0px 10px;
 	border-radius: 3px;
+}
+.question-options li.inline {
+	display: inline-block;
+	margin-right: 5px;
 }
 .item-options-list li:last-child, .question-options li:last-child {
 	margin-bottom: 0;

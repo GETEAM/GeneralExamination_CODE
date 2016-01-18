@@ -11,17 +11,63 @@ $(function(){
 				item: item
 			}
 		},
-		componentDidMount: function() {
-			//点击各区域标题，显示/隐藏相应内容
-			$('.title').unbind().click(function() {
-				$(this).toggleClass('close').next().toggle();
+		/*判断item中是否存在单选类型的试题*/
+		hasSingleChoiceQuestion: function() {
+			var questions = this.state.item.questions;
+			if( questions && questions.length != 0 ){
+				for(var i = 0, len = questions.length; i < len; i++){
+					if(questions[i]['type'] == "SingleChoice"){
+						return true;
+					}
+				}
+			}
+			return false;
+		},
+		/*控制item外部的DOM，添加题型的各步骤的操作*/
+		handleOutDOM: function() {
+			//控制添加题干功能
+			var hasStem = this.state.item.stem ? true : false;
+			if(hasStem){
+				//修改title之前 要先移出鼠标
+				$('.add-item-stem').mouseout().unbind().removeClass('active').attr({
+					'title': "已存在题干，无法进行此操作",
+				});
+			}else{
+				//修改title之前 要先移出鼠标
+				$('.add-item-stem').mouseout().addClass('active').click(handleAddItemStem).attr('title', "点击添加题干");
+			}
+
+			//控制item的添加试题选项功能
+			var hasSingleChoiceQuestion = this.hasSingleChoiceQuestion();
+			var hasOptions = ( this.state.item.options && this.state.item.options.length != 0 ) ? true : false;
+			if(hasOptions){
+				$('.add-item-option').mouseout().unbind().removeClass('active').attr({
+					'title': "已存在试题选项，无法进行此操作",
+				});
+			}else{
+				if(hasSingleChoiceQuestion){
+					$('.add-item-option').mouseout().unbind().removeClass('active').attr({
+						'title': "已存在单选小题，无法进行此操作",
+					});
+				}else{
+					$('.add-item-option').mouseout().addClass('active').click(handleAddItemOption).attr({
+						'title': "点击添加试题选项"
+					});					
+				}
+			}
+
+			//点击各区域标题，显示/隐藏相应内容.且判断点击的不是a链接或者a链接中的图片
+			$('.title').unbind().click(function(event) {
+				if(event.target.tagName != 'A' && event.target.tagName != 'IMG'){
+					$(this).toggleClass('close').next().toggle();					
+				}
 			});
 		},
+		componentDidMount: function() {
+			this.handleOutDOM();
+		},
 		componentDidUpdate: function() {
-			//点击添加题型各步骤标题，显示/隐藏相应内容
-			$('.title').unbind().click(function() {
-				$(this).toggleClass('close').next().toggle();
-			});
+			this.handleOutDOM();			
 		},
 		handleChangeState: function() {
 			this.setState({
@@ -37,23 +83,43 @@ $(function(){
 			//该值默认为true
 			var showOptionsOrderNum = item['show-options-order-num'] === false ? false : true;
 
-			var shuffle = item.shuffle ? item.shuffle : false;
-
 			//该值默认为true
 			var questionsNumLimit = item['questions-num-limit'] === false ? false : true;
 
 			//该值默认为true
 			var preShow = item['pre-show'] === false ? false : true;
 
+			//该值根据item自动确认。默认为true (当item中不存在该参数，且试题选项存在时，该参数默认为false,不显示小题选项内容)
+			var showQuestionsOptionsContent = ( options && options.length > 0 && showOptionsOrderNum ) ? false : true; 
+
+			var hasSingleChoiceQuestion = this.hasSingleChoiceQuestion();
+
 			//如果item题干存在，则插入ItemStem
-			var item_stem = item.stem ?　<ItemStem stem={item.stem} showStemLength={item['show-stem-length']} changeItemState={this.handleChangeState} /> : '';
+			var item_stem = item.stem 
+							?　<ItemStem 
+								stem={item.stem} 
+								showStemLength={item['show-stem-length']} 
+								changeItemState={this.handleChangeState} /> 
+							: '';
 
 			//如果item选项存在，则插入ItemOptions
-			var item_options = (options && options.length != 0) ?　<ItemOptions options={options} shuffle={shuffle} showOptionsOrderNum={showOptionsOrderNum} changeItemState={this.handleChangeState} /> : '';
+			var item_options = (options && options.length != 0) 
+								? <ItemOptions 
+									options={options} 
+									hasSingleChoiceQuestion={hasSingleChoiceQuestion} 
+									showOptionsOrderNum={showOptionsOrderNum} 
+									changeItemState={this.handleChangeState} /> 
+								: '';
 
 			//如果存在questions，则插入Question
 			var questions = (item.questions && item.questions.length != 0) 
-						? <Questions  questionsNumLimit={questionsNumLimit} preShow={preShow} questions={item.questions} itemOptions={options} changeItemState={this.handleChangeState}/> 
+						? <Questions  
+							questionsNumLimit={questionsNumLimit} 
+							preShow={preShow} 
+							itemOptions={options} 
+							showQuestionsOptionsContent={showQuestionsOptionsContent}
+							questions={item.questions} 
+							changeItemState={this.handleChangeState}/> 
 						: '';
 			
 			return (
@@ -100,7 +166,7 @@ $(function(){
 					</div>
 					<div className="item-stem-area">
 						<div className="params">
-							<label title="选中此选项则显示题干包含的字数，反之不显示。该参数在具体试题内可作修改！">
+							<label title="是否在题干末尾显示题干长度(题干长度自动计算)。该参数在具体试题内可作修改！">
 								<input type="checkbox" name="show-stem-length" defaultChecked={showStemLength} onChange={this.handleShowStemLengthChange} />
 								显示题干字数
 							</label>
@@ -129,7 +195,6 @@ $(function(){
 			//移除试题选项
 			delete item.options;
 			delete item['show-options-order-num'];
-			delete item.shuffle;
 
 			//改变item state
 			this.props.changeItemState();
@@ -159,38 +224,45 @@ $(function(){
 			//改变item state
 			this.props.changeItemState();
 		},
-		handleShuffle: function(event) {
-			var shuffle = event.target.checked;
-			//改变item的show-stem-length
-			item.shuffle = shuffle;
-			//改变item state
-			this.props.changeItemState();
-		},
 		render: function() {
 			var self = this;
 			var options = this.props.options;
 			var showOptionsOrderNum = this.props.showOptionsOrderNum;
+			var hasSingleChoiceQuestion = this.props.hasSingleChoiceQuestion;
 			var shuffle = this.props.shuffle;
 			return (
 				<div className="item-options">
 	    			<div className="title" title="点击显示/隐藏该区域">
 	    				试题选项
 						<div className="title-oprations">
-						    <a href="javascript:void(0)" onClick={self.deleteItemOptions} title="删除试题选项" >
-						        <img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题选项"/>
-						    </a>
+						{
+							hasSingleChoiceQuestion
+							?
+							<a href="javascript:void(0)" title="已存在和试题选项相关联的单项选择题，无法删除试题选项" >
+							    <img src="/images/manage/delete-disabled.png" width="16" height="16" alt="已存在和试题选项相关联的单项选择题，无法删除试题选项"/>
+							</a>
+							:
+							<a href="javascript:void(0)" onClick={self.deleteItemOptions} title="删除试题选项" >
+							    <img src="/images/manage/delete-min.png" width="16" height="16" alt="删除试题选项"/>
+							</a>
+						}
 						</div>
 	    			</div>
 	    			<div className="item-options-area">
 	    				<div className="params">
-	    					<label title="选中此选项则显示选项序号，反之不显示。该参数在具体试题内不可作修改！">
+	    				{
+	    					hasSingleChoiceQuestion
+	    					?
+	    					<label title="题型中已存在单选小题，无法修改此参数">
+                            	<input type="checkbox" name="show-options-order-num" defaultChecked={showOptionsOrderNum} onChange={this.handleShowOptionsOrderNum} disabled />
+                           		显示试题选项序号
+                        	</label>
+	    					:
+	    					<label title="是否显示选项序号(如A/B/C/D)。该参数在具体试题内不可作修改！">
                             	<input type="checkbox" name="show-options-order-num" defaultChecked={showOptionsOrderNum} onChange={this.handleShowOptionsOrderNum} />
                            		显示试题选项序号
                         	</label>
-                        	<label title="选中此选项则打乱选项，反之不打乱。该参数在具体试题内可作修改！">
-                            	<input type="checkbox" name="options-shuffle" defaultChecked={shuffle} onChange={this.handleShuffle} />
-                           		打乱试题选项顺序
-                        	</label>
+	    				}
 	    				</div>
 		    			<ul className="item-options-list">
 						{
@@ -256,6 +328,8 @@ $(function(){
 			
 			var questionsNumLimit = this.props.questionsNumLimit;
 
+			var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
+
 			var preshow = this.props.preShow;
 
 			var item_options = this.props.itemOptions;
@@ -274,11 +348,11 @@ $(function(){
 					</div>
 					<div className="questions-area">
 	    				<div className="params">
-	    					<label title="选中此选项则限制小题数量，反之不限制。不限制小题数量的题型，在添加具体试题时，可以以任一小题为模板额外增加小题。该参数在具体试题内不可作修改！">
+	    					<label title="是否限制小题数量。不限制小题数量的题型，在添加具体试题时，可以额外增加相同类型小题。限制小题数量时，不可额外增加小题。该参数在具体试题内不可作修改！">
                             	<input type="checkbox" name="questions-num-limit" defaultChecked={questionsNumLimit} onChange={this.handleQuestionsNulLimit} />
                            		限制小题数量
                         	</label>
-                        	<label title="选中此选项则提前显示各小题，反之不提前显示。该参数在具体试题内可作修改！">
+                        	<label title="是否提前显示试题所包含的各小题（题型可能需求小题先隐藏达到一定条件后显示，一般在流程性试题中使用，当听力或视频播放结束后显示小题）。该参数在具体试题内可作修改！">
                             	<input type="checkbox" name="pre-show" defaultChecked={preshow} onChange={this.handlePreShow} />
                            		提前显示各小题
                         	</label>
@@ -287,7 +361,7 @@ $(function(){
 							{
 								 questions.map(function( question, i, questions ){
 									return (
-										<Question question={question} itemOptions={item_options} order={i} changeItemState={self.props.changeItemState} />
+										<Question question={question} itemOptions={item_options} showQuestionsOptionsContent={showQuestionsOptionsContent} order={i} changeItemState={self.props.changeItemState} />
 									);
 								})
 							}
@@ -348,6 +422,7 @@ $(function(){
 			var question = this.props.question;
 			var order = this.props.order;
 			var type = question.type;
+			var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
 
 			var question_stem = question.stem ? 
 				<div className="question-stem">
@@ -360,21 +435,13 @@ $(function(){
 
 			//小题做答区域
 			var answer_area;
-			//当item_options存在时，小题默认为单选题
-			// if(item_options) {
-			// 	//展示选项时，是否展示选项内容
-			// 	var showOption = false;
-			// 	answer_area = <SingleChoice options={item_options} questionId={id} showOption={showOption} />
-			// }else {
-			//当item_options不存在时，判断小题类型，再做相应处理
-				if(type == "SingleChoice") {
-					answer_area = <SingleChoice options={question.options} questionOrder={order} changeItemState={self.props.changeItemState} />
-				}
-				// else if(type == "SimpleAnswer") {
-				// 	answer_area = <SimpleAnswer questionId={id} />
-				// }else if(type == "BlankFilling") {
-				// 	answer_area = <BlankFilling questionId={id} />
-				// }
+			if(type == "SingleChoice") {
+				answer_area = <SingleChoice itemOptions={item_options} options={question.options} showQuestionsOptionsContent={showQuestionsOptionsContent} questionOrder={order} changeItemState={self.props.changeItemState} />
+			}
+			// else if(type == "SimpleAnswer") {
+			// 	answer_area = <SimpleAnswer questionId={id} />
+			// }else if(type == "BlankFilling") {
+			// 	answer_area = <BlankFilling questionId={id} />
 			// }
 
 			return (
@@ -425,17 +492,27 @@ $(function(){
 		},
 		render: function() {
 			var self = this;
+
 			var options = this.props.options;
+
+			//小题选项是否显示
+			var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
+
+			var itemOptions = this.props.itemOptions;
+
+			//需要显示小题选项时，为小题选项，否则为试题选题
+			options = showQuestionsOptionsContent ? options : itemOptions;
 
 			return (
 				<ul className="question-options">
 				{
 					options.map(function(option, i, a) {
 						return (
-							<li>
-								<span>{option}</span>
+							showQuestionsOptionsContent ?  
+							<li className=''>
+								<span>{option}</span> 
 								{
-									a.length > 2 
+									a.length > 2
 									? 
 									<a href="javascript:void(0)" className="delete-question-option" onClick={self.deleteQuestionOption} title="删除小题选项" >
 										<img src="/images/manage/delete-min.png" width="16" height="16" alt="删除小题选项"/>
@@ -449,6 +526,9 @@ $(function(){
 									<img src="/images/manage/add-min.png" width="16" height="16" alt="添加小题选项"/>
 								</a>
 							</li>
+							: 
+							<li className={showQuestionsOptionsContent ? '' : 'inline'} title="与试题选项相关联的小题选项，无法进行其他操作">
+							</li> 
 						)
 					})
 				}
@@ -464,7 +544,9 @@ $(function(){
 	);
 
 	/*添加删除题干*/
-	$('.add-item-stem').click(function() {
+	$('.add-item-stem').click(handleAddItemStem);
+
+	function handleAddItemStem() {
 		//添加试题题干
 		var new_item_stem = '此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。';
 		item.stem = new_item_stem
@@ -486,11 +568,13 @@ $(function(){
 			<Item />,
 			$('#item-area')[0]
 		);
-	});
+	}
 
 	/*添加删除试题选项*/
 	//点击添加试题选项时，添加试题选项
-	$('.add-item-option').click(function() {
+	$('.add-item-option').click(handleAddItemOption);
+
+	function handleAddItemOption() {
 		//当不存在试题选项或者试题选项个数少于两个时，该添加有效
 		if( !item.options || item.options.length < 2 ){
 			//添加试题选项 至少两个
@@ -521,7 +605,7 @@ $(function(){
 				$('#item-area')[0]
 			);
 		}
-	});
+	}
 
 	/*添加单选小题*/
 	$('.add-single-choice').click(function(){
@@ -530,21 +614,24 @@ $(function(){
 		//设置小题是否提前显示默认值
 		item['pre-show'] = true;
 
-		var new_question = {
-			"type": "SingleChoice",	
-			"pause": 20, //此处单位为秒
-			"shuffle": true, //只有当type为多选或者单选时，该选项才有效			
+		var item_options = item.options;
+		var showOptionsOrderNum = item['show-options-order-num'] === false ? false : true;
+		var new_question1 = {
+			"type": "SingleChoice",			
 			"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
 			"options": [		//question的各个选项
 				"单选小题选项内容",
 				"单选小题选项内容",
 				"单选小题选项内容",
 				"单选小题选项内容"
-			],
-			"strict": true,	//正确答案是否要与参考答案完全匹配
-			"reference-answer": "参考答案",		
-			"answer-analysis": "参考答案解析"
+			]
 		};
+		var new_question2 = {
+			"type": "SingleChoice"
+		};
+
+		var new_question = ( item_options && item_options.length > 0 && showOptionsOrderNum ) ? new_question2 : new_question1;
+
 		//如果item中不存在questions，设为空数组
 		item.questions = item.questions ? item.questions : [];
 		item.questions.push(new_question);
