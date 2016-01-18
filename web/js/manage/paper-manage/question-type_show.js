@@ -1,4 +1,8 @@
 $(function(){
+
+	//删除
+	singleDelete('question_type');
+
 	//首先取到要渲染的id
 	var questiontypeId= $('.question_type_sample').attr('id');
 
