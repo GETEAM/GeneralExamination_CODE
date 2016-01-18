@@ -31,7 +31,6 @@ $(function(){
 		       		}
 	       		]
        	}*/
-
     //显示每个question里面的选项
     var Options = React.createClass({displayName: "Options",
     	render: function(){
