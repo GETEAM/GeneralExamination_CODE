@@ -543,6 +543,20 @@ $(function(){
 		$('#item-area')[0]
 	);
 
+	//点击完成添加时，提交表单
+	$('.complete-add').click(function() {
+		$('.form-add button').click();
+	});
+
+	//修改流程性选项时，修改item
+	$('[name="papermanage_question_type_new[flowable]"]').change(function(){
+		var flowable = $(this).val() ? true : false;
+		item.flowable = flowable;
+
+		//改变item_structure输入框的值
+		$item_structure.val(JSON.stringify(item));
+	})
+
 	/*添加删除题干*/
 	$('.add-item-stem').click(handleAddItemStem);
 

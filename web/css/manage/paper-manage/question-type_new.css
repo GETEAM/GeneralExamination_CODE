@@ -48,6 +48,12 @@
 	margin-top: -3px;
 	vertical-align: middle;
 }
+.complete-add {
+	float: right;
+	background-color: #f70;
+	color: #fff;
+	padding: 5px 8px;
+}
 /*添加小题样式*/
 .add-question .add-question-of-type {
 	z-index: 999;
