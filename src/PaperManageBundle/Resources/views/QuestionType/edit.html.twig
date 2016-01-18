@@ -12,7 +12,7 @@
 
 {% block right -%}
     <h1>
-        添加试题类型
+        修改试题类型
         <a href="{{ path('question_type_index') }}">
             <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回试题类型列表" title="返回试题类型列表">
             <span>返回试题类型列表</span>
@@ -55,9 +55,25 @@
         {{ form_start(edit_form) }}
             {{ form_errors(edit_form) }}
                 <div class="question-type-id" hidden>{{ id }}</div>
+                
                 {{ form_row(edit_form.nameEn, {'attr': {'placeholder': '请输入题型名(英文)', 'autocomplete': 'off'} }) }}
+                
                 {{ form_row(edit_form.nameCh, {'attr': {'placeholder': '请输入题型名(中文)', 'autocomplete': 'off'} }) }}
-                {{ form_row(edit_form.flowable, {'attr': { 'title': '是否为流程性试题。听力试题、口语试题等题型是按照一定的流程完成播放、显示、答题整个过程，其用时是已知的，称为流程性试题。' } }) }}                {{ form_row(edit_form.shuffle, {'attr': {'title': '当试题选项存在时，该参数控制试题选项是否打乱。当试题选项不存在，小题存在选项时，该参数控制小题选项是否打乱'} }) }}
+
+                <div>
+                    {{ form_label(edit_form.flowable) }}
+                    <label  class="checkbox-label" title="是否为流程性试题。听力试题、口语试题等题型是按照一定的流程完成播放、显示、答题整个过程，其用时是已知的，称为流程性试题。">
+                        {{ form_widget(edit_form.flowable) }}  是否为流程性试题             
+                    </label>
+                </div>
+
+                <div>
+                    {{ form_label(edit_form.shuffle) }}
+                    <label  class="checkbox-label" title="当试题选项存在时，该参数控制试题选项是否打乱。当试题选项不存在，小题存在选项时，该参数控制小题选项是否打乱">
+                        {{ form_widget(edit_form.shuffle) }} 选项是否打乱
+                    </label>
+                </div>
+                
                 {{ form_row(edit_form.description, {'attr': {'placeholder': '请输入题型描述'} }) }}
 
             <div class="item-structure">
@@ -75,5 +91,6 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/babel" src="{{ asset('js/manage/paper-manage/question-type_edit.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/item.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/question-type_edit.js') }}"></script>
 {% endblock %}
