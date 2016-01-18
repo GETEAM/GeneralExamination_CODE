@@ -13,8 +13,10 @@
 	margin-bottom: 20px;
 	padding-left: 10px;
 }
-
-
+.question_type_info{
+	color: #A3A3A3;
+	font-size: 15px;
+}
 
 /* 这个是试题类型展示样式 */
 .item{
