@@ -26,8 +26,8 @@ class QuestionTypeNewType extends AbstractType
                 'expanded' => true,
                 'multiple' => false
                 ))
-            ->add('questionsNumLimit', 'choice', array(
-                'label' => '限制小题数量',
+            ->add('shuffle', 'choice', array(
+                'label' => '选项乱序',
                 'choices' => array(
                     '1' => '是',
                     '0' => '否'

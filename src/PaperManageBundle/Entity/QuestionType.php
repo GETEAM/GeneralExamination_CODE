@@ -38,16 +38,16 @@ class QuestionType
     /**
      * @var boolean
      *
-     * @ORM\Column(name="flowable", type="boolean")
+     * @ORM\Column(name="shuffle", type="boolean")
      */
-    private $flowable;
+    private $shuffle;
 
     /**
      * @var boolean
      *
-     * @ORM\Column(name="questions_num_limit", type="boolean")
+     * @ORM\Column(name="flowable", type="boolean")
      */
-    private $questionsNumLimit;
+    private $flowable;
 
     /**
      * @var array
@@ -171,30 +171,6 @@ class QuestionType
     }
 
     /**
-     * Set questionsNumLimit
-     *
-     * @param boolean $questionsNumLimit
-     *
-     * @return QuestionType
-     */
-    public function setQuestionsNumLimit($questionsNumLimit)
-    {
-        $this->questionsNumLimit = $questionsNumLimit;
-
-        return $this;
-    }
-
-    /**
-     * Get questionsNumLimit
-     *
-     * @return boolean
-     */
-    public function getQuestionsNumLimit()
-    {
-        return $this->questionsNumLimit;
-    }
-
-    /**
      * Set description
      *
      * @param string $description
@@ -216,5 +192,29 @@ class QuestionType
     public function getDescription()
     {
         return $this->description;
+    }
+
+    /**
+     * Set shuffle
+     *
+     * @param boolean $shuffle
+     *
+     * @return QuestionType
+     */
+    public function setShuffle($shuffle)
+    {
+        $this->shuffle = $shuffle;
+
+        return $this;
+    }
+
+    /**
+     * Get shuffle
+     *
+     * @return boolean
+     */
+    public function getShuffle()
+    {
+        return $this->shuffle;
     }
 }
