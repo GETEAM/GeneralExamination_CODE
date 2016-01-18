@@ -18,25 +18,6 @@
             <span>返回试题类型列表</span>
         </a>
     </h1>
-
-    <!-- 试题item操作区域和显示区域  
-    <div class="item-operations">
-        <ul>
-            <li class="add-question">
-                <a href="javascript:void(0)" class="item-operation">添加小题</a>
-                <ul class="add-question-of-type">
-                    <li class="add-single-choice">单项选择题</li>
-                    <li>多项选择题</li>
-                    <li>填空题</li>
-                    <li>简答题</li>
-                    <li>录音题</li>
-                </ul>
-            </li>
-            <li class="add-item-option">
-                <a href="javascript:void(0)" class="item-operation">添加试题选项</a>
-            </li>
-        </ul>
-    </div>-->
     
     <div class="item-add-steps">
         <div class="step active">题型基本信息</div>
@@ -54,15 +35,18 @@
             <a href="javascript:void(0)" class="item-operation">添加小题</a>
             <ul class="add-question-of-type">
                 <li class="add-single-choice">单项选择题</li>
-                <li>多项选择题</li>
-                <li>填空题</li>
-                <li>简答题</li>
-                <li>判断题</li>
-                <li>录音题</li>
-                <li>排序题</li>
-                <li>改错题</li>
+                <li class="add-multiple-choice">多项选择题</li>
+                <li class="add-blank-filling">填空题</li>
+                <li class="add-simple-answer">简答题</li>
+                <li class="add-true-or-false">判断题</li>
+                <li class="add-record">录音题</li>
+                <li class="add-sorting">排序题</li>
+                <li class="add-correction">改错题</li>
             </ul>
         </div>
+
+        <a href="javascript:void(0)" class="btn add-btn complete-add">完成添加</a>            
+
     </div>
     <div class="basic-infor">
         <div class="title" title="点击显示/隐藏该区域">
@@ -80,9 +64,9 @@
             <div class="item-structure">
             	{{ form_row(new_form.structure, {'attr': {'placeholder': '请输入题型结构'} }) }}
             </div>    
-
-        	{{ form_row(new_form.save, {'attr': {'class': 'btn add-btn' } }) }}
-
+            <div class="form-add" hidden>
+        	{{ form_row(new_form.save, {'attr': {'class': 'btn add-btn'} }) }}
+            </div>
         {{ form_end(new_form, {'render_rest': true}) }}
     </div>
     <div id="item-area">
