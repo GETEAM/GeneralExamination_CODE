@@ -48,6 +48,55 @@
         <a href="javascript:void(0)" class="btn add-btn complete-btn">完成修改</a>            
 
     </div>
+    <div class="question-type-introduce">
+        <div class="title" title="点击显示/隐藏该区域">
+            <img src="{{ asset('images/manage/notice.png') }}" width="20" height="20" alt="题型添加小贴士" title="题型添加小贴士" />
+            题型添加小贴士
+        </div>
+        <div class="tips-ols">
+            <ol class="introduce-tips">
+                <div class="tips-title">流程指导</div>
+                <li class="tip">        
+                    建议您依次按照括号中的四个步骤完成题型的添加(“题型基本信息”、“添加题干”、“添加试题选项”、“添加小题”)。
+                </li>
+                <li class="tip">
+                    题型基本信息中，当题目类型为听力、口语等按照一定流程播放、显示、答题，其题目用时是已知的，请勾选“流程性试题”。
+                </li>
+                <li class="tip">
+                    题型基本信息中，当需要打乱试题选项或者小题选项时，请勾选“选项乱序”。
+                </li>
+                <li class="tip">
+                    添加题干中，如需显示题干字数的题目，请勾选“显示题干字数”，题干字数为自动计算。
+                </li>
+                <li class="tip">
+                    试题选项中，这一部分主要针对于选词填空(小题为选择题)和选词变形填空(小题为填空题)两种常见英语试题。对于选词填空(小题为选择题)，应显示试题选项序号。
+                    对于选词变形填空(小题为填空题)，应不显示试题选项序号。请根据具体情况选择。
+                </li>
+                <li class="tip">
+                    添加小题中，勾选“限制小题数量”，则使用此题型时，包含的小题数量固定(如完形填空包含20个小题)；当取消勾选时，则使用此题型时，小题数目不固定，在添加具体试题时，可以额外增加相同类型小题(如阅读理解题型可以有3小题、4小题、5小题)。
+                </li>
+                <li class="tip">
+                    添加小题中，题型可能需求小题先隐藏达到一定条件后显示，可以勾选“提前显示各小题”。一般在流程性试题中使用，当听力或视频播放结束后显示小题
+                </li>
+                <li class="tip">
+                    完成四个步骤的设置后点击右上方的“完成添加”按钮完成题型的添加。
+                </li>
+            </ol>
+            <ol class="introduce-tips">
+                <div class="tips-title warning">注意事项</div>
+                <li class="tip">        
+                    当存在试题选项时，添加单选小题的选项为试题选项的选项。当已存在单选小题时，无法继续添加或者删除试题选项.
+                </li>
+                <li class="tip">
+                    当既存在试题选项，小题中又包含单选题时，试题选项的“显示试题选项序号”参数不可修改。
+                </li>
+                <li class="tip">
+                    当题型中不存在小题时，无法完成添加或修改。
+                </li>
+                
+            </ol>
+        </div>
+    </div>
     <div class="basic-infor">
         <div class="title" title="点击显示/隐藏该区域">
             试题类型基本信息

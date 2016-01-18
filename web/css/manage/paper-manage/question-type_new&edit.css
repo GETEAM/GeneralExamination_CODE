@@ -11,7 +11,7 @@
 	/*display: none;*/
 }
 /*试题类型添加步骤*/
-.item-add-steps, .basic-infor, .item-stem, .item-options, .item-questions {
+.item-add-steps, .question-type-introduce, .basic-infor, .item-stem, .item-options, .item-questions {
 	border: 1px solid #eee;
 	border-bottom: none;
 	font-size: 16px;
@@ -99,6 +99,9 @@
 .right .title.close {
 	background: #bbb url('/images/manage/arrow-right.png') no-repeat 99% 50%;	
 } 
+.right .title img {
+	vertical-align: bottom;
+} 
 .title .title-oprations {
 	/*display: none;*/
 	position: absolute;
@@ -128,6 +131,33 @@
 }
 .title .title-oprations a:hover {
 	background-color: #aaa;
+}
+/*题型添加小贴士样式*/
+.question-type-introduce .tips-ols {
+	padding: 8px 15px;
+}
+.question-type-introduce .introduce-tips {
+	font-size: 14px;
+	list-style: decimal;
+	padding: 5px;
+	margin-bottom: 8px;
+	background-color: #fbeed5;
+	border-radius: 5px;
+}
+.question-type-introduce .introduce-tips:last-child {
+	margin-bottom: 0px;
+}
+.question-type-introduce .introduce-tips .tip {
+	margin: 8px 20px 8px 40px;
+}
+.question-type-introduce .introduce-tips .tips-title {
+	border-radius: 5px;
+	margin: 8px 10px 8px 10px;
+	padding: 5px;
+	background-color: #dceed5;
+}
+.question-type-introduce .introduce-tips .tips-title.warning {
+	background-color: #eec57a;
 }
 /*试题类型基本信息*/
 .basic-infor > form {
