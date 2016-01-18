@@ -26,12 +26,15 @@
 }
 .item:before {
 	float: left;
+	font-size: 14px;
 	text-align: center;
 	margin-left: 10px;
-	content: "第"counter(item)"题"
+	margin-right: 10px;
+	content: "第"counter(item)"题  "
 }
 .item-stem {
 	margin-bottom: 10px;
+	font-size: 15px;
 }
 .item-options {
 	width: auto;
@@ -51,7 +54,7 @@
 	border-radius: 5px;
 	background-color: #eee;
 	padding: 10px;
-	font-size: 12px;
+	font-size: 15px;
 	margin-bottom: 15px;
 }
 .question {
@@ -66,16 +69,18 @@
 	float: left;
 	width: 2em;
 	text-align: center;
-	content: counter(question)
+	font-size: 15px;
+	content: counter(question)'.'
 }
-.question .question-option {
-	counter-increment: option-order-num 1;
+.question-option .option{
+	counter-increment:  option-order-num 1 
 }
 .question-option .option:before {
-	content: counter(option-order-num, upper-alpha);
+	content: counter(option-order-num, upper-alpha)' ';
 }
 .question-content {
 	overflow: hidden;
+	font-size: 15px;
 }
 label.question-option {
 	width: auto;
@@ -92,14 +97,15 @@ label:last-child {
 	display: none;
 }
 .question-option .option {
-	display: inline-block;
+	display: block;
 	opacity: 0.7;			
 	text-align: left;
-	margin: 0 5px;
-	padding: 0 8px;
-	border-radius: 5px;
+	margin:5px 10px;
+	padding: 3px 10px;
+	font-size: 14px;
 	background-color: #ccc;
-	transition: background-color ease 0.3s, opacity ease 0.3s;
+/*  
+	transition: background-color ease 0.3s, opacity ease 0.3s;*/
 }
 .question-option .hide-option {
 	width: 3em;
