@@ -6,7 +6,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type_new.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type_new&edit.css') }}"/>
 {% endblock %}
 
 
@@ -45,7 +45,7 @@
             </ul>
         </div>
 
-        <a href="javascript:void(0)" class="btn add-btn complete-add">完成添加</a>            
+        <a href="javascript:void(0)" class="btn add-btn complete-btn">完成修改</a>            
 
     </div>
     <div class="basic-infor">
@@ -57,8 +57,7 @@
                 <div class="question-type-id" hidden>{{ id }}</div>
                 {{ form_row(edit_form.nameEn, {'attr': {'placeholder': '请输入题型名(英文)', 'autocomplete': 'off'} }) }}
                 {{ form_row(edit_form.nameCh, {'attr': {'placeholder': '请输入题型名(中文)', 'autocomplete': 'off'} }) }}
-                {{ form_row(edit_form.flowable) }}
-                {{ form_row(edit_form.shuffle, {'attr': {'title': '当试题选项存在时，该参数控制试题选项是否打乱。当试题选项不存在，小题存在选项时，该参数控制小题选项是否打乱'} }) }}
+                {{ form_row(edit_form.flowable, {'attr': { 'title': '是否为流程性试题。听力试题、口语试题等题型是按照一定的流程完成播放、显示、答题整个过程，其用时是已知的，称为流程性试题。' } }) }}                {{ form_row(edit_form.shuffle, {'attr': {'title': '当试题选项存在时，该参数控制试题选项是否打乱。当试题选项不存在，小题存在选项时，该参数控制小题选项是否打乱'} }) }}
                 {{ form_row(edit_form.description, {'attr': {'placeholder': '请输入题型描述'} }) }}
 
             <div class="item-structure">

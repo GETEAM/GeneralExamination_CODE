@@ -1,6 +1,8 @@
 /*单选按钮问题*/
 #papermanage_question_type_new_flowable, 
-#papermanage_question_type_new_shuffle {
+#papermanage_question_type_new_shuffle,
+#papermanage_question_type_edit_flowable, 
+#papermanage_question_type_edit_shuffle {
 	display: inline-block;
 }
 /*试题类型添加部分 类型结构样式*/
@@ -49,11 +51,14 @@
 	margin-top: -3px;
 	vertical-align: middle;
 }
-.complete-add {
+.complete-btn {
 	float: right;
 	background-color: #f70;
 	color: #fff;
 	padding: 5px 15px;
+}
+.complete-btn.disabled {
+	opacity: 0.3;
 }
 /*添加小题样式*/
 .add-question .add-question-of-type {

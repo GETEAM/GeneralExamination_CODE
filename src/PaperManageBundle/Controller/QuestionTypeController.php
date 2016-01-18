@@ -10,6 +10,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PaperManageBundle\Entity\QuestionType;
 use PaperManageBundle\Form\QuestionTypeNewType;
+use PaperManageBundle\Form\QuestionTypeEditType;
 
 /**
  * 题型 controller.
@@ -138,7 +139,7 @@ class QuestionTypeController extends Controller
         $question_type = $em->getRepository('PaperManageBundle:QuestionType')->find($id);
 
 
-        $edit_form = $this->createForm(new QuestionTypeNewType(), $question_type, array(
+        $edit_form = $this->createForm(new QuestionTypeEditType(), $question_type, array(
             'action' => $this->generateUrl('question_type_edit', array(
                 'id' => $id
             )),
@@ -240,7 +241,6 @@ class QuestionTypeController extends Controller
         $question_type = $em->getRepository('PaperManageBundle:QuestionType')->findById($id);
 
         $item = $question_type[0] -> getStructure();
-        // var_dump($item);
 
         $result = array(
             'item' => $item

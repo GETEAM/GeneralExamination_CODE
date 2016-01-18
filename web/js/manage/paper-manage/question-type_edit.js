@@ -3,6 +3,11 @@ $(function(){
 	var item = {};
 	var question_type_id = $('.question-type-id').html();
 
+	//点击完成添加时，提交表单
+	$('.complete-btn').click(function() {
+		$('.form-add button').click();
+	});
+
 	$.ajax({
 	    type: 'GET',
 	    url: '/manage/question_type/QTJSON/' + question_type_id,
@@ -20,6 +25,10 @@ $(function(){
 	    error: function (XMLHttpRequest, textStatus, errorThrown) {
 	        console.log("error " + textStatus);
 	        console.log("网络或服务器异常！" + 'ERROR');
+
+	        //网络或服务器异常！无法获取题型结构相关！给予提示
+	        var $warning_message = $('<div>').html('网络或服务器异常！无法获取题型结构相关！').addClass('notice error');
+	        $('.flash-message').append($warning_message);
 	    }
 	});
 
@@ -75,6 +84,15 @@ $(function(){
 						'title': "点击添加试题选项"
 					});					
 				}
+			}
+
+			var hasQuestions = ( this.state.item.questions && this.state.item.questions.length != 0 ) ? true : false;
+			if(!hasQuestions){
+				$('.complete-btn').addClass('disabled').unbind().attr('title', '不存在小题，无法完成');				
+			}else{
+				$('.complete-btn').removeClass('disabled').click(function() {
+					$('.form-add button').click();
+				});
 			}
 
 			//点击各区域标题，显示/隐藏相应内容.且判断点击的不是a链接或者a链接中的图片
@@ -563,11 +581,6 @@ $(function(){
 	// 	<Item />,
 	// 	$('#item-area')[0]
 	// );
-
-	//点击完成添加时，提交表单
-	$('.complete-add').click(function() {
-		$('.form-add button').click();
-	});
 
 	//修改流程性选项时，修改item
 	$('[name="papermanage_question_type_new[flowable]"]').change(function(){
