@@ -41,7 +41,6 @@ class QuestionTypeController extends Controller
      * 添加题型信息.
      *
      * @Route("/new", name="question_type_new")
-     * 
      * @Template("PaperManageBundle:QuestionType:new.html.twig")
      */
     public function newAction(Request $request)
@@ -104,13 +103,10 @@ class QuestionTypeController extends Controller
         );
     }
 
-
-
     /**
      * 显示题型信息.
      *
      * @Route("/show/{id}", name="question_type_show")
-     * @Method("GET")
      * @Template("PaperManageBundle:QuestionType:show.html.twig")
      */
     public function showAction(Request $request, $id)
@@ -141,8 +137,11 @@ class QuestionTypeController extends Controller
         $em = $this->getDoctrine()->getManager();
         $question_type = $em->getRepository('PaperManageBundle:QuestionType')->find($id);
 
-        $edit_form = $this->createForm(new StudentEditType($this->getDoctrine()), $question_type, array(
-            'action' => $this->generateUrl('question_type_edit', array('id' => $id ) ),
+
+        $edit_form = $this->createForm(new QuestionTypeNewType(), $question_type, array(
+            'action' => $this->generateUrl('question_type_edit', array(
+                'id' => $id
+            )),
             'method' => 'GET'
         ));
         
@@ -153,7 +152,7 @@ class QuestionTypeController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $success = $em->getRepository('PaperManageBundle:QuestionType')->add($question_type);
                 if($success){
-                    $this->addFlash('success', $question_type->getName().'修改成功');
+                    $this->addFlash('success', $question_type->getNameEn().'('.$question_type->getNameCh().')'.'修改成功');
                 }else{
                     $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
                 }
@@ -168,6 +167,7 @@ class QuestionTypeController extends Controller
 
         return array(
             'edit_form' => $edit_form->createView(),
+            'id' => $question_type->getId()
         );
     }
 
@@ -220,6 +220,30 @@ class QuestionTypeController extends Controller
 
         $result = array(
             'success' => $success
+        );
+        
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
+    }
+
+    /**
+     * 获取指定题型的JSON数据.
+     *
+     * @Route("/QTJSON/{id}", name="question_type_getJSON")
+     * @Method("GET")
+     * @Template()
+     */
+    public function QTJSONAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $question_type = $em->getRepository('PaperManageBundle:QuestionType')->findById($id);
+
+        $item = $question_type[0] -> getStructure();
+        // var_dump($item);
+
+        $result = array(
+            'item' => $item
         );
         
         $response = new Response(json_encode($result));

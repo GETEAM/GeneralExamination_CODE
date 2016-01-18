@@ -1,6 +1,6 @@
 {% extends 'PaperManageBundle:QuestionType:layout.html.twig' %}
 
-{% block title %}添加题型—试卷管理—系统管理{% endblock %}
+{% block title %}修改题型—试卷管理—系统管理{% endblock %}
 
 {% block loading %}正在加载添加表单……{% endblock %}
 
@@ -52,22 +52,22 @@
         <div class="title" title="点击显示/隐藏该区域">
             试题类型基本信息
         </div>
-        {{ form_start(new_form) }}
-            {{ form_errors(new_form) }}
-
-                {{ form_row(new_form.nameEn, {'attr': {'placeholder': '请输入题型名(英文)', 'autocomplete': 'off'} }) }}
-                {{ form_row(new_form.nameCh, {'attr': {'placeholder': '请输入题型名(中文)', 'autocomplete': 'off'} }) }}
-                {{ form_row(new_form.flowable) }}
-                {{ form_row(new_form.shuffle, {'attr': {'title': '当试题选项存在时，该参数控制试题选项是否打乱。当试题选项不存在，小题存在选项时，该参数控制小题选项是否打乱'} }) }}
-                {{ form_row(new_form.description, {'attr': {'placeholder': '请输入题型描述'} }) }}
+        {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+                <div class="question-type-id" hidden>{{ id }}</div>
+                {{ form_row(edit_form.nameEn, {'attr': {'placeholder': '请输入题型名(英文)', 'autocomplete': 'off'} }) }}
+                {{ form_row(edit_form.nameCh, {'attr': {'placeholder': '请输入题型名(中文)', 'autocomplete': 'off'} }) }}
+                {{ form_row(edit_form.flowable) }}
+                {{ form_row(edit_form.shuffle, {'attr': {'title': '当试题选项存在时，该参数控制试题选项是否打乱。当试题选项不存在，小题存在选项时，该参数控制小题选项是否打乱'} }) }}
+                {{ form_row(edit_form.description, {'attr': {'placeholder': '请输入题型描述'} }) }}
 
             <div class="item-structure">
-            	{{ form_row(new_form.structure, {'attr': {'placeholder': '请输入题型结构'} }) }}
+            	{{ form_row(edit_form.structure, {'attr': {'placeholder': '请输入题型结构'} }) }}
             </div>    
             <div class="form-add" hidden>
-        	{{ form_row(new_form.save, {'attr': {'class': 'btn add-btn'} }) }}
+        	{{ form_row(edit_form.save, {'attr': {'class': 'btn add-btn'} }) }}
             </div>
-        {{ form_end(new_form, {'render_rest': true}) }}
+        {{ form_end(edit_form, {'render_rest': true}) }}
     </div>
     <div id="item-area">
     </div>
@@ -76,5 +76,5 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/babel" src="{{ asset('js/manage/paper-manage/question-type_new.js') }}"></script>
+    <script type="text/babel" src="{{ asset('js/manage/paper-manage/question-type_edit.js') }}"></script>
 {% endblock %}
