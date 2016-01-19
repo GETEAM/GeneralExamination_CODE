@@ -3,6 +3,9 @@ $(function(){
   //删除
   singleDelete('question_type');
 
+  //首先取到要渲染的id
+  var questiontypeId= $('.question_type_sample').attr('id');
+
   //取到相应的json结构
   var questionTypeStructureId=$('.question_type_structure').attr('id');
 
@@ -34,18 +37,6 @@ var Item = React.createClass({
       item: item
     }
   },
-  /*判断item中是否存在单选类型的试题*/
-  hasSingleChoiceQuestion: function() {
-    var questions = this.state.item.questions;
-    if( questions && questions.length != 0 ){
-      for(var i = 0, len = questions.length; i < len; i++){
-        if(questions[i]['type'] == "SingleChoice"){
-          return true;
-        }
-      }
-    }
-    return false;
-  },
   render: function() {
     var item = this.state.item;
 
@@ -63,8 +54,6 @@ var Item = React.createClass({
     //该值根据item自动确认。默认为true (当item中不存在该参数，且试题选项存在时，该参数默认为false,不显示小题选项内容)
     var showQuestionsOptionsContent = ( options && options.length > 0 && showOptionsOrderNum ) ? false : true; 
 
-    var hasSingleChoiceQuestion = this.hasSingleChoiceQuestion();
-
     //如果item题干存在，则插入ItemStem
     var item_stem = item.stem 
             ?　<ItemStem 
@@ -76,7 +65,6 @@ var Item = React.createClass({
     var item_options = (options && options.length != 0) 
               ? <ItemOptions 
                 options={options} 
-                hasSingleChoiceQuestion={hasSingleChoiceQuestion} 
                 showOptionsOrderNum={showOptionsOrderNum} /> 
               : '';
 
@@ -127,7 +115,6 @@ var ItemOptions = React.createClass({
     var self = this;
     var options = this.props.options;
     var showOptionsOrderNum = this.props.showOptionsOrderNum;
-    var hasSingleChoiceQuestion = this.props.hasSingleChoiceQuestion;
     var shuffle = this.props.shuffle;
     return (
       <div className="item-options">
@@ -202,12 +189,12 @@ var Question = React.createClass({
     var answer_area;
     if(type == "SingleChoice") {
       answer_area = <SingleChoice itemOptions={item_options} options={question.options} showQuestionsOptionsContent={showQuestionsOptionsContent} questionOrder={order} />
+    }else if(type == "SimpleAnswer") {
+      answer_area = <SimpleAnswer />
+    }else if(type == "BlankFilling") {
+      answer_area = <BlankFilling />
     }
-    // else if(type == "SimpleAnswer") {
-    //  answer_area = <SimpleAnswer questionId={id} />
-    // }else if(type == "BlankFilling") {
-    //  answer_area = <BlankFilling questionId={id} />
-    // }
+
     return (
       <div className="question">
         {question_stem}
@@ -251,10 +238,30 @@ var SingleChoice = React.createClass({
     )
   }
 });
+
+//小题Question中的答题区域部分————填空题
+var BlankFilling = React.createClass({
+  render: function() {
+    return (
+      <input className="blank-filling" type="text" disabled />
+    )
+  }
+});
+
+//小题Question中的答题区域部分————简答题
+var SimpleAnswer = React.createClass({
+  render: function() {
+    return (
+      <textarea className="simple-answer" disabled />
+    )
+  }
+});
+
+
   // 显示Item
   ReactDOM.render(
     <Item />,
-    $('.question_type_sample')[0]
+    $('#'+questiontypeId)[0]
   );
 
 })

@@ -74,7 +74,7 @@
 }
 .question-options li.inline {
 	display: inline-block;
-	margin-right: 5px;
+	margin: 0 5px;
 }
 .item-options-list li:last-child, .question-options li:last-child {
 	margin-bottom: 0;
@@ -87,4 +87,32 @@
 }
 .item-options-list li:hover, .question-options li:hover {
 	background-color: #dedede;
+}
+/* 显示的作答区域 */
+.question-stem + .blank-filling, .question-stem + .simple-answer {
+	margin-top: 0px;
+}
+.blank-filling, .simple-answer {
+	display: block;
+	width: 90%;
+	margin-left: 32px;
+	margin-bottom: 8px;
+	margin-top: 5px;
+} 
+.blank-filling {
+	border: none;
+	outline: none;
+	border-bottom: 1px solid #56abe4;
+	padding: 0 5px 3px;
+}
+.blank-filling:disabled {
+	background-color: transparent;
+}
+.simple-answer {
+	resize: none;
+	border: 1px solid #56abe4;
+	height: 150px;
+}
+.simple-answer:disabled {
+	background-color: transparent;
 }

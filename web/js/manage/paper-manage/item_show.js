@@ -223,3 +223,21 @@ var SingleChoice = React.createClass({displayName: "SingleChoice",
 		)
 	}
 });
+
+//小题Question中的答题区域部分————填空题
+var BlankFilling = React.createClass({displayName: "BlankFilling",
+	render: function() {
+		return (
+			React.createElement("input", {className: "blank-filling", type: "text", disabled: true})
+		)
+	}
+});
+
+//小题Question中的答题区域部分————简答题
+var SimpleAnswer = React.createClass({displayName: "SimpleAnswer",
+	render: function() {
+		return (
+			React.createElement("textarea", {className: "simple-answer", disabled: true})
+		)
+	}
+});
