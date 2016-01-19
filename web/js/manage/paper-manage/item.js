@@ -64,7 +64,7 @@ var Item = React.createClass({displayName: "Item",
 		if(!hasQuestions){
 			$('.complete-btn').addClass('disabled').unbind().attr('title', '不存在小题，无法完成');				
 		}else{
-			$('.complete-btn').removeClass('disabled').click(function() {
+			$('.complete-btn').removeClass('disabled').removeAttr('title').click(function() {
 				$('.form-add button').click();
 			});
 		}

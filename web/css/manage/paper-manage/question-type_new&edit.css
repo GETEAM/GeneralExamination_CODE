@@ -8,7 +8,7 @@
 /*试题类型添加部分 类型结构样式*/
 /*item structure表单隐藏*/
 .item-structure {
-	/*display: none;*/
+	display: none;
 }
 /*试题类型添加步骤*/
 .item-add-steps, .question-type-introduce, .basic-infor, .item-stem, .item-options, .item-questions {
