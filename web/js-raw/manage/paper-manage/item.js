@@ -1,121 +1,12 @@
 //初始化item
-var item= {};
+var item= {
+	'questions-num-limit': true,
+	'pre-show': true
+};
+
+//结构区域赋初始值
 var $item_structure = $('.item-structure textarea');
-
-//点击完成添加时，提交表单
-$('.complete-add').click(function() {
-	$('.form-add button').click();
-});
-
-/*添加删除题干*/
-$('.add-item-stem').click(handleAddItemStem);
-
-function handleAddItemStem() {
-	//添加试题题干
-	var new_item_stem = '此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。';
-	item.stem = new_item_stem
-
-	//指定是否显示题干字数的默认值
-	item['show-stem-length'] = false;
-
-	//关闭所有添加区域title 显示对应添加区域
-	$('.title').each(function(){
-		$(this).addClass('close').next().hide();
-	});
-	$('.item-stem .title').removeClass('close').next().show();
-
-	//改变item_structure输入框的值
-	$item_structure.val(JSON.stringify(item));
-
-	//重新渲染Item
-	ReactDOM.render(
-		<Item />,
-		$('#item-area')[0]
-	);
-}
-
-/*添加删除试题选项*/
-//点击添加试题选项时，添加试题选项
-$('.add-item-option').click(handleAddItemOption);
-
-function handleAddItemOption() {
-	//当不存在试题选项或者试题选项个数少于两个时，该添加有效
-	if( !item.options || item.options.length < 2 ){
-		//添加试题选项 至少两个
-		var new_item_options = ['试题选项内容', '试题选项内容'];
-
-		//如果item中不存在options，设为空数组
-		item.options = item.options ? item.options : [];
-		item.options = item.options.concat(new_item_options);
-
-		//指定是否显示试题选项序号的默认值
-		item['show-options-order-num'] = true;
-
-		//指定是否打乱试题选项顺序
-		item.shuffle = false;
-
-		//关闭所有添加区域title 显示对应添加区域
-		$('.title').each(function(){
-			$(this).addClass('close').next().hide();
-		});
-		$('.item-options .title').removeClass('close').next().show();
-
-		//改变item_structure输入框的值
-		$item_structure.val(JSON.stringify(item));
-
-		//重新渲染Item
-		ReactDOM.render(
-			<Item />,
-			$('#item-area')[0]
-		);
-	}
-}
-
-/*添加单选小题*/
-$('.add-single-choice').click(function(){
-	//设置小题数量是否限制默认值
-	item['questions-num-limit'] = true;
-	//设置小题是否提前显示默认值
-	item['pre-show'] = true;
-
-	var item_options = item.options;
-	var showOptionsOrderNum = item['show-options-order-num'] === false ? false : true;
-	var new_question1 = {
-		"type": "SingleChoice",			
-		"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
-		"options": [		//question的各个选项
-			"单选小题选项内容",
-			"单选小题选项内容",
-			"单选小题选项内容",
-			"单选小题选项内容"
-		]
-	};
-	var new_question2 = {
-		"type": "SingleChoice"
-	};
-
-	var new_question = ( item_options && item_options.length > 0 && showOptionsOrderNum ) ? new_question2 : new_question1;
-
-	//如果item中不存在questions，设为空数组
-	item.questions = item.questions ? item.questions : [];
-	item.questions.push(new_question);
-
-	//关闭所有添加区域title 显示对应添加区域
-	$('.title').each(function(){
-		$(this).addClass('close').next().hide();
-	});
-	$('.item-questions .title').removeClass('close').next().show();
-
-	//改变item_structure输入框的值
-	$item_structure.val(JSON.stringify(item));
-
-	//重新渲染Item
-	ReactDOM.render(
-		<Item />,
-		$('#item-area')[0]
-	);
-});
-
+$item_structure.val(JSON.stringify(item));
 
 //试题Item
 var Item = React.createClass({
@@ -471,11 +362,11 @@ var Questions = React.createClass({
 				<div className="questions-area">
     				<div className="params">
     					<label title="是否限制小题数量。不限制小题数量的题型，在添加具体试题时，可以额外增加相同类型小题。限制小题数量时，不可额外增加小题。该参数在具体试题内不可作修改！">
-                        	<input type="checkbox" name="questions-num-limit" defaultChecked={questionsNumLimit} onChange={this.handleQuestionsNulLimit} />
+                        	<input type="checkbox" name="questions-num-limit" checked={questionsNumLimit} onChange={this.handleQuestionsNulLimit} />
                        		限制小题数量
                     	</label>
                     	<label title="是否提前显示试题所包含的各小题（题型可能需求小题先隐藏达到一定条件后显示，一般在流程性试题中使用，当听力或视频播放结束后显示小题）。该参数在具体试题内可作修改！">
-                        	<input type="checkbox" name="pre-show" defaultChecked={preshow} onChange={this.handlePreShow} />
+                        	<input type="checkbox" name="pre-show" checked={preshow} onChange={this.handlePreShow} />
                        		提前显示各小题
                     	</label>
     				</div>
@@ -559,12 +450,11 @@ var Question = React.createClass({
 		var answer_area;
 		if(type == "SingleChoice") {
 			answer_area = <SingleChoice itemOptions={item_options} options={question.options} showQuestionsOptionsContent={showQuestionsOptionsContent} questionOrder={order} changeItemState={self.props.changeItemState} />
+		}else if(type == "SimpleAnswer") {
+			answer_area = <SimpleAnswer />
+		}else if(type == "BlankFilling") {
+			answer_area = <BlankFilling />
 		}
-		// else if(type == "SimpleAnswer") {
-		// 	answer_area = <SimpleAnswer questionId={id} />
-		// }else if(type == "BlankFilling") {
-		// 	answer_area = <BlankFilling questionId={id} />
-		// }
 
 		return (
 			<div className="question">
@@ -658,3 +548,160 @@ var SingleChoice = React.createClass({
 		)
 	}
 });
+
+//小题Question中的答题区域部分————填空题
+var BlankFilling = React.createClass({
+	render: function() {
+		return (
+			<input className="blank-filling" type="text" disabled />
+		)
+	}
+});
+
+//小题Question中的答题区域部分————简答题
+var SimpleAnswer = React.createClass({
+	render: function() {
+		return (
+			<textarea className="simple-answer" disabled />
+		)
+	}
+});
+
+//点击完成添加时，提交表单
+$('.complete-add').click(function() {
+	$('.form-add button').click();
+});
+
+/*添加删除题干*/
+$('.add-item-stem').click(handleAddItemStem);
+
+function handleAddItemStem() {
+	//添加试题题干
+	var new_item_stem = '此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。';
+	item.stem = new_item_stem
+
+	//指定是否显示题干字数的默认值
+	item['show-stem-length'] = false;
+
+	//关闭所有添加区域title 显示对应添加区域
+	$('.title').each(function(){
+		$(this).addClass('close').next().hide();
+	});
+	$('.item-stem .title').removeClass('close').next().show();
+
+	//改变item_structure输入框的值
+	$item_structure.val(JSON.stringify(item));
+
+	//重新渲染Item
+	ReactDOM.render(
+		<Item />,
+		$('#item-area')[0]
+	);
+}
+
+/*添加删除试题选项*/
+//点击添加试题选项时，添加试题选项
+$('.add-item-option').click(handleAddItemOption);
+
+function handleAddItemOption() {
+	//当不存在试题选项或者试题选项个数少于两个时，该添加有效
+	if( !item.options || item.options.length < 2 ){
+		//添加试题选项 至少两个
+		var new_item_options = ['试题选项内容', '试题选项内容'];
+
+		//如果item中不存在options，设为空数组
+		item.options = item.options ? item.options : [];
+		item.options = item.options.concat(new_item_options);
+
+		//指定是否显示试题选项序号的默认值
+		item['show-options-order-num'] = true;
+
+		//指定是否打乱试题选项顺序
+		item.shuffle = false;
+
+		//关闭所有添加区域title 显示对应添加区域
+		$('.title').each(function(){
+			$(this).addClass('close').next().hide();
+		});
+		$('.item-options .title').removeClass('close').next().show();
+
+		//改变item_structure输入框的值
+		$item_structure.val(JSON.stringify(item));
+
+		//重新渲染Item
+		ReactDOM.render(
+			<Item />,
+			$('#item-area')[0]
+		);
+	}
+}
+
+/*将创建好的小题加入item*/
+function addNewQuestion(new_question) {
+	//如果item中不存在questions，设为空数组
+	item.questions = item.questions ? item.questions : [];
+	item.questions.push(new_question);
+
+	//关闭所有添加区域title 显示对应添加区域
+	$('.title').each(function(){
+		$(this).addClass('close').next().hide();
+	});
+	$('.item-questions .title').removeClass('close').next().show();
+
+	//改变item_structure输入框的值
+	$item_structure.val(JSON.stringify(item));
+
+	//重新渲染Item
+	ReactDOM.render(
+		<Item />,
+		$('#item-area')[0]
+	);
+}
+
+/*添加单选小题*/
+$('.add-single-choice').click(function(){
+	/*建立新小题*/
+	var item_options = item.options;
+	var showOptionsOrderNum = item['show-options-order-num'] === false ? false : true;
+	var new_question1 = {
+		"type": "SingleChoice",			
+		"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
+		"options": [		//question的各个选项
+			"单选小题选项内容",
+			"单选小题选项内容",
+			"单选小题选项内容",
+			"单选小题选项内容"
+		]
+	};
+	var new_question2 = {
+		"type": "SingleChoice"
+	};
+
+	var new_question = ( item_options && item_options.length > 0 && showOptionsOrderNum ) ? new_question2 : new_question1;
+
+	addNewQuestion(new_question);
+	
+});
+
+/*添加填空题*/
+$('.add-blank-filling').click(function() {
+	var new_question = {
+		"type": "BlankFilling",			
+		"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+	}
+
+	addNewQuestion(new_question);
+
+});
+
+/*添加简答题*/
+$('.add-simple-answer').click(function() {
+	var new_question = {
+		"type": "SimpleAnswer",			
+		"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+	}
+
+	addNewQuestion(new_question);
+
+});
+
