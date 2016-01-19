@@ -414,7 +414,7 @@ var Question = React.createClass({displayName: "Question",
 		
 		var order = this.props.order;
 		//添加
-		item.questions[order].stem = "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。";
+		item.questions[order].stem = "此处为小题题干，题干内容可以包括图片、音频以及视频等多媒体。";
 
 		//改变item state
 		this.props.changeItemState();

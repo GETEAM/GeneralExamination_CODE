@@ -36,23 +36,19 @@
         {% if question_type=="" %}
             <div class='question_type_title'>您指定的类型信息不存在，请您核实类型编号！</div>
         {% else %}
-            <div class='question_type_title'>{{ question_type.nameEn }}({{ question_type.nameCh }})
-            	<span class="question_type_info">
-	            	该类型是
-	            	{% if question_type.flowable %}
-	            		流程性试题, 
-	            	{% else %}
-	            		非流程性试题, 
-	            	{% endif %}
-	            	{% if question_type.shuffle %}
-	            		选项顺序可以打乱
-	            	{% else %}
-	            		选项顺序不可打乱
-	            	{% endif %}
-            	</span>
-            </div>
+            <div class='question_type_title'>{{ question_type.nameEn }}({{ question_type.nameCh }})</div>
             <div class="question_type_description">
-            	{{ question_type.description }}
+            	{{ question_type.description }}，该类型是
+                    {% if question_type.flowable %}
+                        流程性试题, 
+                    {% else %}
+                        非流程性试题, 
+                    {% endif %}
+                    {% if question_type.shuffle %}
+                        选项顺序可以打乱
+                    {% else %}
+                        选项顺序不可打乱
+                    {% endif %}
             </div>
             <div id="question_type_structure_{{ question_type.id }}" class="question_type_structure" hidden>{{ question_type.structure }}</div>
             <div id="question_type_{{ question_type.id }}" class="question_type_sample"></div>
@@ -62,6 +58,7 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/babel" src="{{ asset('js/manage/paper-manage/question-type_show.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/item_show.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/question-type_show.js') }}"></script>
 {% endblock %}
 
