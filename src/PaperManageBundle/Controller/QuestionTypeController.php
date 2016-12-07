@@ -82,7 +82,6 @@ class QuestionTypeController extends Controller
 
     /**
      * 可编辑div.
-     *
      * @Route("/editable", name="question_type_editable")
      * @Template("PaperManageBundle:QuestionType:editable.html.twig")
      */
