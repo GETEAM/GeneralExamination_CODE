@@ -64,7 +64,7 @@ class QuestionTypeController extends Controller
                 if($success){
                     $this->addFlash('success', $question_type->getNameEn().'('.$question_type->getNameCh().')'.'添加成功');
                 }else{
-                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添111加！');
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
                     return $this->redirect($this->generateUrl('question_type_new'));
                 }
                 return $this->redirect($this->generateUrl('question_type_index'));
