@@ -4,11 +4,8 @@ security:
     encoders:
         FOS\UserBundle\Model\UserInterface: sha1
 
-    role_hierarchy:
-        ROLE_ADMIN:             ROLE_USER
-
     providers:
-        admin:
+        fos_user:
             id:                 fos_user.user_provider.username
 
     firewalls:
@@ -16,25 +13,20 @@ security:
             pattern:            ^/(_(profiler|wdt)|css|images|js)/
             security:           false
 
-        admin:
+        main:
             pattern:            ^/
             form_login:
-                login_path:     @Login
-                check_path:     fos_user_security_check
-            logout:
-                path:            fos_user_security_logout
-                target:          
-            anonymous:           true
+                provider: fos_user
+                csrf_provider: form.csrf_provider
+            logout:       true
+            anonymous:           ~
 
     role_hierarchy:
-        ROLE_ADMIN:          ROLE_USER
-        ROLE_POST:           ROLE_ADMIN
-        ROLE_CATEGORY:       ROLE_ADMIN
-        ROLE_SUPER_ADMIN:    [ROLE_POST, ROLE_CATEGORY]
+        ROLE_MONITOR:          ROLE_MONITOR
+        ROLE_TEACHER:           ROLE_TEACHER
+        ROLE_SECRETARY:       ROLE_SECRETARY
+        ROLE_SYSTEM_MANAGER:    ROLE_SYSTEM_MANAGER
+
 
     access_control:
-        - { path: ^/admin/login,    roles: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
-        - { path: ^/admin/user,     roles: ROLE_SUPER_ADMIN }
-        - { path: ^/admin/,         roles: ROLE_ADMIN }
+       - { path: ^/manage, role: ROLE_SYSTEM_MANAGER }

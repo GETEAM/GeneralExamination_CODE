@@ -95,6 +95,7 @@ class ManagerController extends Controller
             //添加成功跳转到列表页面，不成功跳转到本页面
             try{
                 $em = $this->getDoctrine()->getManager();
+                $manager ->setEnabled(1);
                 $success = $em->getRepository('UserBundle:Manager')->add($manager);
 
                 if($success){
