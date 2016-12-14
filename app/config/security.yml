@@ -18,6 +18,7 @@ security:
             form_login:
                 provider: fos_user
                 csrf_provider: form.csrf_provider
+                login_path: @BackendLogin
             logout:       true
             anonymous:           ~
 

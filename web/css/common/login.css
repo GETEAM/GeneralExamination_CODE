@@ -1,0 +1,86 @@
+body{
+	margin: 0 auto;
+	padding: 0;
+}
+a:hover{
+	color:;
+}
+.logo{
+	width: 1080px;
+	height: 35px;
+	clear: both;
+	margin-bottom: 20px;
+	margin: 0px auto;
+	font-size: 35px;
+	margin-top: 150px;
+	font-family: "微软雅黑"：
+}
+#container{
+	margin-top: 10px;
+	position: relative;
+	width: 100%;
+	background-color: #DEDEDE;
+}
+#bg{
+	margin: 0 auto;
+	width: 1080px;
+	height:550px;
+	background-image: url('/images/common/login.jpg');
+	background-repeat: no-repeat;
+	opacity: 1;
+}
+#login{
+	width:300px;
+	height: 430px;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+	padding-top: 10px;
+	margin-top: 30px;
+	margin-left: 740px;
+	position: absolute;
+	background-color: #ADADAD;
+	opacity: 0.8;
+}
+.title{
+	margin-top: 5px;
+	margin-left: 10px;
+	font-size: 30px;
+	margin-bottom: 50px;
+	color: #000000;
+	font-family: "楷体";
+	font-weight: 700;
+}
+.rem_paswd{
+	margin-right: 20px;
+}
+#info{
+	color: red;
+	font-size: 12px;
+	display: none;
+}
+.button{
+	margin-top: 25px;
+}
+.reset_btn{
+	margin-left: 40px;
+}
+.label{
+	font-size: 18px;
+	color: #030303;
+	margin-left: 13px;
+}
+.label_form{
+	font-size: 16px;
+	color: #0A0A0A;
+}
+.footer{
+	width: 1080px;
+	height: 35px;
+	clear: both;
+	padding-bottom: 20px;
+	margin: 0px auto;
+}
+.foot{
+	float: right;
+}
