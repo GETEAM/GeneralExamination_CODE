@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <h1>question</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ entity.id }}</td>
+            </tr>
+            <tr>
+                <th>Questiontypeid</th>
+                <td>{{ entity.questionTypeId }}</td>
+            </tr>
+            <tr>
+                <th>Testmodes</th>
+                <td>{{ entity.testModes }}</td>
+            </tr>
+            <tr>
+                <th>Questioncontent</th>
+                <td>{{ entity.questionContent }}</td>
+            </tr>
+            <tr>
+                <th>Score</th>
+                <td>{{ entity.score }}</td>
+            </tr>
+            <tr>
+                <th>Usagecounter</th>
+                <td>{{ entity.usageCounter }}</td>
+            </tr>
+            <tr>
+                <th>Createtime</th>
+                <td>{{ entity.createTime|date('Y-m-d H:i:s') }}</td>
+            </tr>
+            <tr>
+                <th>Questionduration</th>
+                <td>{{ entity.questionDuration }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+        <ul class="record_actions">
+    <li>
+        <a href="{{ path('manage_question') }}">
+            Back to the list
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('manage_question_edit', { 'id': entity.id }) }}">
+            Edit
+        </a>
+    </li>
+    <li>{{ form(delete_form) }}</li>
+</ul>
+{% endblock %}

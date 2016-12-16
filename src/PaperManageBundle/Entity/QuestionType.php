@@ -63,6 +63,11 @@ class QuestionType
      */
     private $description;
 
+    /**
+     * @ORM\OneToMany(targetEntity="question", mappedBy="QuestionType")
+     */
+    protected $products;
+
 
     /**
      * Get id
