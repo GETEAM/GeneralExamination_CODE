@@ -64,9 +64,10 @@ class QuestionType
     private $description;
 
     /**
-     * @ORM\OneToMany(targetEntity="question", mappedBy="QuestionType")
+     * @ORM\OneToMany(targetEntity="Question", mappedBy="questionType")
+     * var Question[]
      */
-    protected $products;
+    protected $questions;
 
 
     /**

@@ -23,7 +23,7 @@ class QuestionController extends Controller
      *
      * @Route("/", name="manage_question")
      * @Method("GET")
-     * @Template("PaperManageBundle:Question:index.html.twig")
+     * @Template()
      */
     public function indexAction()
     {

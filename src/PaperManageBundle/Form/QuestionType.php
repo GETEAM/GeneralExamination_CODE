@@ -16,7 +16,6 @@ class QuestionType extends AbstractType
     {
         $builder
             ->add('questionTypeId')
-            ->add('testModes')
             ->add('questionContent')
             ->add('score')
             ->add('usageCounter')
@@ -31,7 +30,7 @@ class QuestionType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'PaperManageBundle\Entity\question'
+            'data_class' => 'PaperManageBundle\Entity\Question'
         ));
     }
 

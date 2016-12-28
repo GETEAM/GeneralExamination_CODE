@@ -31,13 +31,6 @@ class Question
     /**
      * @var array
      *
-     * @ORM\Column(name="test_modes", type="json_array")
-     */
-    private $testModes;
-
-    /**
-     * @var array
-     *
      * @ORM\Column(name="question_content", type="json_array")
      */
     private $questionContent;
@@ -69,6 +62,12 @@ class Question
      * @ORM\Column(name="question_duration", type="integer")
      */
     private $questionDuration;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="QuestionType", inversedBy="questions")
+     * @var QuestionType
+     */
+    protected $questionType;
 
 
     /**
@@ -103,30 +102,6 @@ class Question
     public function getQuestionTypeId()
     {
         return $this->questionTypeId;
-    }
-
-    /**
-     * Set testModes
-     *
-     * @param array $testModes
-     *
-     * @return Question
-     */
-    public function setTestModes($testModes)
-    {
-        $this->testModes = $testModes;
-
-        return $this;
-    }
-
-    /**
-     * Get testModes
-     *
-     * @return array
-     */
-    public function getTestModes()
-    {
-        return $this->testModes;
     }
 
     /**
