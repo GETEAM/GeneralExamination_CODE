@@ -6,7 +6,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class questionType extends AbstractType
+class QuestionType extends AbstractType
 {
     /**
      * @param FormBuilderInterface $builder

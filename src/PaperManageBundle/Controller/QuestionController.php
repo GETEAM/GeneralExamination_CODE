@@ -7,44 +7,44 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use PaperManageBundle\Entity\question;
-use PaperManageBundle\Form\questionType;
+use PaperManageBundle\Entity\Question;
+use PaperManageBundle\Form\QuestionType;
 
 /**
- * question controller.
+ * Question controller.
  *
  * @Route("/manage/question")
  */
-class questionController extends Controller
+class QuestionController extends Controller
 {
 
     /**
-     * Lists all question entities.
+     * Lists all Question entities.
      *
      * @Route("/", name="manage_question")
      * @Method("GET")
-     * @Template()
+     * @Template("PaperManageBundle:Question:index.html.twig")
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('PaperManageBundle:question')->findAll();
+        $entities = $em->getRepository('PaperManageBundle:Question')->findAll();
 
         return array(
             'entities' => $entities,
         );
     }
     /**
-     * Creates a new question entity.
+     * Creates a new Question entity.
      *
      * @Route("/", name="manage_question_create")
      * @Method("POST")
-     * @Template("PaperManageBundle:question:new.html.twig")
+     * @Template("PaperManageBundle:Question:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new question();
+        $entity = new Question();
         $form = $this->createCreateForm($entity);
         $form->handleRequest($request);
 
@@ -63,15 +63,15 @@ class questionController extends Controller
     }
 
     /**
-     * Creates a form to create a question entity.
+     * Creates a form to create a Question entity.
      *
-     * @param question $entity The entity
+     * @param Question $entity The entity
      *
      * @return \Symfony\Component\Form\Form The form
      */
-    private function createCreateForm(question $entity)
+    private function createCreateForm(Question $entity)
     {
-        $form = $this->createForm(new questionType(), $entity, array(
+        $form = $this->createForm(new QuestionType(), $entity, array(
             'action' => $this->generateUrl('manage_question_create'),
             'method' => 'POST',
         ));
@@ -82,7 +82,7 @@ class questionController extends Controller
     }
 
     /**
-     * Displays a form to create a new question entity.
+     * Displays a form to create a new Question entity.
      *
      * @Route("/new", name="manage_question_new")
      * @Method("GET")
@@ -90,7 +90,7 @@ class questionController extends Controller
      */
     public function newAction()
     {
-        $entity = new question();
+        $entity = new Question();
         $form   = $this->createCreateForm($entity);
 
         return array(
@@ -100,7 +100,7 @@ class questionController extends Controller
     }
 
     /**
-     * Finds and displays a question entity.
+     * Finds and displays a Question entity.
      *
      * @Route("/{id}", name="manage_question_show")
      * @Method("GET")
@@ -110,10 +110,10 @@ class questionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PaperManageBundle:question')->find($id);
+        $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find question entity.');
+            throw $this->createNotFoundException('Unable to find Question entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -125,7 +125,7 @@ class questionController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing question entity.
+     * Displays a form to edit an existing Question entity.
      *
      * @Route("/{id}/edit", name="manage_question_edit")
      * @Method("GET")
@@ -135,10 +135,10 @@ class questionController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PaperManageBundle:question')->find($id);
+        $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find question entity.');
+            throw $this->createNotFoundException('Unable to find Question entity.');
         }
 
         $editForm = $this->createEditForm($entity);
@@ -152,15 +152,15 @@ class questionController extends Controller
     }
 
     /**
-    * Creates a form to edit a question entity.
+    * Creates a form to edit a Question entity.
     *
-    * @param question $entity The entity
+    * @param Question $entity The entity
     *
     * @return \Symfony\Component\Form\Form The form
     */
-    private function createEditForm(question $entity)
+    private function createEditForm(Question $entity)
     {
-        $form = $this->createForm(new questionType(), $entity, array(
+        $form = $this->createForm(new QuestionType(), $entity, array(
             'action' => $this->generateUrl('manage_question_update', array('id' => $entity->getId())),
             'method' => 'PUT',
         ));
@@ -170,20 +170,20 @@ class questionController extends Controller
         return $form;
     }
     /**
-     * Edits an existing question entity.
+     * Edits an existing Question entity.
      *
      * @Route("/{id}", name="manage_question_update")
      * @Method("PUT")
-     * @Template("PaperManageBundle:question:edit.html.twig")
+     * @Template("PaperManageBundle:Question:edit.html.twig")
      */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PaperManageBundle:question')->find($id);
+        $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
 
         if (!$entity) {
-            throw $this->createNotFoundException('Unable to find question entity.');
+            throw $this->createNotFoundException('Unable to find Question entity.');
         }
 
         $deleteForm = $this->createDeleteForm($id);
@@ -203,7 +203,7 @@ class questionController extends Controller
         );
     }
     /**
-     * Deletes a question entity.
+     * Deletes a Question entity.
      *
      * @Route("/{id}", name="manage_question_delete")
      * @Method("DELETE")
@@ -215,10 +215,10 @@ class questionController extends Controller
 
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PaperManageBundle:question')->find($id);
+            $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
 
             if (!$entity) {
-                throw $this->createNotFoundException('Unable to find question entity.');
+                throw $this->createNotFoundException('Unable to find Question entity.');
             }
 
             $em->remove($entity);
@@ -229,7 +229,7 @@ class questionController extends Controller
     }
 
     /**
-     * Creates a form to delete a question entity by id.
+     * Creates a form to delete a Question entity by id.
      *
      * @param mixed $id The entity id
      *

@@ -5,12 +5,12 @@ namespace PaperManageBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * question
+ * Question
  *
  * @ORM\Table()
- * @ORM\Entity(repositoryClass="PaperManageBundle\Entity\questionRepository")
+ * @ORM\Entity(repositoryClass="PaperManageBundle\Entity\QuestionRepository")
  */
-class question
+class Question
 {
     /**
      * @var integer
@@ -86,7 +86,7 @@ class question
      *
      * @param integer $questionTypeId
      *
-     * @return question
+     * @return Question
      */
     public function setQuestionTypeId($questionTypeId)
     {
@@ -110,7 +110,7 @@ class question
      *
      * @param array $testModes
      *
-     * @return question
+     * @return Question
      */
     public function setTestModes($testModes)
     {
@@ -134,7 +134,7 @@ class question
      *
      * @param array $questionContent
      *
-     * @return question
+     * @return Question
      */
     public function setQuestionContent($questionContent)
     {
@@ -158,7 +158,7 @@ class question
      *
      * @param integer $score
      *
-     * @return question
+     * @return Question
      */
     public function setScore($score)
     {
@@ -182,7 +182,7 @@ class question
      *
      * @param integer $usageCounter
      *
-     * @return question
+     * @return Question
      */
     public function setUsageCounter($usageCounter)
     {
@@ -206,7 +206,7 @@ class question
      *
      * @param \DateTime $createTime
      *
-     * @return question
+     * @return Question
      */
     public function setCreateTime($createTime)
     {
@@ -230,7 +230,7 @@ class question
      *
      * @param integer $questionDuration
      *
-     * @return question
+     * @return Question
      */
     public function setQuestionDuration($questionDuration)
     {

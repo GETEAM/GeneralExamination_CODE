@@ -438,9 +438,9 @@ var Question = React.createClass({displayName: "Question",
 		var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
 
 		var question_stem = question.stem ? 
-			React.createElement("div", {className: "question-stem"}, 
+			React.createElement("div", {className: "Question-stem"},
 				React.createElement("span", null, question.stem), 
-				React.createElement("a", {href: "javascript:void(0)", className: "delete-question-stem-a", onClick: this.deleteQuestionStem, title: "删除小题题干"}, 
+				React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-stem-a", onClick: this.deleteQuestionStem, title: "删除小题题干"},
 					React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题题干"})
 				)
 			) 
@@ -458,18 +458,18 @@ var Question = React.createClass({displayName: "Question",
 
 		return (
 			React.createElement("div", {className: "question"}, 
-				React.createElement("div", {className: "question-operations"}, 
-					React.createElement("a", {href: "javascript:void(0)", className: "delete-question-a", onClick: this.deleteQuestion, title: "删除小题"}, 
+				React.createElement("div", {className: "Question-operations"},
+					React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-a", onClick: this.deleteQuestion, title: "删除小题"},
 						React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题"})
 					), 
 					
 						!question_stem ? 
-						React.createElement("a", {href: "javascript:void(0)", className: "add-question-stem-a", onClick: this.addQuestionStem, title: "添加小题题干"}, 
+						React.createElement("a", {href: "javascript:void(0)", className: "add-Question-stem-a", onClick: this.addQuestionStem, title: "添加小题题干"},
 							React.createElement("img", {src: "/images/manage/add-stem.png", width: "16", height: "16", alt: "添加小题题干"})
 						)
 						: "", 
 					
-					React.createElement("a", {href: "javascript:void(0)", className: "add-question-a", onClick: this.addQuestionFromCurrent, title: "添加小题"}, 
+					React.createElement("a", {href: "javascript:void(0)", className: "add-Question-a", onClick: this.addQuestionFromCurrent, title: "添加小题"},
 						React.createElement("img", {src: "/images/manage/add-min.png", width: "16", height: "16", alt: "添加小题"})
 					)
 				), 
@@ -516,7 +516,7 @@ var SingleChoice = React.createClass({displayName: "SingleChoice",
 		options = showQuestionsOptionsContent ? options : itemOptions;
 
 		return (
-			React.createElement("ul", {className: "question-options"}, 
+			React.createElement("ul", {className: "Question-options"},
 			
 				options.map(function(option, i, a) {
 					return (
@@ -526,15 +526,15 @@ var SingleChoice = React.createClass({displayName: "SingleChoice",
 							
 								a.length > 2
 								? 
-								React.createElement("a", {href: "javascript:void(0)", className: "delete-question-option", onClick: self.deleteQuestionOption, title: "删除小题选项"}, 
+								React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-option", onClick: self.deleteQuestionOption, title: "删除小题选项"},
 									React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题选项"})
 								)
 								: 
-								React.createElement("a", {href: "javascript:void(0)", className: "delete-question-option", title: "无法删除小题选项。小题选项不能少于两个。"}, 
+								React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-option", title: "无法删除小题选项。小题选项不能少于两个。"},
 									React.createElement("img", {src: "/images/manage/delete-disabled.png", width: "16", height: "16", alt: "无法删除小题选项。小题选项不能少于两个。"})
 								), 
 							
-							React.createElement("a", {href: "javascript:void(0)", className: "add-question-option", onClick: self.addQuestionOption, title: "添加小题选项"}, 
+							React.createElement("a", {href: "javascript:void(0)", className: "add-Question-option", onClick: self.addQuestionOption, title: "添加小题选项"},
 								React.createElement("img", {src: "/images/manage/add-min.png", width: "16", height: "16", alt: "添加小题选项"})
 							)
 						)

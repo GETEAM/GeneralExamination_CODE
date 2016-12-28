@@ -180,7 +180,7 @@ var Question = React.createClass({displayName: "Question",
     var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
 
     var question_stem = question.stem ? 
-      React.createElement("div", {className: "question-stem"}, 
+      React.createElement("div", {className: "Question-stem"},
         React.createElement("span", null, question.stem)
       ) 
       : '';
@@ -220,7 +220,7 @@ var SingleChoice = React.createClass({displayName: "SingleChoice",
     options = showQuestionsOptionsContent ? options : itemOptions;
 
     return (
-      React.createElement("ul", {className: "question-options"}, 
+      React.createElement("ul", {className: "Question-options"},
       
         options.map(function(option, i, a) {
           return (
