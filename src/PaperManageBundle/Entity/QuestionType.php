@@ -223,4 +223,45 @@ class QuestionType
     {
         return $this->shuffle;
     }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->questions = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add question
+     *
+     * @param \PaperManageBundle\Entity\Question $question
+     *
+     * @return QuestionType
+     */
+    public function addQuestion(\PaperManageBundle\Entity\Question $question)
+    {
+        $this->questions[] = $question;
+
+        return $this;
+    }
+
+    /**
+     * Remove question
+     *
+     * @param \PaperManageBundle\Entity\Question $question
+     */
+    public function removeQuestion(\PaperManageBundle\Entity\Question $question)
+    {
+        $this->questions->removeElement($question);
+    }
+
+    /**
+     * Get questions
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getQuestions()
+    {
+        return $this->questions;
+    }
 }

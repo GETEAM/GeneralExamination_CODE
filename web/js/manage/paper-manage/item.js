@@ -516,7 +516,7 @@ var SingleChoice = React.createClass({displayName: "SingleChoice",
 		options = showQuestionsOptionsContent ? options : itemOptions;
 
 		return (
-			React.createElement("ul", {className: "Question-options"},
+			React.createElement("ul", {className: "question-options"},
 			
 				options.map(function(option, i, a) {
 					return (

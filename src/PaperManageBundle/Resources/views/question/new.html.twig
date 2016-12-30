@@ -1,15 +1,68 @@
-{% extends '::base.html.twig' %}
+{% extends 'PaperManageBundle:Question:layout.html.twig' %}
 
-{% block body -%}
-    <h1>Question creation</h1>
+{% block title %}添加试题—试卷管理—系统管理{% endblock %}
 
-    {{ form(form) }}
+{% block loading %}正在加载添加表单……{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('manage_question') }}">
-            Back to the list
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/Question-type_new&edit.css') }}"/>
+{% endblock %}
+
+
+{% block right -%}
+    <h1>
+        添加试题
+        <a href="{{ path('question_index') }}">
+            <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回试题列表" title="返回试题列表">
+            <span>返回试题列表</span>
         </a>
-    </li>
-</ul>
+    </h1>
+    
+
+    <div class="basic-infor">
+        <div class="title" title="点击显示/隐藏该区域">
+            试题基本信息
+        </div>
+        
+        {{ form_start(new_form) }}
+            {{ form_errors(new_form) }}
+            	<div class="question-type-choose">
+            		<ul class="item-add-steps">
+            			<label>试题类型</label>
+			        	{% if question_types|length == 0 %}
+			                <li>还不存在试题类型，请先添加试题类型！</li>
+			            {% else %}
+			                {% for question_type in question_types %}
+			                	<li class="step active" title="{{ question_type.nameCh }}"><a href="javascript:void(0)">{{ question_type.nameCh }}</a></li>
+			                {% endfor %}
+			            {% endif %}
+       				</ul>
+            	</div>
+                {{ form_row(new_form.questionName, {'attr': {'placeholder': '请输入试题名称', 'autocomplete': 'off'} }) }}
+
+                {{ form_row(new_form.score, {'attr': {'placeholder': '请输入试题分值', 'autocomplete': 'off'} }) }}
+
+                {{ form_row(new_form.questionDuration, {'attr': {'placeholder': '请输入试题用时', 'autocomplete': 'off'} }) }}
+                <div hidden>
+                	{{ form_row(new_form.questionTypeId, {'attr': {'placeholder': '试题类型，是经过选择的'} }) }}
+                	{{ form_row(new_form.questionContent, {'attr': {'placeholder': '试题类型，是经过选择的'} }) }}
+                	{{ form_row(new_form.createTime, {'attr': {'placeholder': '出题时间，默认系统时间', 'autocomplete': 'off'} }) }}
+                	{{ form_row(new_form.usageCounter, {'attr': {'placeholder': '使用次数，需要统计', 'autocomplete': 'off'} }) }}
+                </div>
+  
+            <div class="form-add" hidden>
+        		{{ form_row(new_form.save, {'attr': {'class': 'btn add-btn'} }) }}
+            </div>
+        {{ form_end(new_form, {'render_rest': true}) }}
+    </div>
+    <div id="item-area">
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/manage/paper-manage/item.js') }}"></script>
+    <script src="{{ asset('js/manage/paper-manage/Question-type_new.js') }}"></script>
 {% endblock %}

@@ -20,7 +20,7 @@
 	padding: 15px;
 }
 /*各步骤具体内容框架样式*/
-.item-add-steps > .step, .item-add-steps > .next-step  {
+.item-add-steps > .step, .item-add-steps > .next-step, .show-question-type {
 	opacity: 0.3;
 	display: inline-block;
 	font-size: 12px;
@@ -330,4 +330,10 @@
 }
 .simple-answer:disabled {
 	background-color: transparent;
+}
+
+/*上面是试题类型所有的样式，但是在出题界面依然用到了很多，该部分是出题专有的*/
+.question-type-choose .item-add-steps{
+	padding: 0px;
+	border: none;
 }
