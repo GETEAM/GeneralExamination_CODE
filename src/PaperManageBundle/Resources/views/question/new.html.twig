@@ -6,7 +6,8 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/Question-type_new&edit.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type_new&edit.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question_new&edit.css') }}"/>
 {% endblock %}
 
 
@@ -27,14 +28,18 @@
         
         {{ form_start(new_form) }}
             {{ form_errors(new_form) }}
-            	<div class="question-type-choose">
-            		<ul class="item-add-steps">
+            	<div>
+            		<ul class="question-type-choose">
             			<label>试题类型</label>
 			        	{% if question_types|length == 0 %}
 			                <li>还不存在试题类型，请先添加试题类型！</li>
 			            {% else %}
 			                {% for question_type in question_types %}
-			                	<li class="step active" title="{{ question_type.nameCh }}"><a href="javascript:void(0)">{{ question_type.nameCh }}</a></li>
+			                	<li class="question-type" title="{{ question_type.nameCh }}" id="{{ question_type.id }}"><a href="javascript:void(0)">{{ question_type.nameCh }}</a>
+			                	<p class="item-flowable">{{ question_type.flowable }}</p>
+			                	<p class="item-shuffle">{{ question_type.shuffle }}</p>
+			                	<span hidden>{{ question_type.structure }}</span>
+			                	</li>
 			                {% endfor %}
 			            {% endif %}
        				</ul>
@@ -46,7 +51,7 @@
                 {{ form_row(new_form.questionDuration, {'attr': {'placeholder': '请输入试题用时', 'autocomplete': 'off'} }) }}
                 <div hidden>
                 	{{ form_row(new_form.questionTypeId, {'attr': {'placeholder': '试题类型，是经过选择的'} }) }}
-                	{{ form_row(new_form.questionContent, {'attr': {'placeholder': '试题类型，是经过选择的'} }) }}
+                	{{ form_row(new_form.questionContent, {'attr': {'placeholder': '试题类型，是经过选择的','class':'question-structure'} }) }}
                 	{{ form_row(new_form.createTime, {'attr': {'placeholder': '出题时间，默认系统时间', 'autocomplete': 'off'} }) }}
                 	{{ form_row(new_form.usageCounter, {'attr': {'placeholder': '使用次数，需要统计', 'autocomplete': 'off'} }) }}
                 </div>
@@ -56,13 +61,18 @@
             </div>
         {{ form_end(new_form, {'render_rest': true}) }}
     </div>
-    <div id="item-area">
+    <div id="item-content-area">
+    	<div class="title" title="试题出题内容" hidden>试题出题内容</div>
+    	<div id="item-content"></div>
+    </div>
+    <div class="item-finish-btn">
+    	<a href="javascript:void(0)" class="btn add-btn complete-btn">完成添加</a>
     </div>
 {% endblock %}
 
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('js/manage/paper-manage/item.js') }}"></script>
-    <script src="{{ asset('js/manage/paper-manage/Question-type_new.js') }}"></script>
+    
+    <script src="{{ asset('js/manage/paper-manage/question_new.js') }}"></script>
 {% endblock %}

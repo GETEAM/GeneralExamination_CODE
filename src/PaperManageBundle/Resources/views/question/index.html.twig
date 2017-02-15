@@ -21,7 +21,7 @@
         </a>
         <a href="{{ path('question_new') }}" class="btn btn-common-action">
             <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加试题" title="添加试题">
-            添加类型
+            添加试题
         </a>
         <a href="javascript:void(0)" class="btn btn-common-action btn-multi-delete">
             <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
@@ -97,7 +97,7 @@
         </tbody>
         <tfoot>
             <tr>
-            <td colspan="7">
+            <td colspan="10">
                 {{ knp_pagination_render(questions) }}            
             </td>
             </tr>

@@ -446,19 +446,23 @@ var Question = React.createClass({displayName: "Question",
 			) 
 			: '';
 
-		//小题做答区域
-		var answer_area;
+		//小题内容区域
+		var content_area;
 		if(type == "SingleChoice") {
-			answer_area = React.createElement(SingleChoice, {itemOptions: item_options, options: question.options, showQuestionsOptionsContent: showQuestionsOptionsContent, questionOrder: order, changeItemState: self.props.changeItemState})
+			content_area = React.createElement(SingleChoice, {itemOptions: item_options, options: question.options, showQuestionsOptionsContent: showQuestionsOptionsContent, questionOrder: order, changeItemState: self.props.changeItemState})
+		}if(type == "MultipleChoice") {
+			content_area = React.createElement(MultipleChoice, {options: question.options, questionOrder: order, changeItemState: self.props.changeItemState})
 		}else if(type == "SimpleAnswer") {
-			answer_area = React.createElement(SimpleAnswer, null)
+			content_area = React.createElement(SimpleAnswer, null)
 		}else if(type == "BlankFilling") {
-			answer_area = React.createElement(BlankFilling, null)
+			content_area = React.createElement(BlankFilling, null)
+		}else if(type == "TrueOrFalse"){
+			content_area = React.createElement(TrueOrFalse, {questionOrder: order})
 		}
 
 		return (
 			React.createElement("div", {className: "question"}, 
-				React.createElement("div", {className: "Question-operations"},
+				React.createElement("div", {className: "question-operations"},
 					React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-a", onClick: this.deleteQuestion, title: "删除小题"},
 						React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题"})
 					), 
@@ -474,13 +478,13 @@ var Question = React.createClass({displayName: "Question",
 					)
 				), 
 				question_stem, 
-				answer_area
+				content_area
 			)
 		);
 	}
 });
 
-//小题Question中的答题区域部分————单选题
+//小题Question中的内容区域部分————单选题
 var SingleChoice = React.createClass({displayName: "SingleChoice",
 	deleteQuestionOption: function(event) {
 		$(event.target).mouseout();
@@ -549,7 +553,71 @@ var SingleChoice = React.createClass({displayName: "SingleChoice",
 	}
 });
 
-//小题Question中的答题区域部分————填空题
+
+//小题Question中的内容区域部分————多选题
+var MultipleChoice = React.createClass({displayName: "MultipleChoice",
+	deleteQuestionOption: function(event) {
+		$(event.target).mouseout();
+
+		var question_order = this.props.questionOrder;
+		//删除当前小题的一个选项
+		item.questions[question_order].options.pop();
+
+		//改变item state
+		this.props.changeItemState();
+	},
+	addQuestionOption: function() {
+		var question_order = this.props.questionOrder;
+
+		//添加一个新的选项
+		var new_question_option = item.questions[question_order].options[0];
+		item.questions[question_order].options.push(new_question_option);
+
+		//改变item state
+		this.props.changeItemState();
+	},
+	render: function() {
+		var self = this;
+
+		var options = this.props.options;
+
+		//小题选项是否显示
+		var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
+
+		var itemOptions = this.props.itemOptions;
+
+		return (
+			React.createElement("ul", {className: "question-options"},
+			
+				options.map(function(option, i, a) {
+					return (
+						React.createElement("li", {className: ""}, 
+							React.createElement("span", null, option), 
+							
+								a.length > 2
+								? 
+								React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-option", onClick: self.deleteQuestionOption, title: "删除小题选项"},
+									React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题选项"})
+								)
+								: 
+								React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-option", title: "无法删除小题选项。小题选项不能少于两个。"},
+									React.createElement("img", {src: "/images/manage/delete-disabled.png", width: "16", height: "16", alt: "无法删除小题选项。小题选项不能少于两个。"})
+								), 
+							
+							React.createElement("a", {href: "javascript:void(0)", className: "add-Question-option", onClick: self.addQuestionOption, title: "添加小题选项"},
+								React.createElement("img", {src: "/images/manage/add-min.png", width: "16", height: "16", alt: "添加小题选项"})
+							)
+						)
+					) 
+				})
+			
+			)
+		)
+	}
+});
+
+
+//小题Question中的内容区域部分————填空题
 var BlankFilling = React.createClass({displayName: "BlankFilling",
 	render: function() {
 		return (
@@ -558,7 +626,7 @@ var BlankFilling = React.createClass({displayName: "BlankFilling",
 	}
 });
 
-//小题Question中的答题区域部分————简答题
+//小题Question中的内容区域部分————简答题
 var SimpleAnswer = React.createClass({displayName: "SimpleAnswer",
 	render: function() {
 		return (
@@ -566,6 +634,20 @@ var SimpleAnswer = React.createClass({displayName: "SimpleAnswer",
 		)
 	}
 });
+
+//小题Question中的内容区域部分————判断题
+var TrueOrFalse = React.createClass({displayName: "TrueOrFalse",
+	render: function() {
+		var question_order = this.props.questionOrder;
+		return (
+			React.createElement("div", {className: "true-or-false"},
+				React.createElement("input",{type:"radio",name:"question_"+question_order,className:"true-option",value:0,disabled:true}),
+				React.createElement("input",{type:"radio",name:"question_"+question_order,className:"false-option",value:1,disabled:true})
+			)
+		)
+	}
+});
+
 
 //点击完成添加时，提交表单
 $('.complete-add').click(function() {
@@ -683,11 +765,26 @@ $('.add-single-choice').click(function(){
 	
 });
 
+/*添加多选题*/
+$('.add-multiple-choice').click(function() {
+	var new_question = {
+		"type": "MultipleChoice",			
+		"stem": "此处为多选题小题题干，题干内容可以包括图片、音频以及视频等多媒体。",
+		"options": [		//question的各个选项
+			"多选小题选项内容",
+			"多选小题选项内容",
+			"多选小题选项内容",
+			"多选小题选项内容"
+		]
+	};
+	addNewQuestion(new_question);
+});
+
 /*添加填空题*/
 $('.add-blank-filling').click(function() {
 	var new_question = {
 		"type": "BlankFilling",			
-		"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+		"stem": "此处为填空题小题题干，题干内容可以包括图片、音频以及视频等多媒体。"
 	}
 
 	addNewQuestion(new_question);
@@ -698,10 +795,55 @@ $('.add-blank-filling').click(function() {
 $('.add-simple-answer').click(function() {
 	var new_question = {
 		"type": "SimpleAnswer",			
-		"stem": "此处为单选小题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+		"stem": "此处为简答题题干，题干内容可以包括图片、音频以及视频等多媒体。"
 	}
 
 	addNewQuestion(new_question);
-
 });
+
+/*添加判断题*/
+$('.add-true-or-false').click(function() {
+	var new_question = {
+		"type": "TrueOrFalse",			
+		"stem": "此处为判断题题干，题干内容可以包括图片、音频以及视频等多媒体。",
+		"options": [		//question的各个选项
+			"正确",
+			"错误",
+		]
+	}
+
+	addNewQuestion(new_question);
+});
+
+/*添加录音题*/
+$('.add-simple-answer').click(function() {
+	var new_question = {
+		"type": "SimpleAnswer",			
+		"stem": "此处为录音题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+	}
+
+	addNewQuestion(new_question);
+});
+
+/*添加排序题*/
+$('.add-simple-answer').click(function() {
+	var new_question = {
+		"type": "SimpleAnswer",			
+		"stem": "此处为排序题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+	}
+
+	addNewQuestion(new_question);
+});
+
+/*添加改错题*/
+$('.add-simple-answer').click(function() {
+	var new_question = {
+		"type": "SimpleAnswer",			
+		"stem": "此处为改错题题干，题干内容可以包括图片、音频以及视频等多媒体。"
+	}
+
+	addNewQuestion(new_question);
+});
+
+
 
