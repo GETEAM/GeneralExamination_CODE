@@ -11,7 +11,7 @@
 	display: none;
 }
 /*试题类型添加步骤*/
-.item-add-steps, .question-type-introduce, .basic-infor, .item-stem, .item-options, .item-questions {
+.item-add-steps, .question-type-introduce, .basic-infor, .item-stem, .item-options, .item-questions, .question-type-choose {
 	border: 1px solid #eee;
 	border-bottom: none;
 	font-size: 16px;
@@ -20,7 +20,7 @@
 	padding: 15px;
 }
 /*各步骤具体内容框架样式*/
-.item-add-steps > .step, .item-add-steps > .next-step  {
+.item-add-steps > .step, .item-add-steps > .next-step, .question-type-choose > .question-type{
 	opacity: 0.3;
 	display: inline-block;
 	font-size: 12px;
@@ -30,15 +30,15 @@
 	background-color: #f8f8f8;
 	cursor: pointer;
 }
-.item-add-steps > .active {
+.item-add-steps > .active , .question-type-choose > .question-type {
 	opacity: 1;
 }
-.item-add-steps > .active:hover {
+.item-add-steps > .active:hover, .question-type-choose > .question-type:hover {
 	color: #333;
 	background-color: #eee;
 	border: 1px solid #eee;
 }
-.item-add-steps > .step {
+.item-add-steps > .step , .question-type-choose > .question-type{
 	padding: 5px 8px;
 	position: relative;
 }
@@ -166,7 +166,7 @@
 	padding: 30px 30px 15px 30px;
 }
 /*试题类型内容*/
-#item-area {
+#item-area, #item-content-area {
 	padding-left: 0px;
 	border-bottom: 1px solid #eee;
 
@@ -330,4 +330,35 @@
 }
 .simple-answer:disabled {
 	background-color: transparent;
+}
+/*判断题前面的T和F*/
+.true-or-false{
+	background-color: #efefef;
+	padding: 0px 30px;
+	border-radius: 3px;
+	margin-top: 10px;
+}
+.true-option, .false-option {
+	width: 40px;
+}
+.true-option:before, .false-option:before{
+	width: 16px;
+	display: inline-block;
+}
+.true-option:before{
+	content: 'T';
+}
+.false-option:before {
+	content: 'F';
+}
+
+
+/*上面是试题类型所有的样式，但是在出题界面依然用到了很多，该部分是出题专有的*/
+.question-type-choose{
+	padding: 0px;
+	border: none;
+}
+.question-type-choose > .question-type.selected{
+	background-color: #bbb;
+	border: 1px solid #aaa;
 }

@@ -29,6 +29,13 @@ class Question
     private $questionTypeId;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="question_name", type="string")
+     */
+    private $questionName;
+
+    /**
      * @var array
      *
      * @ORM\Column(name="question_content", type="json_array")
@@ -223,5 +230,52 @@ class Question
     {
         return $this->questionDuration;
     }
-}
 
+    /**
+     * Set questionType
+     *
+     * @param \PaperManageBundle\Entity\QuestionType $questionType
+     *
+     * @return Question
+     */
+    public function setQuestionType(\PaperManageBundle\Entity\QuestionType $questionType = null)
+    {
+        $this->questionType = $questionType;
+
+        return $this;
+    }
+
+    /**
+     * Get questionType
+     *
+     * @return \PaperManageBundle\Entity\QuestionType
+     */
+    public function getQuestionType()
+    {
+        return $this->questionType;
+    }
+
+    /**
+     * Set questionName
+     *
+     * @param string $questionName
+     *
+     * @return Question
+     */
+    public function setQuestionName($questionName)
+    {
+        $this->questionName = $questionName;
+
+        return $this;
+    }
+
+    /**
+     * Get questionName
+     *
+     * @return string
+     */
+    public function getQuestionName()
+    {
+        return $this->questionName;
+    }
+}

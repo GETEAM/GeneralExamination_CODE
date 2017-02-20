@@ -1,51 +1,117 @@
-{% extends '::base.html.twig' %}
+{% extends 'PaperManageBundle:Question:layout.html.twig' %}
 
-{% block body -%}
-    <h1>Question list</h1>
+{% block title %}试题管理—试卷管理{% endblock %}
 
-    <table class="records_list">
+{% block loading %}正在加载试题列表……{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/Question-type_index.css') }}"/>
+{% endblock %}
+
+{% block right %}
+    <h1>
+       试题列表
+    </h1>
+    <div class="common-action">
+        <a href="javascript:void(0)" class="btn btn-common-action select-all">
+            <input type="checkbox" hidden/>
+            <i></i>
+            全选
+        </a>
+        <a href="{{ path('question_new') }}" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加试题" title="添加试题">
+            添加试题
+        </a>
+        <a href="javascript:void(0)" class="btn btn-common-action btn-multi-delete">
+            <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
+            批量删除
+        </a>
+    </div>
+
+    <table class="common-table question_types">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Questiontypeid</th>
-                <th>Questioncontent</th>
-                <th>Score</th>
-                <th>Usagecounter</th>
-                <th>Createtime</th>
-                <th>Questionduration</th>
-                <th>Actions</th>
+                <th>编号</th>
+                <th>类型名称</th>
+                <th>试题名</th>
+                <th>流程性</th>
+                <th>乱序</th>
+                <th>生成时间</th>
+                <th>分数</th>
+                <th>使用次数</th>
+                <th>试题用时</th>
+                <th>操作</th>
             </tr>
         </thead>
-        <tbody>
-        {% for entity in entities %}
-            <tr>
-                <td><a href="{{ path('manage_question_show', { 'id': entity.id }) }}">{{ entity.id }}</a></td>
-                <td>{{ entity.questionTypeId }}</td>
-                <td>{{ entity.questionContent }}</td>
-                <td>{{ entity.score }}</td>
-                <td>{{ entity.usageCounter }}</td>
-                <td>{% if entity.createTime %}{{ entity.createTime|date('Y-m-d H:i:s') }}{% endif %}</td>
-                <td>{{ entity.questionDuration }}</td>
-                <td>
-                <ul>
-                    <li>
-                        <a href="{{ path('manage_question_show', { 'id': entity.id }) }}">show</a>
-                    </li>
-                    <li>
-                        <a href="{{ path('manage_question_edit', { 'id': entity.id }) }}">edit</a>
-                    </li>
-                </ul>
-                </td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
 
-        <ul>
-        <li>
-            <a href="{{ path('manage_question_new') }}">
-                Create a new entry
-            </a>
-        </li>
-    </ul>
-    {% endblock %}
+        <tbody>
+            {% if questions|length == 0 %}
+                <tr>
+                    <td colspan="10">尚不存在试题，请您添加！</td>
+                </tr>
+            {% else %}
+                {% for question in questions %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="questions" value="{{ question_type.id }}" hidden/>
+                            <a href="{{ path('question_show', { 'id': question.id }) }}">{{ question.id }}</a>
+                        </td>
+                        <td>{{ questionType.nameCn }}</td>
+                        <td>{{ questionName }}</td>
+                        <td>
+                            {% if questionType.flowable %}
+                                是
+                            {% else %}
+                                否
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if questionType.shuffle %}
+                                是
+                            {% else %}
+                                否
+                            {% endif %}
+                        </td>
+                        <td>{{ question.createTime }}</td>
+                        <td>{{ question.score }}</td>
+                        <td>{{ question.usageCounter }}</td>
+                        <td>{{ question.questionDuration }}</td>
+                        <td>
+                            <a href="{{ path('question_show', { 'id': question_type.id }) }}">
+                                <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="预览试题" title="预览">
+                            </a>
+                            <a href="{{ path('question_edit', { 'id': question_type.id }) }}">
+                                <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑类型" title="编辑类型">
+                            </a>
+                            <a href="javascript:void(0)" class="delete-btn" question_type-id="{{ question_type.id }}">
+                                <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除类型" title="删除类型">
+                            </a>
+                            <div id="delete-dialog_{{ question.id }}" class="delete-dialog" title="删除确认" question-id={{ question.id }} hidden>
+                                <p>确定要删除   <span class="dialog-item-key">{{questionName}}</span>   的类型信息吗？</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+            <td colspan="10">
+                {{ knp_pagination_render(questions) }}            
+            </td>
+            </tr>
+        </tfoot>
+</table>
+
+    <!-- 批量删除对话框 -->
+    <div class="multi-delete-dialog" title="批量删除确认" hidden>
+        <p>确定要删除选中的试题信息吗？</p>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/manage/paper-manage/Question-type_index.js') }}"></script>
+{% endblock %}
+

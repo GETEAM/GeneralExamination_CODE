@@ -8,7 +8,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use PaperManageBundle\Entity\Question;
-use PaperManageBundle\Form\QuestionType;
+use PaperManageBundle\Entity\QuestionType;
+use PaperManageBundle\Form\QuestionNewType;
+use PaperManageBundle\Form\QuestionEditType;
 
 /**
  * Question controller.
@@ -19,90 +21,79 @@ class QuestionController extends Controller
 {
 
     /**
-     * Lists all Question entities.
+     * 试题列表
      *
-     * @Route("/", name="manage_question")
+     * @Route("/", name="question_index")
      * @Method("GET")
-     * @Template()
+     * @Template("PaperManageBundle:Question:index.html.twig")
      */
-    public function indexAction()
+    public function indexAction(Request $request)
     {
         $em = $this->getDoctrine()->getManager();
+        $allquestions = $em->getRepository('PaperManageBundle:Question')->findAll();
 
-        $entities = $em->getRepository('PaperManageBundle:Question')->findAll();
+        $paginator = $this->get('knp_paginator');
+        $questions = $paginator->paginate($allquestions, $request->query->getInt('page', 1));
 
         return array(
-            'entities' => $entities,
+            'questions' => $questions,
         );
     }
+
     /**
-     * Creates a new Question entity.
+     * 添加题型
      *
-     * @Route("/", name="manage_question_create")
-     * @Method("POST")
+     * @Route("/new", name="question_new")
+     * @Method("GET")
      * @Template("PaperManageBundle:Question:new.html.twig")
      */
-    public function createAction(Request $request)
+    public function newAction(Request $request)
     {
-        $entity = new Question();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+        //第一步是想把类型列表加载出来
+        $em = $this->getDoctrine()->getManager();
+        $question_types = $em->getRepository('PaperManageBundle:QuestionType')->findAll();
 
-            return $this->redirect($this->generateUrl('manage_question_show', array('id' => $entity->getId())));
+
+
+        $question = new Question();
+        $new_form = $this->createForm(new QuestionNewType(), $question, array(
+            'action' => $this->generateUrl('question_new'),
+            'method' => 'POST',
+        ));
+        
+        $new_form->handleRequest($request);
+
+        if ($new_form->isValid()) {
+            //添加成功跳转到列表页面，不成功跳转到本页面
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('PaperManageBundle:Question')->add($question);
+                
+                if($success){
+                    $this->addFlash('success', $questionName->getQuestionName().'添加成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                    return $this->redirect($this->generateUrl('question_new'));
+                }
+                return $this->redirect($this->generateUrl('question_index'));
+                
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                return $this->redirect($this->generateUrl('question_new'));
+            }
         }
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
-    }
-
-    /**
-     * Creates a form to create a Question entity.
-     *
-     * @param Question $entity The entity
-     *
-     * @return \Symfony\Component\Form\Form The form
-     */
-    private function createCreateForm(Question $entity)
-    {
-        $form = $this->createForm(new QuestionType(), $entity, array(
-            'action' => $this->generateUrl('manage_question_create'),
-            'method' => 'POST',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Create'));
-
-        return $form;
-    }
-
-    /**
-     * Displays a form to create a new Question entity.
-     *
-     * @Route("/new", name="manage_question_new")
-     * @Method("GET")
-     * @Template()
-     */
-    public function newAction()
-    {
-        $entity = new Question();
-        $form   = $this->createCreateForm($entity);
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'question_types' => $question_types,
+            'new_form'   => $new_form->createView(),
         );
     }
 
     /**
      * Finds and displays a Question entity.
      *
-     * @Route("/{id}", name="manage_question_show")
+     * @Route("/{id}", name="question_show")
      * @Method("GET")
      * @Template()
      */
@@ -125,83 +116,51 @@ class QuestionController extends Controller
     }
 
     /**
-     * Displays a form to edit an existing Question entity.
-     *
-     * @Route("/{id}/edit", name="manage_question_edit")
-     * @Method("GET")
-     * @Template()
-     */
-    public function editAction($id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Question entity.');
-        }
-
-        $editForm = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
-    }
-
-    /**
-    * Creates a form to edit a Question entity.
-    *
-    * @param Question $entity The entity
-    *
-    * @return \Symfony\Component\Form\Form The form
-    */
-    private function createEditForm(Question $entity)
-    {
-        $form = $this->createForm(new QuestionType(), $entity, array(
-            'action' => $this->generateUrl('manage_question_update', array('id' => $entity->getId())),
-            'method' => 'PUT',
-        ));
-
-        $form->add('submit', 'submit', array('label' => 'Update'));
-
-        return $form;
-    }
-    /**
      * Edits an existing Question entity.
      *
-     * @Route("/{id}", name="manage_question_update")
+     * @Route("/{id}", name="question_edit")
      * @Method("PUT")
      * @Template("PaperManageBundle:Question:edit.html.twig")
      */
-    public function updateAction(Request $request, $id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
+        $question_type = $em->getRepository('PaperManageBundle:Question')->find($id);
 
-        $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Question entity.');
-        }
+        $edit_form = $this->createForm(new QuestionEditType(), $question_type, array(
+            'action' => $this->generateUrl('question_edit', array(
+                'id' => $id
+            )),
+            'method' => 'GET'
+        ));
+        
+        $edit_form->handleRequest($request);
 
-        $deleteForm = $this->createDeleteForm($id);
-        $editForm = $this->createEditForm($entity);
-        $editForm->handleRequest($request);
+        if ($edit_form->isValid()) {
+            try{
+                $em = $this->getDoctrine()->getManager();
+                $success = $em->getRepository('PaperManageBundle:Question')->add($question);
+                if($success){
+                    $this->addFlash('success', $questionName->getQuestionName().'修改成功');
+                }else{
+                    $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+                }
+            } catch(\Exception $e){
+                $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
+            }
 
-        if ($editForm->isValid()) {
-            $em->flush();
-
-            return $this->redirect($this->generateUrl('manage_question_edit', array('id' => $id)));
+            return $this->redirect($this->generateUrl('question_edit', array(
+                'id' => $id
+            )));
         }
 
         return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
+            'edit_form' => $edit_form->createView(),
+            'id' => $question->getId()
         );
     }
+
     /**
      * Deletes a Question entity.
      *
