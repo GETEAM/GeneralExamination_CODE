@@ -24,6 +24,8 @@ class AppKernel extends Kernel
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Ddeboer\DataImportBundle\DdeboerDataImportBundle(),
             new PaperManageBundle\PaperManageBundle(),
+            new Gos\Bundle\WebSocketBundle\GosWebSocketBundle(),
+            new Gos\Bundle\PubSubRouterBundle\GosPubSubRouterBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'), true)) {
