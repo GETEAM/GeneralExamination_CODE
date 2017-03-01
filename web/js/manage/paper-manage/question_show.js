@@ -1,13 +1,13 @@
 $(function(){
 
   //删除
-  singleDelete('question_type');
+  singleDelete('question');
 
   //首先取到要渲染的id
-  var questiontypeId= $('.question_type_sample').attr('id');
+  var questiontypeId= $('.question_sample').attr('id');
 
   //取到相应的json结构
-  var questionTypeStructureId=$('.question_type_structure').attr('id');
+  var questionTypeStructureId=$('.question_content').attr('id');
 
   var item=JSON.parse($('#'+questionTypeStructureId).text());
    /*var item = {
@@ -188,17 +188,17 @@ var Question = React.createClass({displayName: "Question",
     //小题做答区域
     var answer_area;
     if(type == "SingleChoice") {
-      answer_area = React.createElement(SingleChoice, {itemOptions: item_options, options: question.options, showQuestionsOptionsContent: showQuestionsOptionsContent, questionOrder: order})
+        answer_area = React.createElement(SingleChoice, {itemOptions: item_options, options: question.options, showQuestionsOptionsContent: showQuestionsOptionsContent})
     }else if(type == "MultipleChoice"){
-      answer_area = React.createElement(MultipleChoice, {options: question.options});
+    	answer_area = React.createElement(MultipleChoice, {options: question.options});
     }else if(type == "SimpleAnswer") {
-        answer_area = React.createElement(SimpleAnswer, null)
+      	answer_area = React.createElement(SimpleAnswer, null)
     }else if(type == "BlankFilling") {
-        answer_area = React.createElement(BlankFilling, null)
+      	answer_area = React.createElement(BlankFilling, null)
     }else if(type == "TrueOrFalse") {
-        answer_area = React.createElement(TrueOrFalse, {questionOrder:order});
+      	answer_area = React.createElement(TrueOrFalse, {questionOrder:order});
     }else if(type == "Record") {
-        answer_area = React.createElement(Record, null);
+      	answer_area = React.createElement(Record, null);
     }
 
     return (
@@ -270,7 +270,7 @@ var MultipleChoice = React.createClass({displayName: "MultipleChoice",
 var BlankFilling = React.createClass({displayName: "BlankFilling",
   render: function() {
     return (
-      React.createElement("input", {className: "blank-filling", type: "text", disabled: true})
+      React.createElement("input", {className: "blank-filling", type: "text", placeholder:"请输入答案"})
     )
   }
 });
@@ -279,22 +279,22 @@ var BlankFilling = React.createClass({displayName: "BlankFilling",
 var SimpleAnswer = React.createClass({displayName: "SimpleAnswer",
   render: function() {
     return (
-      React.createElement("textarea", {className: "simple-answer", disabled: true})
+      React.createElement("textarea", {className: "simple-answer", placeholder:"请输入答案"})
     )
   }
 });
 
 //小题Question中的答题区域部分————判断题
 var TrueOrFalse = React.createClass({displayName: "TrueOrFalse",
-    
+  	
   render: function() {
-    var question_order = this.props.questionOrder;
-    return (
-      React.createElement("div",{className:'question-answer-truefalse'},
-      React.createElement("input",{type:"radio",className:'true-option',name:"question_"+question_order,}),
-      React.createElement("input",{type:"radio",className:'false-option',name:"question_"+question_order,})
-    )
-    )
+  	var question_order = this.props.questionOrder;
+  	return (
+  		React.createElement("div",{className:'question-answer-truefalse'},
+			React.createElement("input",{type:"radio",className:'true-option',name:"question_"+question_order,}),
+			React.createElement("input",{type:"radio",className:'false-option',name:"question_"+question_order,})
+		)
+  	)
   }
 });
 
@@ -302,10 +302,11 @@ var TrueOrFalse = React.createClass({displayName: "TrueOrFalse",
 var Record = React.createClass({displayName: "Record",
   render: function() {
     return (
-      React.createElement("input",{type:'button',value: "点击录音",className:'record-btn'})
+    	React.createElement("input",{type:'button',value: "点击录音",className:'record-btn'})
     )
   }
 });
+
 
   // 显示Item
   ReactDOM.render(

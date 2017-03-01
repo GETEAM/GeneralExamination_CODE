@@ -3,6 +3,8 @@
 namespace PaperManageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\ManyToOne;
+use Doctrine\ORM\Mapping\JoinColumn;
 
 /**
  * Question
@@ -21,12 +23,6 @@ class Question
      */
     private $id;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="question_type_id", type="integer")
-     */
-    private $questionTypeId;
 
     /**
      * @var string
@@ -34,6 +30,7 @@ class Question
      * @ORM\Column(name="question_name", type="string")
      */
     private $questionName;
+
 
     /**
      * @var array
@@ -71,8 +68,10 @@ class Question
     private $questionDuration;
 
     /**
-     * @ORM\ManyToOne(targetEntity="QuestionType", inversedBy="questions")
      * @var QuestionType
+     *
+     * @ORM\ManyToOne(targetEntity="QuestionType", inversedBy="questions")
+     * @JoinColumn(name="question_type_id",referencedColumnName="id")
      */
     protected $questionType;
 
@@ -87,29 +86,7 @@ class Question
         return $this->id;
     }
 
-    /**
-     * Set questionTypeId
-     *
-     * @param integer $questionTypeId
-     *
-     * @return Question
-     */
-    public function setQuestionTypeId($questionTypeId)
-    {
-        $this->questionTypeId = $questionTypeId;
 
-        return $this;
-    }
-
-    /**
-     * Get questionTypeId
-     *
-     * @return integer
-     */
-    public function getQuestionTypeId()
-    {
-        return $this->questionTypeId;
-    }
 
     /**
      * Set questionContent

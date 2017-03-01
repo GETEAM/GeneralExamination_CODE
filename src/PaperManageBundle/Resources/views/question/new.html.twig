@@ -35,7 +35,7 @@
 			                <li>还不存在试题类型，请先添加试题类型！</li>
 			            {% else %}
 			                {% for question_type in question_types %}
-			                	<li class="question-type" title="{{ question_type.nameCh }}" id="{{ question_type.id }}"><a href="javascript:void(0)">{{ question_type.nameCh }}</a>
+			                	<li class="question-type" title="{{ question_type.nameCh }}" value="{{ question_type.id }}"><a href="javascript:void(0)">{{ question_type.nameCh }}</a>
 			                	<p class="item-flowable">{{ question_type.flowable }}</p>
 			                	<p class="item-shuffle">{{ question_type.shuffle }}</p>
 			                	<span hidden>{{ question_type.structure }}</span>
@@ -49,14 +49,15 @@
                 {{ form_row(new_form.score, {'attr': {'placeholder': '请输入试题分值', 'autocomplete': 'off'} }) }}
 
                 {{ form_row(new_form.questionDuration, {'attr': {'placeholder': '请输入试题用时', 'autocomplete': 'off'} }) }}
+
                 <div hidden>
-                	{{ form_row(new_form.questionTypeId, {'attr': {'placeholder': '试题类型，是经过选择的'} }) }}
-                	{{ form_row(new_form.questionContent, {'attr': {'placeholder': '试题类型，是经过选择的','class':'question-structure'} }) }}
-                	{{ form_row(new_form.createTime, {'attr': {'placeholder': '出题时间，默认系统时间', 'autocomplete': 'off'} }) }}
-                	{{ form_row(new_form.usageCounter, {'attr': {'placeholder': '使用次数，需要统计', 'autocomplete': 'off'} }) }}
+                {{ form_row(new_form.questionType, {'attr': {'placeholder': '试题类型，是经过选择的','class':'question_type'} }) }}
+            	{{ form_row(new_form.questionContent, {'attr': {'placeholder': '试题类型，是经过选择的','class':'question-structure'} }) }}
+            	{{ form_row(new_form.createTime, {'attr': {'placeholder': '出题时间，默认系统时间', 'class':'question_createtime'} }) }}
+            	{{ form_row(new_form.usageCounter, {'attr': {'placeholder': '使用次数，需要统计', 'autocomplete': 'off','class':'question_usagecount'} }) }}
                 </div>
   
-            <div class="form-add" hidden>
+            <div class="form-add-question" hidden>
         		{{ form_row(new_form.save, {'attr': {'class': 'btn add-btn'} }) }}
             </div>
         {{ form_end(new_form, {'render_rest': true}) }}

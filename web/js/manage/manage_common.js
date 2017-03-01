@@ -185,7 +185,7 @@ function multiDelete(name, names) {
 				$('.loading').show();
 				
 				var ids = getSelectedTRs(names);
-
+				console.log(ids.length);
 				//post操作 用ajax实现
 				$.ajax({
 				    type: 'POST',
