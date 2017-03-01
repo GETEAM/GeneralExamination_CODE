@@ -116,6 +116,17 @@
     <div class="multi-delete-dialog" title="批量删除确认" hidden>
         <p>确定要删除选中的教师信息吗？</p>
     </div>
+
+    {{ ws_client() }}
+    <script> var webSocket = WS.connect("ws://127.0.0.1:8088");
+
+        webSocket.on("socket/connect", function(session){
+            //session is an Autobahn JS WAMP session.
+            console.log("Successfully Connected!");
+        })
+    </script>
+
+
 {% endblock %}
 
 {% block javascripts %}
