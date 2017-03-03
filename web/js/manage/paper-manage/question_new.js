@@ -117,7 +117,8 @@ $(function(){
 			handleStemLength: function(event) {
 				item.stem = event.target.value;
 				//长度值改变
-				$('#stem-length').text('('+item.stem.split(' ').length+'words)');        
+				$('#stem-length').text('('+item.stem.split(' ').length+'words)'); 
+				this.props.changeItemState();       
 			},
 			//删除试题题干
 			deleteItemStem: function(event){
@@ -164,6 +165,7 @@ $(function(){
 			    var options = this.props.options;  
 			    options[index] = optionValue;  
 			    item.options = options;
+			    this.props.changeItemState();
 			},
 			addItemOption: function(event){
 				//添加试题选项输入框
@@ -279,6 +281,7 @@ $(function(){
 				
 				var question = this.props.question;  
 			    question.stem = stemText;
+			    this.props.changeItemState();
 			},
 			handleQuestionStemMediaContent: function(event){//选择多媒体元素
 				//如果选择了多媒体元素则文本选项失效
@@ -289,6 +292,7 @@ $(function(){
 				}
 				var question = this.props.question;  
 			    question.stem = stemMedia;
+			    this.props.changeItemState();
 			},
 			deleteQuestionStem: function(event){//删除题干
 				$(event.target).mouseout();
@@ -346,6 +350,7 @@ $(function(){
 				};
 				var question = this.props.question;
 				question['reference-answer'] = referenceAnswer;
+				this.props.changeItemState();
 			},
 			handleStrictMatch: function(event){//答案是否严格匹配
 				var strict = event.target.checked;
@@ -357,6 +362,7 @@ $(function(){
 			handleAnswerAnalysis: function(event){//答案解析
 				var question = this.props.question;
 				question['answer-analysis'] = event.target.value;
+				this.props.changeItemState();
 			},
 		  render: function() {
 		    var self = this;
@@ -442,6 +448,7 @@ $(function(){
 				var options = this.props.options;
 				var i = event.target.getAttribute('name');
 				options[i] = event.target.value;
+				this.props.changeItemState();
 			},
 			deleteQuestionOption: function(event){//删除当前小题的一个选项
 				var question_order = this.props.questionOrder;
@@ -540,6 +547,7 @@ $(function(){
 				var options = this.props.options;
 				var i = event.target.getAttribute('name');
 				options[i] = event.target.value;
+				this.props.changeItemState();
 			},
 			deleteQuestionOption: function(event){//删除当前小题的一个选项
 				var question_order = this.props.questionOrder;
@@ -685,8 +693,8 @@ $(function(){
 		    var question_order = this.props.questionOrder;
 		  	var answer_area = React.createElement("div",{className:'question-answer'},
 		  		"正确答案： ",
-	  			React.createElement("input",{type:"radio",name:"question_"+question_order,className:'true-option',value:0}),
-				React.createElement("input",{type:"radio",name:"question_"+question_order,className:'false-option',value:1}),
+	  			React.createElement("input",{type:"radio",name:"question_"+question_order,className:'true-option',value:0,onChange:this.handleReferenceAnswer}),
+				React.createElement("input",{type:"radio",name:"question_"+question_order,className:'false-option',value:1,onChange:this.handleReferenceAnswer}),
 				React.createElement("label", {title: "考生答案和标准参考答案是否完全一致",className:'strict-match'}, 
                 React.createElement("input", {type: "checkbox", name: "strict-match",defaultChecked:strict, onChange: this.handleStrictMatch}), 
                    	"是否严格匹配"

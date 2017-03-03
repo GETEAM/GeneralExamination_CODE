@@ -1,16 +1,67 @@
-{% extends '::base.html.twig' %}
+{% extends 'PaperManageBundle:Question:layout.html.twig' %}
 
-{% block body -%}
-    <h1>Question edit</h1>
+{% block title %}修改试题—试卷管理—系统管理{% endblock %}
 
-    {{ form(edit_form) }}
+{% block loading %}正在加载添加表单……{% endblock %}
 
-        <ul class="record_actions">
-    <li>
-        <a href="{{ path('manage_question') }}">
-            Back to the list
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type_new&edit.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question_new&edit.css') }}"/>
+{% endblock %}
+
+
+{% block right -%}
+    <h1>
+        修改试题
+        <a href="{{ path('question_index') }}">
+            <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回试题列表" title="返回试题列表">
+            <span>返回试题列表</span>
         </a>
-    </li>
-    <li>{{ form(delete_form) }}</li>
-</ul>
+    </h1>
+    
+
+    <div class="basic-infor">
+        <div class="title" title="点击显示/隐藏该区域">
+            试题基本信息
+        </div>
+        
+        {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+            	<div class="question-id" hidden>{{ id }}</div>
+                {{ form_row(edit_form.questionName, {'attr': {'placeholder': '请输入试题名称', 'autocomplete': 'off'} }) }}
+
+                {{ form_row(edit_form.score, {'attr': {'placeholder': '请输入试题分值', 'autocomplete': 'off'} }) }}
+
+                {{ form_row(edit_form.questionDuration, {'attr': {'placeholder': '请输入试题用时', 'autocomplete': 'off'} }) }}
+
+                <div hidden>
+                {{ form_row(edit_form.questionType, {'attr': {'placeholder': '试题类型，是经过选择的','class':'question_type'} }) }}
+            	{{ form_row(edit_form.questionContent, {'attr': {'placeholder': '试题类型，是经过选择的','class':'question-structure'} }) }}
+            	{{ form_row(edit_form.createTime, {'attr': {'placeholder': '出题时间，默认系统时间', 'class':'question_createtime'} }) }}
+            	{{ form_row(edit_form.usageCounter, {'attr': {'placeholder': '使用次数，需要统计', 'autocomplete': 'off','class':'question_usagecount'} }) }}
+                </div>
+  
+            <div class="form-add-question" hidden>
+        		{{ form_row(edit_form.save, {'attr': {'class': 'btn add-btn'} }) }}
+            </div>
+        {{ form_end(edit_form, {'render_rest': true}) }}
+    </div>
+    <div id="item-content-area">
+    	<div class="title" title="试题出题内容" hidden>试题出题内容</div>
+    	<div id="item-content"></div>
+    </div>
+    <div class="item-finish-btn">
+    	<a href="javascript:void(0)" class="btn add-btn complete-btn">修改完成</a>
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    
+    
+    
+    <script src="{{ asset('js/manage/paper-manage/question_edit.js') }}"></script>
+
 {% endblock %}

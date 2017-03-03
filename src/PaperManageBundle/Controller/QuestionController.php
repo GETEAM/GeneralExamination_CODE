@@ -3,6 +3,7 @@
 namespace PaperManageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -110,19 +111,19 @@ class QuestionController extends Controller
     }
 
     /**
-     * Edits an existing Question entity.
+     * 编辑题型信息.
      *
-     * @Route("/{id}", name="question_edit")
-     * @Method("PUT")
+     * @Route("/edit/{id}", name="question_edit")
+     * @Method("GET")
      * @Template("PaperManageBundle:Question:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $question_type = $em->getRepository('PaperManageBundle:Question')->find($id);
+        $question = $em->getRepository('PaperManageBundle:Question')->find($id);
 
 
-        $edit_form = $this->createForm(new QuestionEditType(), $question_type, array(
+        $edit_form = $this->createForm(new QuestionEditType(), $question, array(
             'action' => $this->generateUrl('question_edit', array(
                 'id' => $id
             )),
@@ -136,7 +137,7 @@ class QuestionController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $success = $em->getRepository('PaperManageBundle:Question')->add($question);
                 if($success){
-                    $this->addFlash('success', $questionName->getQuestionName().'修改成功');
+                    $this->addFlash('success', $question->getQuestionName().'修改成功');
                 }else{
                     $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
                 }
@@ -216,7 +217,7 @@ class QuestionController extends Controller
     /**
      * 获取指定题型的JSON数据.
      *
-     * @Route("/QTJSON/{id}", name="question_type_getJSON")
+     * @Route("/QTJSON/{id}", name="question_getJSON")
      * @Method("GET")
      * @Template()
      */
