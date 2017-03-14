@@ -1,8 +1,8 @@
-.question_type_show{
+.question_type_show, .question_show{
 	border: 1px solid #E5E5E5;
 	padding-top: 5px;
 }
-.question_type_title{
+.question_type_title, .question_title{
 	font-size: 24px;
 	font-family: '微软雅黑';
 	margin-bottom: 10px;
@@ -25,7 +25,7 @@
 	font-size: 15px;
 }
 .item-stem-content{
-	background-color: #dedede;
+	background-color: #f6f6f6;
 	padding: 8px 10px;
 	margin: 0px 10px ;
 }
@@ -115,4 +115,28 @@
 }
 .simple-answer:disabled {
 	background-color: transparent;
+}
+.record-btn{
+	margin-left: 34px;
+	margin-top: 10px;
+}
+/*判断题选项样式*/
+.question-answer-truefalse{
+	background-color: #efefef;
+	padding: 4px 30px;
+	border-radius: 3px;
+	margin-top: 10px;
+}
+.true-option, .false-option {
+	width: 40px;
+}
+.true-option:before, .false-option:before{
+	width: 16px;
+	display: inline-block;
+}
+.true-option:before{
+	content: 'T';
+}
+.false-option:before {
+	content: 'F';
 }

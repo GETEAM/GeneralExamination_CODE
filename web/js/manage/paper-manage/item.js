@@ -438,7 +438,7 @@ var Question = React.createClass({displayName: "Question",
 		var showQuestionsOptionsContent = this.props.showQuestionsOptionsContent;
 
 		var question_stem = question.stem ? 
-			React.createElement("div", {className: "Question-stem"},
+			React.createElement("div", {className: "question-stem"},
 				React.createElement("span", null, question.stem), 
 				React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-stem-a", onClick: this.deleteQuestionStem, title: "删除小题题干"},
 					React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题题干"})
@@ -458,6 +458,8 @@ var Question = React.createClass({displayName: "Question",
 			content_area = React.createElement(BlankFilling, null)
 		}else if(type == "TrueOrFalse"){
 			content_area = React.createElement(TrueOrFalse, {questionOrder: order})
+		}else if(type == "Record"){
+			content_area = React.createElement(Record, null)
 		}
 
 		return (
@@ -648,9 +650,20 @@ var TrueOrFalse = React.createClass({displayName: "TrueOrFalse",
 	}
 });
 
-
+//小题Question中的内容区域部分————录音题
+var Record = React.createClass({displayName: "Record",
+	render: function() {
+		return (
+			React.createElement("input", {className: "record-btn", type:"button", value: "点击录音"})
+		)
+	}
+});
 //点击完成添加时，提交表单
 $('.complete-add').click(function() {
+	if($('#papermanage_question_type_new_nameEn').val() == ''){
+		alert('类型中文名不能为空');
+		return;
+	}
 	$('.form-add button').click();
 });
 
@@ -805,41 +818,17 @@ $('.add-simple-answer').click(function() {
 $('.add-true-or-false').click(function() {
 	var new_question = {
 		"type": "TrueOrFalse",			
-		"stem": "此处为判断题题干，题干内容可以包括图片、音频以及视频等多媒体。",
-		"options": [		//question的各个选项
-			"正确",
-			"错误",
-		]
+		"stem": "此处为判断题题干，题干内容可以包括图片、音频以及视频等多媒体。"
 	}
 
 	addNewQuestion(new_question);
 });
 
 /*添加录音题*/
-$('.add-simple-answer').click(function() {
+$('.add-record').click(function() {
 	var new_question = {
-		"type": "SimpleAnswer",			
+		"type": "Record",			
 		"stem": "此处为录音题题干，题干内容可以包括图片、音频以及视频等多媒体。"
-	}
-
-	addNewQuestion(new_question);
-});
-
-/*添加排序题*/
-$('.add-simple-answer').click(function() {
-	var new_question = {
-		"type": "SimpleAnswer",			
-		"stem": "此处为排序题题干，题干内容可以包括图片、音频以及视频等多媒体。"
-	}
-
-	addNewQuestion(new_question);
-});
-
-/*添加改错题*/
-$('.add-simple-answer').click(function() {
-	var new_question = {
-		"type": "SimpleAnswer",			
-		"stem": "此处为改错题题干，题干内容可以包括图片、音频以及视频等多媒体。"
 	}
 
 	addNewQuestion(new_question);

@@ -3,6 +3,7 @@
 namespace PaperManageBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -44,7 +45,7 @@ class QuestionController extends Controller
      * 添加题型
      *
      * @Route("/new", name="question_new")
-     * @Method("GET")
+     * @Method({"GET","POST"})
      * @Template("PaperManageBundle:Question:new.html.twig")
      */
     public function newAction(Request $request)
@@ -63,23 +64,20 @@ class QuestionController extends Controller
         ));
         
         $new_form->handleRequest($request);
-
         if ($new_form->isValid()) {
             //添加成功跳转到列表页面，不成功跳转到本页面
+
             try{
                 $em = $this->getDoctrine()->getManager();
-                $success = $em->getRepository('PaperManageBundle:Question')->add($question);
+                $question->setCreateTime(new \DateTime('today'));//创建时间和
                 
-                if($success){
-                    $this->addFlash('success', $questionName->getQuestionName().'添加成功');
-                }else{
-                    $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
-                    return $this->redirect($this->generateUrl('question_new'));
-                }
+                $em->persist($question);
+                $em->flush();
                 return $this->redirect($this->generateUrl('question_index'));
                 
             } catch(\Exception $e){
-                $this->addFlash('error', '网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                $this->addFlash('error', 'HHHH网络原因或数据库故障，添加失败. 请重新尝试添加！');
+                //print_r($e);
                 return $this->redirect($this->generateUrl('question_new'));
             }
         }
@@ -90,45 +88,42 @@ class QuestionController extends Controller
         );
     }
 
-    /**
-     * Finds and displays a Question entity.
+     /**
+     * 显示试题信息.
      *
-     * @Route("/{id}", name="question_show")
-     * @Method("GET")
-     * @Template()
+     * @Route("/show/{id}", name="question_show")
+     * @Template("PaperManageBundle:Question:show.html.twig")
      */
-    public function showAction($id)
+    public function showAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
+        $question = $em->getRepository('PaperManageBundle:Question')->find($id);
 
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Question entity.');
+        //调试错误提示
+        if (!$question) {
+            throw $this->createNotFoundException('Unable to find Student entity.');
         }
-
-        $deleteForm = $this->createDeleteForm($id);
-
+        
         return array(
-            'entity'      => $entity,
-            'delete_form' => $deleteForm->createView(),
+            'question' => $question
         );
     }
 
     /**
-     * Edits an existing Question entity.
+     * 编辑题型信息.
      *
-     * @Route("/{id}", name="question_edit")
-     * @Method("PUT")
+     * @Route("/edit/{id}", name="question_edit")
+     * @Method("GET")
      * @Template("PaperManageBundle:Question:edit.html.twig")
      */
     public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $question_type = $em->getRepository('PaperManageBundle:Question')->find($id);
+        $question = $em->getRepository('PaperManageBundle:Question')->find($id);
 
 
-        $edit_form = $this->createForm(new QuestionEditType(), $question_type, array(
+        $edit_form = $this->createForm(new QuestionEditType(), $question, array(
             'action' => $this->generateUrl('question_edit', array(
                 'id' => $id
             )),
@@ -142,7 +137,7 @@ class QuestionController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $success = $em->getRepository('PaperManageBundle:Question')->add($question);
                 if($success){
-                    $this->addFlash('success', $questionName->getQuestionName().'修改成功');
+                    $this->addFlash('success', $question->getQuestionName().'修改成功');
                 }else{
                     $this->addFlash('error', '网络原因或数据库故障，修改失败. 请重新修改！');
                 }
@@ -161,46 +156,85 @@ class QuestionController extends Controller
         );
     }
 
+
     /**
-     * Deletes a Question entity.
+     * 删除题型信息.
      *
-     * @Route("/{id}", name="manage_question_delete")
-     * @Method("DELETE")
+     * @Route("/delete/{id}", name="question_delete")
+     * @Method("GET")
+     * @Template()
      */
     public function deleteAction(Request $request, $id)
     {
-        $form = $this->createDeleteForm($id);
-        $form->handleRequest($request);
-
-        if ($form->isValid()) {
+        try{
             $em = $this->getDoctrine()->getManager();
-            $entity = $em->getRepository('PaperManageBundle:Question')->find($id);
-
-            if (!$entity) {
-                throw $this->createNotFoundException('Unable to find Question entity.');
+            $success = $em->getRepository('PaperManageBundle:Question')->delete($id);
+            if($success){
+                $this->addFlash('success', '试题删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
             }
-
-            $em->remove($entity);
-            $em->flush();
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，删除失败. 请重新删除！');
         }
 
-        return $this->redirect($this->generateUrl('manage_question'));
+        return $this->redirect($this->generateUrl('question_index'));
+    }
+
+
+     /**
+     * 批量删除题型信息.
+     *
+     * @Route("/multi-delete", name="question_multi_delete")
+     * @Method("POST")
+     */
+    public function multiDeleteAction(Request $request)
+    {
+        $ids = $request->request->get('ids');
+        
+        try{
+            $em = $this->getDoctrine()->getManager();
+            $success = $em->getRepository('PaperManageBundle:Question')->multiDelete($ids);
+
+            if($success){
+                $this->addFlash('success', '批量删除成功!');
+            }else{
+                $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+            }
+        } catch(\Exception $e){
+            $this->addFlash('error', '网络原因或数据库故障，批量删除失败!请重新删除！');
+        }
+
+        $result = array(
+            'success' => $success
+        );
+        
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
 
     /**
-     * Creates a form to delete a Question entity by id.
+     * 获取指定题型的JSON数据.
      *
-     * @param mixed $id The entity id
-     *
-     * @return \Symfony\Component\Form\Form The form
+     * @Route("/QTJSON/{id}", name="question_getJSON")
+     * @Method("GET")
+     * @Template()
      */
-    private function createDeleteForm($id)
+    public function QTJSONAction(Request $request, $id)
     {
-        return $this->createFormBuilder()
-            ->setAction($this->generateUrl('manage_question_delete', array('id' => $id)))
-            ->setMethod('DELETE')
-            ->add('submit', 'submit', array('label' => 'Delete'))
-            ->getForm()
-        ;
+        $em = $this->getDoctrine()->getManager();
+        $question = $em->getRepository('PaperManageBundle:Question')->findById($id);
+
+        $item = $question[0] -> getQuestionContent();
+
+        $result = array(
+            'item' => $item
+        );
+        
+        $response = new Response(json_encode($result));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response;
     }
+  
 }

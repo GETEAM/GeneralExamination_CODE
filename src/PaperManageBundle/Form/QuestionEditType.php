@@ -13,10 +13,14 @@ class QuestionEditType extends AbstractType
      * @param array $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+     {
         $builder
             ->add('questionName','text', array('label' => '试题名称'))
-            ->add('questionTypeId','text',array('label' => '试题类型'))
+            ->add('questionType', 'entity', array(
+                'class' => 'PaperManageBundle:QuestionType',
+                'property' => 'name_ch',
+                'label' => '试题类型'
+            ))
             ->add('questionContent','textarea', array('label' => '试题结构'))
             ->add('score','text',array('label' => '分值'))
             ->add('usageCounter','text',array('label' => '使用次数'))

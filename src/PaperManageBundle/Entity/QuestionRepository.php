@@ -10,4 +10,28 @@ namespace PaperManageBundle\Entity;
  */
 class QuestionRepository extends \Doctrine\ORM\EntityRepository
 {
+	//添加/编辑(单个)题型(编辑的操作和添加相似)
+    public function add($question) {
+    	$em = $this->getEntityManager();
+        $em->persist($question);
+        $em->flush();
+        return true;
+    }
+
+	//删除单个题型信息
+    public function delete($id) {
+    	$em = $this->getEntityManager();
+        $question=$this->findOneById($id);
+        $em->remove($question);
+        $em->flush();
+        return true;
+    }
+
+    //批量删除题型信息
+    public function multiDelete($ids) {
+    	foreach( $ids as $id ) {
+    		$this->delete($id);
+    	}
+    	return true;
+    }
 }

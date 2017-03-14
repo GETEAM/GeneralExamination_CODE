@@ -1,5 +1,5 @@
 $(function(){
-	var question_type_id = $('.Question-type-id').html();
+	var question_type_id = $('.question-type-id').html();
 
 	//修改流程性选项时，修改item
 	$('[name="papermanage_question_type_edit[flowable]"]').change(function(){

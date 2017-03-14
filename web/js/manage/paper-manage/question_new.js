@@ -5,9 +5,18 @@ $(function(){
 				$(this).toggleClass('close').next().toggle();					
 			}
 		});
+
+
 	//item是指该小题的结构内容
 	var item = {};
-	$('.question-type-choose .question-type').click(function(){
+
+	var $itemStructure = $('.question-structure');
+
+	$('.question-type-choose .question-type').click(function(){//根据选择的类型决定如何显示
+		
+		//获得试题类型
+		$('.question_type').val($(this).attr('value'));
+
 		//背景颜色改变
 		$(this).addClass('selected').siblings().removeClass('selected');
 
@@ -18,9 +27,6 @@ $(function(){
 		item.flowable = $(this).find('.item-flowable').text();
 		item.shuffle = $(this).find('.item-shuffle').text();
 		
-		//item的内容
-		var $itemStructure = $('.question-structure');
-		$itemStructure.val(JSON.stringify(item));
 
 		/*var item = {"questions-num-limit":true,"pre-show":true,
 		"stem":"此处为试题题干内容，题干中可以包括图片、音频以及视频等多媒体。",
@@ -111,7 +117,8 @@ $(function(){
 			handleStemLength: function(event) {
 				item.stem = event.target.value;
 				//长度值改变
-				$('#stem-length').text('('+item.stem.split(' ').length+'words)');        
+				$('#stem-length').text('('+item.stem.split(' ').length+'words)'); 
+				this.props.changeItemState();       
 			},
 			//删除试题题干
 			deleteItemStem: function(event){
@@ -158,6 +165,7 @@ $(function(){
 			    var options = this.props.options;  
 			    options[index] = optionValue;  
 			    item.options = options;
+			    this.props.changeItemState();
 			},
 			addItemOption: function(event){
 				//添加试题选项输入框
@@ -273,6 +281,7 @@ $(function(){
 				
 				var question = this.props.question;  
 			    question.stem = stemText;
+			    this.props.changeItemState();
 			},
 			handleQuestionStemMediaContent: function(event){//选择多媒体元素
 				//如果选择了多媒体元素则文本选项失效
@@ -283,6 +292,7 @@ $(function(){
 				}
 				var question = this.props.question;  
 			    question.stem = stemMedia;
+			    this.props.changeItemState();
 			},
 			deleteQuestionStem: function(event){//删除题干
 				$(event.target).mouseout();
@@ -340,6 +350,7 @@ $(function(){
 				};
 				var question = this.props.question;
 				question['reference-answer'] = referenceAnswer;
+				this.props.changeItemState();
 			},
 			handleStrictMatch: function(event){//答案是否严格匹配
 				var strict = event.target.checked;
@@ -351,6 +362,7 @@ $(function(){
 			handleAnswerAnalysis: function(event){//答案解析
 				var question = this.props.question;
 				question['answer-analysis'] = event.target.value;
+				this.props.changeItemState();
 			},
 		  render: function() {
 		    var self = this;
@@ -391,6 +403,14 @@ $(function(){
 		    }else if(type == "BlankFilling") {
 		      	question_show = React.createElement(BlankFilling, {strict: strict,handleReferenceAnswer:this.handleReferenceAnswer,
 		      		handleStrictMatch:this.handleStrictMatch,changeItemState: self.props.changeItemState});
+		    
+		    }else if(type == "TrueOrFalse") {
+		      	question_show = React.createElement(TrueOrFalse, {questionOrder: order,strict: strict,handleReferenceAnswer:this.handleReferenceAnswer,
+		      		handleStrictMatch:this.handleStrictMatch,changeItemState: self.props.changeItemState});
+		    
+		    }else if(type == "Record") {
+		      	question_show = React.createElement(Record, {strict: strict,handleReferenceAnswer:this.handleReferenceAnswer,
+		      		handleStrictMatch:this.handleStrictMatch,changeItemState: self.props.changeItemState});
 		    }
 
 
@@ -428,6 +448,7 @@ $(function(){
 				var options = this.props.options;
 				var i = event.target.getAttribute('name');
 				options[i] = event.target.value;
+				this.props.changeItemState();
 			},
 			deleteQuestionOption: function(event){//删除当前小题的一个选项
 				var question_order = this.props.questionOrder;
@@ -526,6 +547,7 @@ $(function(){
 				var options = this.props.options;
 				var i = event.target.getAttribute('name');
 				options[i] = event.target.value;
+				this.props.changeItemState();
 			},
 			deleteQuestionOption: function(event){//删除当前小题的一个选项
 				var question_order = this.props.questionOrder;
@@ -641,7 +663,7 @@ $(function(){
 				this.props.handleStrictMatch(event);
 			},
 		  render: function() {
-		  	//填空题初始的非严格匹配
+		  	//初始的非严格匹配
 		    var strict = this.props.strict;//false
 
 		  	var answer_area = React.createElement("div",{className:'question-answer'},
@@ -657,6 +679,61 @@ $(function(){
 		  }
 		});
 
+		//小题Question中的答题区域部分————判断题
+		var TrueOrFalse = React.createClass({displayName: "TrueOrFalse",
+		  	handleReferenceAnswer: function(event){
+				this.props.handleReferenceAnswer(event);
+			},
+			handleStrictMatch: function(event){
+				this.props.handleStrictMatch(event);
+			},
+		  render: function() {
+		  	//初始的严格匹配
+		    var strict = this.props.strict;//true
+		    var question_order = this.props.questionOrder;
+		  	var answer_area = React.createElement("div",{className:'question-answer'},
+		  		"正确答案： ",
+	  			React.createElement("input",{type:"radio",name:"question_"+question_order,className:'true-option',value:0,onChange:this.handleReferenceAnswer}),
+				React.createElement("input",{type:"radio",name:"question_"+question_order,className:'false-option',value:1,onChange:this.handleReferenceAnswer}),
+				React.createElement("label", {title: "考生答案和标准参考答案是否完全一致",className:'strict-match'}, 
+                React.createElement("input", {type: "checkbox", name: "strict-match",defaultChecked:strict, onChange: this.handleStrictMatch}), 
+                   	"是否严格匹配"
+            	)
+	    	);
+		    return (
+		    	answer_area
+		    )
+		  }
+		});
+
+		//小题Question中的答题区域部分————录音题
+		var Record = React.createClass({displayName: "Record",
+			handleReferenceAnswer: function(event){
+				this.props.handleReferenceAnswer(event);
+			},
+			handleStrictMatch: function(event){
+				this.props.handleStrictMatch(event);
+			},
+		  render: function() {
+		  	//填空题初始的非严格匹配
+		    var strict = this.props.strict;//false
+
+		  	var answer_area = React.createElement("div",{className:'question-answer'},
+		    	"正确答案： ",
+		    	React.createElement("input",{type:'button',value: "点击录音",onChange:this.handleReferenceAnswer}),
+		    	React.createElement("a", {href: "javascript:void(0)", className: "delete-record", onClick: self.deleteQuestionOption, title: "删除录音"},
+					React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除录音"})
+				),
+		    	React.createElement("label", {title: "考生答案和标准参考答案是否完全一致",className:'strict-match'}, 
+                    React.createElement("input", {type: "checkbox", name: "strict-match",defaultChecked:strict, onChange: this.handleStrictMatch}), 
+                       	"是否严格匹配"
+                )
+	    	);
+		    return (
+		    	answer_area
+		    )
+		  }
+		});
 
 		  // 显示Item
 		  ReactDOM.render(
@@ -665,8 +742,45 @@ $(function(){
 		  );
 	});
 	
+	//试题出题完成按钮
 	$('.item-finish-btn .complete-btn').click(function(){
-		console.log(JSON.stringify(item));
+		var flag = true;//提交之前的标记
+		//提交之前判断大题题干、小题题干、小题选项是否都不为空
+		$('.item-stem textarea, .question-stem input[type = "text"],.question-options input[type="text"]').each(function(){
+			if(!$(this).attr('disabled') && $(this).val() == ''){
+				alert('题干或者试题选项没有填写！');
+				return false;
+			}
+		});
+
+		//用来判断单选题和多选题是否都填写了正确答案
+		var question_length = item.questions.length;//得到小题数量，根据radio的name属性判断是否单选和多选答案
+		var val = '';var len = 0;
+		for (var i = 0; i < question_length; i++) {
+			val = $('#item-content input[name=question_'+i+']:checked').val();
+			var len = $('#item-content input[name=question_'+i+']:checked').length;
+			if(len!=0 && !val){
+				alert('请填写正确答案aaa！');
+				return false;
+			}
+		}
+
+		//判断填空题，简答题答案是否填写
+		$(".question-answer input,question-answer textarea").each(function(){
+			if($(this).val() == ''){
+				alert('请填写正确答案！');
+				return false;
+			}
+		})
+		
+		//最终要出题的item的内容
+		$itemStructure.val(JSON.stringify(item));
+
+		//使用次数
+		$('.question_usagecount').val(1);
+	
+		$('.form-add-question button').click();
+		//console.log(JSON.stringify(item));
 	});
 
 });

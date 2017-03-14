@@ -3,6 +3,7 @@
 namespace PaperManageBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * QuestionType
@@ -64,8 +65,9 @@ class QuestionType
     private $description;
 
     /**
+     * @var Question
+     *
      * @ORM\OneToMany(targetEntity="Question", mappedBy="questionType")
-     * var Question[]
      */
     protected $questions;
 

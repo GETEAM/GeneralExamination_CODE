@@ -351,7 +351,12 @@
 .false-option:before {
 	content: 'F';
 }
-
+/*录音按钮*/
+.record-btn {
+    color: #430707;
+    padding: 3px 10px;
+    margin-left: 34px;
+}
 
 /*上面是试题类型所有的样式，但是在出题界面依然用到了很多，该部分是出题专有的*/
 .question-type-choose{
