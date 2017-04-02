@@ -1,0 +1,124 @@
+{% extends 'PaperManageBundle:Question:layout.html.twig' %}
+
+{% block title %}试卷管理—试卷管理{% endblock %}
+
+{% block loading %}正在加载试卷列表……{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
+
+{% block right %}
+    <h1>
+       试卷列表
+    </h1>
+    <div class="common-action">
+        <a href="javascript:void(0)" class="btn btn-common-action select-all">
+            <input type="checkbox" hidden/>
+            <i></i>
+            全选
+        </a>
+        <a href="{{ path('paper_new') }}" class="btn btn-common-action">
+            <img src="{{  asset('images/manage/add.png')  }}" width="20" height="20" alt="添加试卷" title="添加试卷">
+            添加试题
+        </a>
+        <a href="javascript:void(0)" class="btn btn-common-action btn-multi-delete">
+            <img src="{{  asset('images/manage/deletes.png')  }}" width="20" height="20" alt="批量删除" title="批量删除">
+            批量删除
+        </a>
+    </div>
+
+    <table class="common-table papers">
+        <thead>
+            <tr>
+                <th>编号</th>
+                <th>试卷名称</th>
+                <th>测试形式</th>
+                <th>组卷方法</th>
+                <th>组卷人</th>
+                <th>公开性</th>
+                <th>建议时长</th>
+                <th>试卷总分</th>
+                <th>使用次数</th>
+                <th>创建时间</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if papers|length == 0 %}
+                <tr>
+                    <td colspan="11">尚不存在试卷，请您添加！</td>
+                </tr>
+            {% else %}
+                {% for paper in papers %}
+                    <tr>
+                        <td>
+                            <input type="checkbox" name="papers" value="{{ paper.id }}" hidden/>
+                            <a href="{{ path('paper_show', { 'id': paper.id }) }}">{{ paper.id }}</a>
+                        </td>
+                        <td>{{ paper.name }}</td>
+                        <td>
+                            {% if paper.testModes == 'strictMode' %}
+                                严格
+                            {% else %}
+                                练习
+                            {% endif %}
+                        </td>
+                            
+                        <td>
+                            {% if paper.groupWay == 'artificial' %}
+                                手动
+                            {% else %}
+                                自动
+                            {% endif %}
+                        </td>
+                        <td>{{ paper.groupUser }}</td>
+                        <td>
+                            {% if paper.isPublic == '1' %}
+                                公开
+                            {% else %}
+                                私有
+                            {% endif %}
+                        </td>
+                        <td>{{ paper.duration }}</td>
+                        <td>{{ paper.score }}</td>
+                        <td>{{ paper.usageCounter }}</td>
+                        <td>{{ paper.createTime|date('Y-m-d') }}</td>
+                        <td>
+                            <a href="{{ path('paper_show', { 'id': paper.id }) }}" target="_blank">
+                                <img src="{{  asset('images/manage/view.png')  }}" width="20" height="20" alt="预览试题" title="预览">
+                            </a>
+                            <a href="{{ path('paper_edit', { 'id': paper.id }) }}">
+                                <img src="{{  asset('images/manage/edit.png')  }}" width="20" height="20" alt="编辑类型" title="编辑类型">
+                            </a>
+                            <a href="javascript:void(0)" class="delete-btn" paper-id="{{ paper.id }}">
+                                <img src="{{  asset('images/manage/delete.png')  }}" width="20" height="20" alt="删除类型" title="删除类型">
+                            </a>
+                            <div id="delete-dialog_{{ paper.id }}" class="delete-dialog" title="删除确认" paper-id={{ paper.id }} hidden>
+                                <p>确定要删除试卷   <span class="dialog-item-key">{{paper.name}}</span>吗？</p>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
+        </tbody>
+        <tfoot>
+            <tr>
+            <td colspan="11">
+                {{ knp_pagination_render(papers) }}            
+            </td>
+            </tr>
+        </tfoot>
+</table>
+
+    <!-- 批量删除对话框 -->
+    <div class="multi-delete-dialog" title="批量删除确认" hidden>
+        <p>确定要删除选中的试卷信息吗？</p>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/manage/paper-manage/paper_index.js') }}"></script>
+{% endblock %}

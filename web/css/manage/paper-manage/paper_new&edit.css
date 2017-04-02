@@ -1,0 +1,138 @@
+#paper-content-area {
+    padding-left: 0px;
+    border-bottom: 1px solid #eee;
+}
+.radio-div{
+	display: inline;
+}
+.tag,.part-order:after{
+	font-size: larger;
+	font-weight: bold;
+	color:#555;
+}
+
+
+.groups{
+	border: 1px solid #eee;
+	padding: 5px;
+}
+.group {
+	border:1px solid #333;
+}
+.group-title,.part-title, .section-title, .item-title{
+	border-bottom: 1px solid #eee;
+	padding: 5px 15px;
+}
+.group label {
+	margin-left: 50px;
+}
+.group label input{
+	
+	margin-left: 10px;
+}
+.group-operations, .part-operations, .section-operations {
+	position: absolute;
+	background-color: #ddd;
+	width: 40px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+}
+.group-operations {
+	right: -39px;
+}
+.part-operations  {
+	right: 1%;
+}
+.section-operations{
+	right: 5%;
+}
+.delete-group-option:hover, .add-paper-option:hover, .add-part-option:hover, 
+.delete-part-option:hover, .add-section-option:hover, .delete-section-option:hover, 
+.add-question:hover, .delete-question:hover, .add-item-option:hover {
+	background-color: #efefef;
+}
+
+.delete-group-option, .add-group-option,.add-part-option, 
+.delete-part-option, .add-section-option, .delete-section-option{
+	float: right;
+	/*display: none;*/
+	text-align: center;
+	width: 20px;
+	height: 24px;
+	margin-top: 8px;
+	border-radius: 2px;	
+}
+.parts{
+	margin: 5px;
+	counter-reset: part 0;
+}
+.part{
+	border:1px solid #aaa;
+	counter-increment: part;
+}
+.part-property,.section-property, .item-property {
+	display: inline-block;
+}
+.part-order:after{
+	width: 70px;
+	display: inline-block;
+	content: "Part "counter(part, upper-roman);
+	margin-left: 10px;
+}
+
+.sections{
+	counter-reset: section 0;
+	margin: 5px;
+}
+.section{
+	counter-increment: section;
+	border:1px solid #ccc;
+}
+.section-order:after{
+	width: 90px;
+	display: inline-block;
+	content: "Section "counter(section, upper-alpha);
+	margin-left: 20px;
+}
+.items{
+	margin: 5px;
+	border:1px solid #ddd;
+}
+.item{
+
+}
+
+.item-order{
+	/*width: 70px;*/
+	display: inline-block;
+	margin-left: 35px;
+	margin-right: 20px;
+}
+.item-property .item-name {
+	margin-left: 20px;
+	border:1px solid #ddd;
+	padding: 2px 10px;
+	display: inline-block;
+	margin-bottom: 2px;
+	background-color: #B8F3B8;
+}
+.item-property .nameDiv{
+	display: inline-block;
+}
+.questionlist{
+	padding:5px;
+}
+.add-question,.delete-question{
+	padding: 5px 5px 2px 5px;
+}
+
+/*完成添加按钮*/
+.paper-finish-btn{
+	border: 1px solid #eee;
+	border-top: none;
+	padding: 2px 0px;
+	text-align: center;
+}
+.paper-finish-btn .complete-btn{
+	float: none;
+}

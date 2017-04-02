@@ -1,0 +1,38 @@
+{% extends '::base.html.twig' %}
+
+{% block title %}书卷信息展示{% endblock %}
+
+{% block loading %}正在加载指定试卷的详细信息……{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/common/bootstrap.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/paper_show.css') }}"/>
+
+{% endblock %}
+
+
+{% block content %}
+    <div class='paper_show'>
+        {% if paper=="" %}
+            <div class='paper_title'>您指定的试卷信息不存在，请您核实试卷编号！</div>
+        {% else %}
+            <div class='paper_title'>{{ paper.name }}</div>
+            <div id="paper_content_{{ paper.id }}" class="paper_content" hidden>{{ paper.content }}</div>
+        {% endif %}
+    </div>
+    <div id="content"></div>
+
+{% endblock %}
+
+
+ 
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('js/common/react/react.js') }}"></script>
+    <script src="{{ asset('js/common/react/react-dom.js') }}"></script>
+    <script src="{{ asset('js/common/react/browser.min.js') }}"></script>
+    <script type="text/babel" src="{{ asset('js/manage/paper-manage/paper_show.js') }}"></script>
+{% endblock %}
+

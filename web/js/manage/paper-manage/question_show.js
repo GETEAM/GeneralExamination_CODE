@@ -8,7 +8,7 @@ $(function(){
 
   //取到相应的json结构
   var questionTypeStructureId=$('.question_content').attr('id');
-
+  console.log($('#'+questionTypeStructureId).text());
   var item=JSON.parse($('#'+questionTypeStructureId).text());
    /*var item = {
      "flowable":false,

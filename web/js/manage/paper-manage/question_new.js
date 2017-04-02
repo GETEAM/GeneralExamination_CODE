@@ -420,17 +420,17 @@ $(function(){
 		    return (
 		      React.createElement("div", {className: "question"}, 
 		      	React.createElement("div", {className: "question-operations"},
-					React.createElement("a", {href: "javascript:void(0)", className: "delete-Question-a", onClick: this.deleteQuestion, title: "删除小题"},
+					React.createElement("a", {href: "javascript:void(0)", className: "delete-question-a", onClick: this.deleteQuestion, title: "删除小题"},
 						React.createElement("img", {src: "/images/manage/delete-min.png", width: "16", height: "16", alt: "删除小题"})
 					), 
 					
 						!question_stem ? 
-						React.createElement("a", {href: "javascript:void(0)", className: "add-Question-stem-a", onClick: this.addQuestionStem, title: "添加小题题干"},
+						React.createElement("a", {href: "javascript:void(0)", className: "add-question-stem-a", onClick: this.addQuestionStem, title: "添加小题题干"},
 							React.createElement("img", {src: "/images/manage/add-stem.png", width: "16", height: "16", alt: "添加小题题干"})
 						)
 						: "", 
 					
-					React.createElement("a", {href: "javascript:void(0)", className: "add-Question-a", onClick: this.addQuestionFromCurrent, title: "添加小题"},
+					React.createElement("a", {href: "javascript:void(0)", className: "add-question-a", onClick: this.addQuestionFromCurrent, title: "添加小题"},
 						React.createElement("img", {src: "/images/manage/add-min.png", width: "16", height: "16", alt: "添加小题"})
 					)
 				),
@@ -744,7 +744,6 @@ $(function(){
 	
 	//试题出题完成按钮
 	$('.item-finish-btn .complete-btn').click(function(){
-		var flag = true;//提交之前的标记
 		//提交之前判断大题题干、小题题干、小题选项是否都不为空
 		$('.item-stem textarea, .question-stem input[type = "text"],.question-options input[type="text"]').each(function(){
 			if(!$(this).attr('disabled') && $(this).val() == ''){

@@ -1,0 +1,116 @@
+{% extends 'PaperManageBundle:Paper:layout.html.twig' %}
+
+{% block title %}修改试卷—试卷管理—系统管理{% endblock %}
+
+{% block loading %}正在加载修改表单……{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/question-type_new&edit.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/manage/paper-manage/paper_new&edit.css') }}"/>
+{% endblock %}
+
+
+{% block right -%}
+    <h1>
+        手动组卷
+        <a href="{{ path('paper_index') }}">
+            <img src="{{ asset('images/manage/back.png') }}" width="12" height="12" alt="返回试卷列表" title="返回试卷列表">
+            <span>返回试卷列表</span>
+        </a>
+    </h1>
+
+    <div class="question-type-introduce">
+        <div class="title close" title="点击显示/隐藏该区域">
+            <img src="{{ asset('images/manage/notice.png') }}" width="20" height="20" alt="试卷添加小贴士" title="试卷添加小贴士" />
+            试卷添加小贴士
+        </div>
+        <div class="tips-ols" hidden>
+            <ol class="introduce-tips">
+                <div class="tips-title">流程指导</div>
+                <li class="tip">        
+                    试卷是由一个及以上group组成，group由一个或多个part组成，part由section组成，section由试题组成。
+                </li>
+                <li class="tip">
+                    group相当于考试中的不同答题卡，每个group有自己的时间，试卷显示也是一个group为一次性所见内容。
+                </li>
+                <li class="tip">
+                    part有name属性，根据part区分流程性和非流程性，每个part部分也有具体时长。
+                </li>
+                <li class="tip">
+                    section是为了符合现有试卷的布局格式，有direction属性相当于题目，然后有试题。
+                </li>
+                <li class="tip">
+                    这四个部分每一部分都可以自主添加和删除，最后完成组卷。
+                </li>
+            </ol>
+            <ol class="introduce-tips">
+                <div class="tips-title warning">注意事项</div>
+                <li class="tip">        
+                    当没有添加别的或者一些选项时，都会根据默认值组卷。默认group，part等都是一个。
+                </li>
+                <li class="tip">
+                    当任何一个有section却没有item时，会提示不能完成添加。
+                </li>
+            </ol>
+        </div>
+    </div>
+    <div class="basic-infor">
+        <div class = 'username' hidden>{{app.user.username}}</div>
+        <div class="title" title="点击显示/隐藏该区域">
+            试卷类型基本信息
+        </div>
+        {{ form_start(edit_form) }}
+            {{ form_errors(edit_form) }}
+                <div class="paper-id" hidden>{{ id }}</div>
+                {{ form_row(edit_form.name, {'attr': {'placeholder': '请输入试卷名称', 'autocomplete': 'off'} }) }}
+                {{ form_row(edit_form.score, {'attr': {'placeholder': '请输入试卷分值'} }) }}
+                {{ form_row(edit_form.duration, {'attr': {'placeholder': '请输入试卷时长,分钟'} }) }} 
+                
+
+                <div>
+                    {{ form_label(edit_form.testModes) }}
+                    {{ form_widget(edit_form.testModes, {'attr': {'class': 'radio-div'} }) }}
+                </div>
+                <div>
+                    {{ form_label(edit_form.groupWay) }}
+                    {{ form_widget(edit_form.groupWay, {'attr': {'class': 'radio-div'} }) }}
+                </div>
+   
+                <div>
+                    {{ form_label(edit_form.isPublic) }}
+                    <label  class="checkbox-label" title="是否是对外公开的，默认是公开的，除非特殊情况转为私有">
+                        {{ form_widget(edit_form.isPublic,{'attr': {'checked': 'checked'} }) }} 是否对外公开
+                    </label>
+                </div>
+                
+                <div hidden>
+                    {{ form_row(edit_form.groupUser, {'attr': {'placeholder': '请输入出题人姓名','class': 'groupuser' } }) }}
+                    {{ form_row(edit_form.usageCounter, {'attr': {'class': 'paper-usagecount','placeholder': '请输入使用次数'} }) }}
+                    {{ form_row(edit_form.createTime) }}
+                </div>
+            <div class="paper-structure" hidden>
+                {{ form_row(edit_form.content, {'attr': {'placeholder': '请输入试卷结构'} }) }}
+            </div>    
+            <div class="form-add-paper" hidden>
+            {{ form_row(edit_form.save, {'attr': {'class': 'btn add-btn'} }) }}
+            </div>
+        {{ form_end(edit_form, {'render_rest': true}) }}
+    </div>
+    <div id="paper-content-area">
+        <div class="title" title="试题出题内容">试题出题内容</div>
+        <div id="paper-content">aaa</div>
+    </div>
+    <div class="paper-finish-btn">
+        <a href="javascript:void(0)" class="btn add-btn complete-btn">完成添加</a>
+    </div>
+   <script type="text/babel" src="{{ asset('js/manage/paper-manage/paper_edit.js') }}">
+   </script>
+
+{% endblock %}
+
+
+{% block javascripts %}
+    {{ parent() }}
+    
+{% endblock %}
